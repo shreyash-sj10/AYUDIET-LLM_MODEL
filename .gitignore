@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Virtual env
+venv/
+.venv/
+
+# Environment secrets
+.env
+
+# Local cache/temp artifacts
+pytest-cache-files-*/
+*.log
+
+# Local outputs
+groq_prompt_output*.json
+
+# Large/optional data artifacts
+data/*.pdf
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

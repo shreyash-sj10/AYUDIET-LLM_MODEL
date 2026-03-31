@@ -1,0 +1,1015 @@
+Food Code,Food Name,Rasa,Guna (Physical),Guna (Mental),Virya,Vipaka,Prabhava,Vata Effect,Pitta Effect,Kapha Effect
+ASC001,Hot tea (Garam Chai),katu,laghu/snigdha,rajovardhan,ushna,katu,stimulant,increase,increase,decrease
+ASC002,Instant coffee,katu,laghu/ushna,rajovardhan,ushna,katu,energizing,increase,increase,decrease
+ASC003,Espresso coffee,katu,laghu/ushna,rajovardhan,ushna,katu,intense stimulant,increase,increase,decrease
+ASC004,Iced tea,katu,laghu/sheeta,tamovardhan,sheeta,amla,cooling refreshing,neutral,decrease,neutral
+ASC005,Raw mango drink (Aam panna),amla,guru/snigdha,rajovardhan,ushna,amla,digestive aid cooling,decrease,increase,increase
+ASC006,Fruit Punch (with fresh juices),madhura,guru/snigdha,sattvavardhan,sheeta,madhura,nourishing tonic,decrease,decrease,increase
+ASC007,Fruit Punch (with squashes),madhura,guru/snigdha,sattvavardhan,sheeta,madhura,sweet tonic,decrease,decrease,increase
+ASC008,Lemonade,amla,laghu/ruksha,rajovardhan,sheeta,amla,digestive detoxifying,decrease,decrease,increase
+ASC009,Lem-o-gin,amla/katu,laghu/ushna,rajovardhan,ushna,amla,detoxifying warming,increase,neutral,decrease
+ASC010,Cumin infused water (Jeere ka pani),katu,laghu/ushna,sattvavardhan,ushna,katu,digestive stimulant,increase,neutral,decrease
+ASC011,Coco pine cooler,madhura,snigdha/sheeta,sattvavardhan,sheeta,madhura,cooling hydrating,decrease,decrease,increase
+ASC012,Summer cooler,madhura,snigdha/sheeta,sattvavardhan,sheeta,madhura,refreshing cooling,decrease,decrease,increase
+ASC014,Hot cocoa,madhura,guru/snigdha,sattvavardhan,ushna,madhura,comforting warming,neutral,neutral,increase
+ASC015,Cold coffee with ice cream,madhura,snigdha/sheeta,rajovardhan,sheeta,madhura,energizing cooling,neutral,decrease,increase
+ASC016,Banana milkshake (Kele milkshake),madhura,guru/snigdha,sattvavardhan,sheeta,madhura,nourishing grounding,decrease,decrease,increase
+ASC017,Mango milkshake (Aam milkshake),madhura,guru/snigdha,sattvavardhan,sheeta,madhura,cooling sweet tonic,decrease,neutral,increase
+ASC018,Pineapple milkshake (Ananas milkshake),amla,guru/snigdha,rajovardhan,sheeta,amla,digestive sweet-sour,decrease,increase,increase
+ASC019,Orange milkshake (Narangi milkshake),amla/madhura,guru/snigdha,sattvavardhan,sheeta,amla,refreshing digestive,decrease,neutral,increase
+ASC020,Egg nog,madhura,guru/snigdha,tamovardhan,sheeta,madhura,nourishing heavy,decrease,decrease,increase
+ASC021,Sweet Lassi (Meethi lassi),madhura,guru/snigdha,sattvavardhan,sheeta,madhura,cooling digestive,decrease,decrease,increase
+ASC022,Lassi (salted),lavana,laghu/snigdha,sattvavardhan,sheeta,amla,digestive tonic,decrease,neutral,increase
+ASC023,Cheese and chilli sandwich,katu/madhura,guru/snigdha,rajovardhan,ushna,katu,stimulating snack,increase,increase,decrease
+ASC024,Egg sandwich (Ande ka sandwich),madhura,guru/snigdha,tamovardhan,ushna,madhura,protein rich,neutral,neutral,increase
+ASC025,Cucumber sandwich (Kheere ka sandwich),tikta,laghu/sheeta,sattvavardhan,sheeta,madhura,cooling snack,decrease,decrease,neutral
+ASC026,Cheese and pineapple sandwich,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,sweet and tangy,decrease,neutral,increase
+ASC027,Cheese and tomato sandwich,amla/madhura,laghu/snigdha,sattvavardhan,sheeta,amla,light nourishing,decrease,decrease,neutral
+ASC028,Chicken sandwich,katu,laghu/ushna,rajovardhan,ushna,katu,protein energizing,increase,increase,decrease
+ASC029,Peanut and tomato sandwich,madhura/katu,guru/snigdha,rajovardhan,ushna,katu,nutty tasty,increase,neutral,increase
+ASC030,Rainbow sandwich,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,variety snack,decrease,decrease,increase
+ASC031,Club sandwich,katu/madhura,guru/snigdha,rajovardhan,ushna,katu,hearty snack,increase,neutral,decrease
+ASC032,Vegetarian club sandwich,katu/madhura,guru/snigdha,sattvavardhan,sheeta,katu,balanced snack,neutral,decrease,increase
+ASC033,Pin wheel sandwich,madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,light appetizer,decrease,decrease,increase
+ASC034,Carrot apple sandwich,madhura,laghu/snigdha,sattvavardhan,sheeta,amla,sweet healthy,decrease,neutral,increase
+ASC035,Salami sandwich,katu,guru/ushna,rajovardhan,ushna,katu,spicy protein,increase,increase,decrease
+ASC036,Vegetable and mayonnaise sandwich,madhura,snigdha/sheeta,sattvavardhan,sheeta,madhura,creamy veggie,neutral,decrease,increase
+ASC037,Egg and tomato sandwich,amla/madhura,guru/snigdha,tamovardhan,ushna,madhura,balanced protein,neutral,neutral,increase
+ASC038,Sweet open sandwich,madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,dessert style,decrease,decrease,increase
+ASC039,Mushroom and cheese sandwich,tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,umami snack,decrease,decrease,neutral
+ASC040,Cheese and tomato sandwich (toasted),amla/madhura,ugru/snigdha,sattvavardhan,ushna,amla,warm light snack,neutral,decrease,increase
+ASC041,Pea potato sandwich (toasted),madhura/katu,laghu/snigdha,sattvavardhan,sheeta,madhura/katu,light nourishing,decrease,neutral,increase
+ASC042,Paneer pea sandwich (toasted),madhura,guru/snigdha,sattvavardhan,sheeta,madhura,protein rich,decrease,neutral,increase
+ASC043,Chicken sandwich (toasted),katu,laghu/ushna,rajovardhan,ushna,katu,protein energizing,increase,increase,decrease
+ASC044,Pea keema sandwich (toasted),madhura/katu,laghu/snigdha,rajovardhan,ushna,katu,energizing snack,increase,neutral,increase
+ASC045,Classic club sandwich,madhura/katu,guru/snigdha,rajovardhan,ushna,katu,hearty snack,increase,neutral,decrease
+ASC046,Sesame toast,madhura/katu,guru/snigdha,sattvavardhan,ushna,katu,nutty crisp,decrease,neutral,increase
+ASC047,Cracked wheat porridge,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,nourishing breakfast,decrease,decrease,increase
+ASC048,Semolina porridge,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,comforting breakfast,decrease,decrease,increase
+ASC050,Oatmeal Porridge,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,filling breakfast,decrease,neutral,increase
+ASC051,Cornflakes with milk,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,easy breakfast,decrease,neutral,increase
+ASC052,Rice flakes,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,light breakfast,decrease,neutral,increase
+ASC053,Wheat flakes,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,nutritional flakes,decrease,neutral,increase
+ASC054,Murmura (Puffed rice),madhura,laghu/ruksha,sattvavardhan,sheeta,madhura,light crunchy,decrease,neutral,increase
+ASC055,Puffed wheat,madhura,laghu/ruksha,sattvavardhan,sheeta,madhura,light crunchy,decrease,neutral,increase
+ASC056,Boiled egg,madhura,guru/snigdha,rajovardhan,ushna,madhura,protein rich,neutral,neutral,increase
+ASC057,Fried Egg,madhura/katu,guru/ushna,rajovardhan,ushna,katu,energizing protein,increase,increase,decrease
+ASC058,Poached egg,madhura,guru/snigdha,rajovardhan,sheeta,madhura,light protein,neutral,neutral,increase
+ASC059,Scrambled egg,madhura/katu,guru/snigdha,rajovardhan,ushna,katu,protein rich energizing,increase,increase,decrease
+ASC060,Baked egg,madhura,guru/snigdha,rajovardhan,sheeta,madhura,light protein,neutral,neutral,increase
+ASC061,Plain omelette/omlet,madhura,guru/snigdha,tamovardhan,sheeta,madhura,light protein,neutral,decrease,increase
+ASC062,Stuffed egg omelette/omlet,madhura/katu,guru/snigdha,rajovardhan,ushna,katu,protein rich energizing,increase,increase,decrease
+ASC063,Pancake,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,light sweet,decrease,neutral,increase
+ASC064,Keema pancake,katu,laghu/ushna,rajovardhan,ushna,katu,protein heavy,increase,increase,decrease
+ASC065,Vegetable pancake,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,light savory,decrease,decrease,increase
+ASC066,Jam and fruit pancake,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,sweet energizing,decrease,neutral,increase
+ASC067,Khoa and coconut pancake,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,sweet nourishing,decrease,neutral,increase
+ASC068,Brown stock,katu,laghu/ushna,rajovardhan,ushna,katu,digestive stimulant,increase,increase,decrease
+ASC069,Vegetable stock,tikta,laghu/sheeta,sattvavardhan,sheeta,madhura,light nourishing,decrease,decrease,increase
+ASC070,Chicken stock,katu,laghu/ushna,rajovardhan,ushna,katu,protein stimulant,increase,increase,decrease
+ASC079,Clear tomato soup (Tamatar ka soup),amla/katu,laghu/ushna,sattvavardhan,sheeta,amla,light detoxifying,decrease,increase,decrease
+ASC080,Lentil soup,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,nourishing,decrease,neutral,increase
+ASC081,Chicken consomme (Clear chicken soup),katu,laghu/ushna,rajovardhan,ushna,katu,light protein,increase,increase,decrease
+ASC082,Cream of tomato soup,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,light nourishing,decrease,neutral,increase
+ASC083,Cream of green peas soup,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,light nourishing,decrease,neutral,increase
+ASC084,Cream of spinach soup,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura,light nourishing,decrease,neutral,increase
+ASC085,Cream of mixed vegetable soup,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,light nourishing,decrease,neutral,increase
+ASC086,Cream of mushroom soup,tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,light nourishing,decrease,neutral,increase
+ASC087,Chicken sweet corn soup,katu,laghu/ushna,rajovardhan,ushna,katu,light protein,increase,increase,decrease
+ASC088,Minestrone soup,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,light nourishing,decrease,neutral,increase
+ASC089,Egg drop soup,madhura/katu,guru/snigdha,tamovardhan,sheeta,madhura,light protein,decrease,neutral,increase
+ASC090,Chinese cabbage and meat ball soup,katu/madhura,laghu/snigdha,rajovardhan,sheeta,madhura,light protein,decrease,neutral,increase
+ASC091,French onion soup,amla/katu,laghu/snigdha,sattvavardhan,sheeta,amla,digestive tonic,decrease,increase,decrease
+ASC092,Hot and sour soup,katu/amla,laghu/ushna,rajovardhan,ushna,amla,digestive stimulant,increase,increase,decrease
+ASC093,Talaumein soup,madhura/katu,laghu/snigdha,sattvavardhan,sheeta,madhura,light nourishing,decrease,neutral,increase
+ASC094,Cold cucumber soup (Thanda kheere ka soup),sheeta/tikta,laghu/sheeta,sattvavardhan,sheeta,sheeta,cooling tonic,decrease,decrease,neutral
+ASC095,Cold summer garden soup,madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,refreshing tonic,decrease,neutral,increase
+ASC096,Chapati/Roti,madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,energy food,decrease,neutral,increase
+ASC097,Plain parantha/paratha,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,hearty food,decrease,neutral,increase
+ASC098,Potato parantha/paratha (Aloo ka parantha/paratha),madhura/katu,guru/snigdha,rajovardhan,ushna,katu,hearty snack,increase,neutral,decrease
+ASC099,Radish parantha/paratha (Mooli ka parantha/paratha),tikta,laghu/sheeta,sattvavardhan,sheeta,sheeta,light snack,decrease,decrease,neutral
+ASC100,Cauliflower parantha/paratha (Phoolgobhi ka parantha/paratha),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,nutritious snack,decrease,neutral,increase
+ASC101,Dal parantha/paratha,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,nourishing food,decrease,neutral,increase
+ASC102,Sprouted moong parantha/paratha,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,protein rich,decrease,neutral,increase
+ASC103,Pea parantha/paratha (Matar ka parantha/paratha),madhura/katu,laghu/snigdha,sattvavardhan,sheeta,madhura/katu,light nourishing,decrease,neutral,increase
+ASC104,Keema parantha/paratha,katu,laghu/ushna,rajovardhan,ushna,katu,protein snack,increase,increase,decrease
+ASC105,Paneer parantha/paratha,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,hearty snack,decrease,neutral,increase
+ASC106,Besan and spinach parantha/paratha,tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,nutritious food,decrease,neutral,increase
+ASC107,Poori,madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,light fried bread,decrease,neutral,increase
+ASC108,Spinach poori (Palak poori),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,nutritious fried bread,decrease,neutral,increase
+ASC109,Methi poori,tikta,laghu/snigdha,sattvavardhan,sheeta,sheeta,light fried bread,decrease,neutral,neutral
+ASC110,Dal stuffed poori,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,protein rich bread,decrease,neutral,increase
+ASC111,Potato stuffed poori (Aloo ki poori),madhura/katu,guru/snigdha,rajovardhan,ushna,katu,hearty stuffed bread,increase,neutral,decrease
+ASC112,Tandoori parantha/paratha,madhura/katu,guru/ushna,rajovardhan,ushna,katu,spicy stuffed bread,increase,increase,decrease
+ASC113,Boiled rice (Uble chawal),madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,light staple food,decrease,neutral,increase
+ASC114,Plain pulao,madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,simple staple food,decrease,neutral,increase
+ASC115,Mixed vegetable pulao,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,nutritious staple food,decrease,neutral,increase
+ASC116,Mushroom pulao,tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,savory staple food,decrease,neutral,increase
+ASC117,Sprouted moong pulao,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,protein rich pulao,decrease,neutral,increase
+ASC118,Paneer pulao,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,rich protein pulao,decrease,neutral,increase
+ASC119,Peanut pulao,madhura/katu,guru/snigdha,sattvavardhan,sheeta,katu,nutty pulao,decrease,neutral,increase
+ASC120,Navratan pulao,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,nutritious staple,decrease,neutral,increase
+ASC121,Green chickpeas pulao (Choliya pulao/Hare chane ka pulao),madhura,guru/snigdha,sattvavardhan,sheeta,madhura,protein rich,decrease,neutral,increase
+ASC122,Mutton biryani/biriyani,katu,laghu/ushna,rajovardhan,ushna,katu,hearty protein,increase,increase,decrease
+ASC123,Vegetable biryani/biriyani,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,balanced nourishing,decrease,neutral,increase
+ASC124,"Lemon rice (Pulihora, Elumichai sadam, Chitranna)",amla/katu,laghu/snigdha,rajovardhan,sheeta,amla/katu,refreshing detox,decrease,increase,decrease
+ASC125,Sweet rice (Meethe chawal),madhura,guru/snigdha,sattvavardhan,sheeta,madhura,sweet nutritious,decrease,neutral,increase
+ASC126,Curd rice (Dahi bhaat/Dahi chawal/ Perugu annam/Daddojanam/Thayir saadam),amla/madhura,guru/snigdha,sattvavardhan,sheeta,amla/madhura,cooling digestive,decrease,neutral,increase
+ASC127,Tamarind rice (Chintapandu pulihora/Puliyodharai/Puli sadam/Huli anna),amla/katu,laghu/snigdha,rajovardhan,sheeta,amla/katu,digestive aid,decrease,increase,decrease
+ASC128,Spanish rice,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,sweet staple,decrease,neutral,increase
+ASC129,Chinese fried rice,madhura/katu,guru/snigdha,rajovardhan,ushna,katu,savory fried rice,increase,increase,decrease
+ASC133,Macroni cheese pie,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,cheesy filling,decrease,neutral,increase
+ASC134,Vegetable chowmein,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,savory snack,decrease,neutral,increase
+ASC135,Chicken chowmein,katu,laghu/ushna,rajovardhan,ushna,katu,spicy protein,increase,increase,decrease
+ASC136,Cheese noodle ring,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,rich cheesy,decrease,neutral,increase
+ASC137,Spaghetti and cheese balls in tomato sauce,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,hearty pasta,decrease,neutral,increase
+ASC138,Penne platter,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,variety pasta,decrease,neutral,increase
+ASC139,Pasta hot pot,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,comforting pasta,decrease,neutral,increase
+ASC140,Chicken lasagne,katu,laghu/ushna,rajovardhan,ushna,katu,protein rich pasta,increase,increase,decrease
+ASC141,Fettuccine with spinach sauce,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura,light pasta,decrease,neutral,increase
+ASC142,Naan,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,staple bread,decrease,neutral,increase
+ASC143,Bhatura,madhura/katu,guru/ushna,rajovardhan,ushna,katu,fried bread,increase,increase,decrease
+ASC144,Idli,madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,light staple,decrease,neutral,increase
+ASC146,Masala dosa,katu,laghu/ushna,rajovardhan,ushna,katu,spicy staple,increase,increase,decrease
+ASC147,Semolina dosa (Suji/Rava dosa),madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,light staple,decrease,neutral,increase
+ASC148,Onion tomato uttapam,katu/madhura,laghu/snigdha,rajovardhan,sheeta,katu,savory snack,increase,neutral,decrease
+ASC149,Paneer kaathi roll,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,spiced snack,decrease,neutral,increase
+ASC150,Makki ki roti,madhura/katu,guru/snigdha,rajovardhan,sheeta,katu,corn bread,increase,neutral,decrease
+ASC151,Washed moong dal (Dhuli moong ki dal),madhura,guru/snigdha,sattvavardhan,sheeta,madhura,protein rich dal,decrease,neutral,increase
+ASC152,Washed urad dal (Dhuli urad ki dal),madhura,guru/snigdha,sattvavardhan,sheeta,madhura,protein rich dal,decrease,neutral,increase
+ASC153,Split bengal gram with bottle gourd (Channa dal with ghiya/lauki),madhura/katu,guru/snigdha,rajovardhan,sheeta,madhura/katu,hearty dal,increase,neutral,decrease
+ASC154,Dry washed urad,madhura,guru/snigdha,sattvavardhan,sheeta,katu,light dal,decrease,neutral,increase
+ASC155,Mixed dal,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,balanced dal,decrease,neutral,increase
+ASC156,Whole moong (Moong ki dal),madhura,guru/snigdha,sattvavardhan,sheeta,madhura,nutritious dal,decrease,neutral,increase
+ASC157,Whole masoor (Masoor ki dal),madhura/katu,guru/snigdha,rajovardhan,sheeta,katu,hearty dal,increase,neutral,decrease
+ASC158,Whole moth (Moth ki dal),madhura,guru/snigdha,sattvavardhan,sheeta,madhura,nutritious dal,decrease,neutral,increase
+ASC159,Whole urad (Urad ki dal),madhura,guru/snigdha,sattvavardhan,sheeta,madhura,protein rich dal,decrease,neutral,increase
+ASC160,Moti mahal dal (Urad rajmah mix dal),madhura/katu,guru/snigdha,sattvavardhan,sheeta,katu,hearty dal,increase,neutral,decrease
+ASC161,Black channa curry/Bengal gram curry (Kale chane ki curry),madhura/katu,guru/snigdha,rajovardhan,sheeta,katu,hearty curry,increase,neutral,decrease
+ASC162,Chickpeas curry (Safed channa curry),madhura,guru/snigdha,sattvavardhan,sheeta,madhura,protein rich curry,decrease,neutral,increase
+ASC163,Lobia curry,madhura/katu,guru/snigdha,rajovardhan,sheeta,katu,hearty curry,increase,neutral,decrease
+ASC164,Soyabean curry,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,nutritious curry,decrease,neutral,increase
+ASC165,Kidney bean curry (Rajmah curry),madhura/katu,guru/snigdha,rajovardhan,sheeta,katu,hearty curry,increase,neutral,decrease
+ASC167,Sambar,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,thick lentil curry,decrease,neutral,increase
+ASC168,Besan kadhi with pakodies,madhura/katu,guru/snigdha,rajovardhan,sheeta,katu,spicy lentil curry,increase,neutral,decrease
+ASC169,Khatta channa,amla/katu,laghu/snigdha,rajovardhan,sheeta,amla/katu,sour curry,decrease,increase,decrease
+ASC170,Sprouted moong dal chat,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,light protein snack,decrease,neutral,increase
+ASC171,Potato cauliflower (Aloo gobhi),madhura/tikta,guru/snigdha,sattvavardhan,sheeta,madhura,nutritious veg,decrease,neutral,increase
+ASC172,Potato capsicum (Shimla mirch aloo),madhura/katu,guru/snigdha,rajovardhan,ushna,katu,spicy snack,increase,increase,decrease
+ASC173,Cabbage and peas (Pattagobhi aur matar),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,light veg,decrease,neutral,increase
+ASC174,Carrot and fenugreek leaves (Gajar methi),tikta/madhura,laghu/ruksha,sattvavardhan,sheeta,madhura,nutritious combo,decrease,neutral,increase
+ASC175,Potato fenugreek (Aloo methi),madhura/tikta,laghu/snigdha,sattvavardhan,sheeta,madhura,nutritious combo,decrease,neutral,increase
+ASC177,Brinjal bhartha (Baingan ka bhartha),tikta/katu,laghu/ruksha,sattvavardhan,ushna,katu,spicy veg,increase,increase,decrease
+ASC178,Dry potato (Sookhe aloo),madhura,laghu/ruksha,sattvavardhan,sheeta,madhura,light veg,decrease,neutral,increase
+ASC179,Beans with coconut (Nariyal aur sem/phali; Beans thoran),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,nutritious beans,decrease,neutral,increase
+ASC180,Cauliflower with coconut (Nariyal ke saath phoolgobhi),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,nutritious veg,decrease,neutral,increase
+ASC181,Carrot and cabbage with coconut,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,nutritious combo,decrease,neutral,increase
+ASC182,Raw turnip with coconut,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,nutritious combo,decrease,neutral,increase
+ASC183,Raw papaya with coconut (Papaya thoran),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,nutritious combo,decrease,neutral,increase
+ASC184,Stuffed okra (Bharwa bhindi),tikta/katu,laghu/snigdha,rajovardhan,ushna,katu,spicy veg,increase,increase,decrease
+ASC185,Stuffed round gourd (Bharwa tinde),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,light veg,decrease,neutral,increase
+ASC186,Stuffed capsicum (Bharwa shimla mirch),tikta/katu,laghu/snigdha,rajovardhan,ushna,katu,spicy veg,increase,increase,decrease
+ASC187,Stuffed brinjal (Bharwa baingan),tikta/katu,laghu/snigdha,rajovardhan,ushna,katu,spicy veg,increase,increase,decrease
+ASC189,Stuffed tomatoes (Bharwa tamatar),amla/katu,laghu/snigdha,rajovardhan,sheeta,amla,spicy filling,decrease,increase,decrease
+ASC190,Pea potato curry (Aloo matar),madhura/katu,guru/snigdha,rajovardhan,sheeta,madhura,nutritious curry,decrease,neutral,increase
+ASC191,Pea paneer curry (Matar paneer),madhura,guru/snigdha,sattvavardhan,sheeta,madhura,protein curry,decrease,neutral,increase
+ASC192,Pea mushroom curry (Matar mushroom),tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,nutritious curry,decrease,neutral,increase
+ASC193,Pea curry (Matar ki sabzi),madhura/katu,guru/snigdha,rajovardhan,sheeta,madhura,nutritious veg,decrease,neutral,increase
+ASC194,Pea vadi curry,madhura/katu,guru/snigdha,rajovardhan,ushna,katu,hearty curry,increase,neutral,decrease
+ASC195,Paneer curry,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,protein rich,decrease,neutral,increase
+ASC196,Lotus stem curry (Kamal kakdi curry),tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,fibrous veg,decrease,neutral,increase
+ASC197,Gravy for kofta,madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,light gravy,decrease,neutral,increase
+ASC198,Pea kofta curry (Matar kofta curry),madhura/katu,guru/snigdha,rajovardhan,ushna,katu,hearty curry,increase,neutral,decrease
+ASC199,Spinach kofta curry (Palak kofta curry),tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,green veg curry,decrease,neutral,increase
+ASC200,Paneer kofta curry,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,hearty protein curry,decrease,neutral,increase
+ASC201,Lotus stem kofta curry (Kamal kakdi kofta curry),tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,fibrous curry,decrease,neutral,increase
+ASC202,Raw banana kofta curry (Kela kofta curry),madhura,guru/snigdha,sattvavardhan,sheeta,madhura,fibrous curry,decrease,neutral,increase
+ASC203,Cauliflower kofta curry (Phoolgobhi kofta curry),tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,fibrous curry,decrease,neutral,increase
+ASC204,Cabbage kofta curry (Pattagobhi kofta curry),tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,fibrous curry,decrease,neutral,increase
+ASC205,Ghiya/Lauki Kofta Curry,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,fibrous curry,decrease,neutral,increase
+ASC206,Spinach paneer kofta curry (Palak paneer kofta curry),tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,green protein curry,decrease,neutral,increase
+ASC207,Vegetarian egg kofta curry,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,protein veg curry,decrease,neutral,increase
+ASC208,Baked vegetables,madhura/tikta,laghu/snigdha,sattvavardhan,sheeta,madhura,healthy veg,decrease,neutral,increase
+ASC209,Cauliflower musallam (Phoolgobhi musallam),tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,green veg,decrease,neutral,increase
+ASC210,Baked vegetables with spinach,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,healthy mix,decrease,neutral,increase
+ASC211,Baked potato with skin,madhura/katu,laghu/ruksha,sattvavardhan,sheeta,madhura,hearty veg,decrease,neutral,increase
+ASC212,Shepherd's pie (vegetarian),madhura,guru/snigdha,sattvavardhan,sheeta,madhura,hearty veg pie,decrease,neutral,increase
+ASC213,Baked brinjal in tomato sauce,amla/katu,laghu/snigdha,rajovardhan,sheeta,amla,spicy bake,decrease,increase,decrease
+ASC214,Dum aloo,madhura/katu,guru/snigdha,rajovardhan,ushna,katu,hearty veg,increase,neutral,decrease
+ASC215,Spinach paneer (Palak paneer),tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,nutritious combo,decrease,neutral,increase
+ASC216,Methi chaman,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,nutritious paneer,decrease,neutral,increase
+ASC217,Sarson ka saag,tikta/katu,laghu/ruksha,sattvavardhan,ushna,katu,spicy greens,increase,increase,decrease
+ASC218,Jackfruit sabzi (Kathal ki sabzi),madhura/katu,guru/snigdha,rajovardhan,sheeta,madhura,fibrous veg,decrease,neutral,increase
+ASC219,Avial,madhura/tikta,laghu/snigdha,sattvavardhan,sheeta,madhura,mixed veg curry,decrease,neutral,increase
+ASC220,Al yakhani,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,hearty curry,decrease,neutral,increase
+ASC221,Shahi paneer,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,rich protein,decrease,neutral,increase
+ASC222,Paneer in butter sauce,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,rich fat protein,decrease,neutral,increase
+ASC223,Methi malai paneer,tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,fatty paneer,decrease,neutral,increase
+ASC224,Chilli paneer,katu/madhura,laghu/snigdha,rajovardhan,ushna,katu,spicy paneer,increase,increase,decrease
+ASC225,Paneer makhana korma,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,hearty curry,decrease,neutral,increase
+ASC226,Kadhai Paneer,katu/madhura,laghu/snigdha,rajovardhan,ushna,katu,spicy curry,increase,increase,decrease
+ASC227,Roghan josh,katu,laghu/ushna,rajovardhan,ushna,katu,spicy mutton,increase,increase,decrease
+ASC228,Spinach mutton (Palak mutton),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy protein,increase,increase,decrease
+ASC229,Pea keema curry (Matar keema ki sabzi),katu/madhura,laghu/ushna,rajovardhan,ushna,katu,spicy protein,increase,increase,decrease
+ASC230,Keema kofta curry,katu,laghu/ushna,rajovardhan,ushna,katu,protein curry,increase,increase,decrease
+ASC231,Kashmiri mutton koftas (Gushtaba),madhura/katu,guru/ushna,rajovardhan,ushna,katu,protein kofta,increase,increase,decrease
+ASC232,Mutton yakhni,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,hearty mutton,decrease,neutral,increase
+ASC233,Chicken yakhni,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,hearty protein,decrease,neutral,increase
+ASC234,Mutton do piaza,madhura/katu,laghu/ushna,rajovardhan,ushna,katu,spicy protein,increase,increase,decrease
+ASC236,Mutton chops,katu,laghu/ushna,rajovardhan,ushna,katu,hearty chops,increase,increase,decrease
+ASC237,Shammi kebab,katu/madhura,laghu/ushna,rajovardhan,ushna,katu,protein kebab,increase,increase,decrease
+ASC238,Scotch egg,madhura/katu,guru/snigdha,rajovardhan,ushna,katu,protein egg,increase,increase,decrease
+ASC239,Shepherd's pie (with minced meat),madhura/katu,guru/snigdha,rajovardhan,ushna,katu,protein pie,increase,increase,decrease
+ASC240,Chicken curry,katu,laghu/ushna,rajovardhan,ushna,katu,spicy chicken,increase,increase,decrease
+ASC241,Tandoori chicken,katu,laghu/ushna,rajovardhan,ushna,katu,spicy chicken,increase,increase,decrease
+ASC242,Butter chicken,madhura/katu,guru/snigdha,rajovardhan,ushna,katu,rich spicy chicken,increase,increase,decrease
+ASC243,Chicken kebab,katu,laghu/ushna,rajovardhan,ushna,katu,protein snack,increase,increase,decrease
+ASC244,Chilli chicken,katu,laghu/ushna,rajovardhan,ushna,katu,spicy snack,increase,increase,decrease
+ASC245,Fried chicken with tomato sauce,katu/amla,laghu/ushna,rajovardhan,ushna,amla,spicy protein,increase,increase,decrease
+ASC246,Fish curry (Machli curry),katu,laghu/ushna,rajovardhan,ushna,katu,spicy fish,increase,increase,decrease
+ASC247,Fried fish (Indian style),katu,laghu/ushna,rajovardhan,ushna,katu,protein fish,increase,increase,decrease
+ASC248,Fried fish and Chips (English Style),katu,laghu/ushna,rajovardhan,ushna,katu,spicy protein,increase,increase,decrease
+ASC249,Tomato fish,amla/katu,laghu/snigdha,sattvavardhan,sheeta,amla,digestive protein,decrease,neutral,increase
+ASC250,Baked fish with cheese sauce,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich protein,decrease,neutral,increase
+ASC251,Fish tikka,katu,laghu/ushna,rajovardhan,ushna,katu,spicy protein,increase,increase,decrease
+ASC252,Tandoori fish,katu,laghu/ushna,rajovardhan,ushna,katu,spicy protein,increase,increase,decrease
+ASC253,"Paneer, apple and pineapple salad",madhura,guru/snigdha,sattvavardhan,sheeta,madhura,refreshing salad,decrease,neutral,increase
+ASC254,Russian salad,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,rich salad,decrease,neutral,increase
+ASC255,Pasta salad,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,light salad,decrease,neutral,increase
+ASC256,Deviled egg,madhura/katu,guru/snigdha,rajovardhan,ushna,katu,spicy protein,increase,increase,decrease
+ASC257,Hawain salad,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich salad,decrease,neutral,increase
+ASC258,Mixed pulse and vegetable salad,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,nutritious salad,decrease,neutral,increase
+ASC259,Sprouted moong salad,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,nutritious salad,decrease,neutral,increase
+ASC260,Tossed salad,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,light salad,decrease,neutral,increase
+ASC261,Mixed vegetable salad with curd sauce,madhura/katu,guru/snigdha,sattvavardhan,sheeta,katu,refreshing salad,decrease,neutral,increase
+ASC262,Potato salad (Aloo ka salaad),madhura/katu,guru/snigdha,rajovardhan,sheeta,madhura/katu,light salad,decrease,neutral,increase
+ASC263,Waldroff salad,madhura/katu,guru/snigdha,sattvavardhan,sheeta,katu,rich salad,decrease,neutral,increase
+ASC264,Coleslaw,madhura/katu,guru/snigdha,sattvavardhan,sheeta,katu,rich salad,decrease,neutral,increase
+ASC265,Fruit salad (Phalon ka salaad),madhura,guru/snigdha,sattvavardhan,sheeta,madhura,sweet salad,decrease,neutral,increase
+ASC269,Tomato onion raita (Tamatar aur pyaaz ka raita),amla/katu,laghu/snigdha,rajovardhan,sheeta,amla/katu,light cleansing,decrease,neutral,increase
+ASC270,Peanut raita (Mungfali ka raita),madhura/katu,guru/snigdha,sattvavardhan,sheeta,katu,refreshing raita,decrease,neutral,increase
+ASC271,Sprouted moong raita,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,light raita,decrease,neutral,increase
+ASC272,Bottle gourd raita (Ghiya/Lauki ka raita),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura,cooling raita,decrease,neutral,increase
+ASC273,Cucumber raita (Kheere ka raita),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,refreshing raita,decrease,neutral,increase
+ASC274,Carrot and spinach raita (Gajar aur palak ka raita),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious raita,decrease,neutral,increase
+ASC275,Mint raita (Pudinay ka raita),tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,refreshing raita,decrease,neutral,increase
+ASC276,Potato raita (Aloo ka raita),madhura/katu,guru/snigdha,rajovardhan,sheeta,madhura/katu,light raita,decrease,neutral,increase
+ASC277,Boondi raita,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,light raita,decrease,neutral,increase
+ASC278,Sweet raita (Meetha raita),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet raita,decrease,neutral,increase
+ASC279,Dahi vadas/Dahi bhalla,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,protein snack,decrease,neutral,increase
+ASC280,Gunjia,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet snack,decrease,neutral,increase
+ASC281,Saunth/Sonth chutney with tamarind/imli,tikta/katu,laghu/ushna,sattvavardhan,ushna,katu,spicy chutney,increase,increase,decrease
+ASC282,Rice kheer (Chawal ki kheer),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC283,Makhana kheer,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,light dessert,decrease,neutral,increase
+ASC285,Vermicelli kheer (Semiya/Seviyan ki kheer),madhura,guru/snigdha,sattvavardhan,sheeta,madhura,sweet dessert,decrease,neutral,increase
+ASC286,Semolina kheer (Suji/Rava kheer),madhura,guru/snigdha,sattvavardhan,sheeta,madhura,light dessert,decrease,neutral,increase
+ASC287,Paneer kheer,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,protein dessert,decrease,neutral,increase
+ASC288,Cabbage kheer (Pattagobhi ki kheer),tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,vegetable dessert,decrease,neutral,increase
+ASC289,Carrot kheer (Gajar ki kheer),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet veg dessert,decrease,neutral,increase
+ASC290,Cauliflower kheer (Phoolgobhi ki kheer),tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,vegetable dessert,decrease,neutral,increase
+ASC291,Moong dal kheer,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,protein dessert,decrease,neutral,increase
+ASC292,Phirni,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC293,Semolina halwa (Suji ka halwa),madhura,guru/snigdha,sattvavardhan,sheeta,madhura,sweet dessert,decrease,neutral,increase
+ASC294,Shahi suji halwa,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich dessert,decrease,neutral,increase
+ASC295,Carrot halwa (Gajar ka halwa),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC296,Egg halwa (Ande ka halwa),madhura/katu,guru/snigdha,rajovardhan,sheeta,katu,protein dessert,decrease,neutral,increase
+ASC297,Potato halwa (Aloo ka halwa),madhura/katu,guru/snigdha,sattvavardhan,sheeta,katu,sweet dessert,decrease,neutral,increase
+ASC298,Pumpkin halwa (Kaddu ka halwa),madhura,guru/snigdha,sattvavardhan,sheeta,madhura,sweet dessert,decrease,neutral,increase
+ASC299,Moong dal halwa,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC300,Caramel custard (steamed),madhura,guru/snigdha,sattvavardhan,sheeta,madhura,sweet dessert,decrease,neutral,increase
+ASC301,Baked custard,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC302,Soft Custard (stirred),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC304,Chocolate ice cream,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC305,Mango ice cream,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC307,Fruit Ice cream (Phalon ka Ice cream),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC308,Caramel ice cream,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC309,Lemon souffle,amla/katu,laghu/ushna,rajovardhan,sheeta,amla/katu,light dessert,decrease,increase,decrease
+ASC310,Orange souffle,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,light dessert,decrease,neutral,increase
+ASC311,Vanilla souffle,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,light dessert,decrease,neutral,increase
+ASC312,Chocolate souffle,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC313,Pineapple souffle,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC314,Apple mousse,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC315,Rich chocolate mousse,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich dessert,decrease,neutral,increase
+ASC316,Mango mousse,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC317,Orange and pineapple cream,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich cream,decrease,neutral,increase
+ASC318,Charlotte rousse,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich dessert,decrease,neutral,increase
+ASC319,Triffle pudding,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC320,Snow flakes pudding,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,light dessert,decrease,neutral,increase
+ASC321,Kulfi,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich dessert,decrease,neutral,increase
+ASC322,Steamed orange pudding,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,light dessert,decrease,neutral,increase
+ASC323,Meringue and rice pudding,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,light dessert,decrease,neutral,increase
+ASC324,Cheese pudding,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich dessert,decrease,neutral,increase
+ASC325,Chocolate pudding,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich dessert,decrease,neutral,increase
+ASC326,Bread and butter pudding,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich dessert,decrease,neutral,increase
+ASC327,Queen of pudding,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich dessert,decrease,neutral,increase
+ASC328,Pineapple upside down pudding,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC329,Date and nut pie,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich dessert,decrease,neutral,increase
+ASC330,Stewed apple with custard,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC331,Apple snowballs,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet snack,decrease,neutral,increase
+ASC332,Hot orange souffle,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,warm dessert,decrease,neutral,increase
+ASC333,Hot chocolate souffle,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,warm dessert,decrease,neutral,increase
+ASC334,Hot vanilla souffle,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,warm dessert,decrease,neutral,increase
+ASC335,Plain burfi (Burfi),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC336,Coconut burfi (Nariyal ki burfi),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC337,Bottle gourd burfi (Ghiya/Lauki burfi),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC338,Chocolate burfi,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC339,Cashewnut burfi (Kaju burfi/Kaju katli),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC340,Gram flour burfi (Besan burfi),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC341,Semolina ladoo with khoya (Suji/Rava aur khoye ke ladoo),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC342,Semolina ladoo with coconut (Suji/Rava aur nariyal ke ladoo),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC343,Gram flour ladoo (Besan ladoo),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC344,Sesame ladoo (Til ke ladoo),madhura,guru/snigdha,sattvavardhan,sheeta,madhura,sweet dessert,decrease,neutral,increase
+ASC345,Chenna murki,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet snack,decrease,neutral,increase
+ASC346,Milk cake,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich dessert,decrease,neutral,increase
+ASC347,Ghujia/Lavang latika,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC348,Gulab Jamun with khoya,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich dessert,decrease,neutral,increase
+ASC349,Mal pua,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC350,Shahi tukre,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich dessert,decrease,neutral,increase
+ASC351,Potato pakora/pakoda,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,fried snack,decrease,neutral,increase
+ASC352,Onion pakora/pakoda,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,fried snack,decrease,neutral,increase
+ASC353,Cauliflower pakora/pakoda,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,fried snack,decrease,neutral,increase
+ASC354,Mixed vegetable pakora/pakoda,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,fried snack,decrease,neutral,increase
+ASC355,Spinach pakora/pakoda,tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,fried snack,decrease,neutral,increase
+ASC356,Methi pakora/pakoda,tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,fried snack,decrease,neutral,increase
+ASC357,Egg pakora/pakoda,madhura/katu,guru/snigdha,rajovardhan,ushna,katu,fried protein,increase,increase,decrease
+ASC358,Bread pakora/pakoda,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,fried snack,decrease,neutral,increase
+ASC359,Paneer pakora/pakoda,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,fried snack,decrease,neutral,increase
+ASC360,Potato bonda,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,fried snack,decrease,neutral,increase
+ASC361,Potato samosa,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,fried snack,decrease,neutral,increase
+ASC362,Minced meat samosa,katu,laghu/ushna,rajovardhan,ushna,katu,fried protein,increase,increase,decrease
+ASC363,Paneer and pea samosa,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,fried snack,decrease,neutral,increase
+ASC364,Mathri,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,fried snack,decrease,neutral,increase
+ASC365,Khasta kachori,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,fried snack,decrease,neutral,increase
+ASC366,Vegetable cutlet,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,healthy snack,decrease,neutral,increase
+ASC367,Flattened rice cutlet,madhura/katu,laghu/snigdha,sattvavardhan,sheeta,madhura,nutritious snack,decrease,neutral,increase
+ASC368,Peanut cutlet,madhura/katu,guru/snigdha,sattvavardhan,sheeta,katu,nutty fried snack,decrease,neutral,increase
+ASC369,Fish cutlet,katu,laghu/ushna,rajovardhan,ushna,katu,protein fried snack,increase,increase,decrease
+ASC370,Paneer potato cutlet,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura,nutritious fried snack,decrease,neutral,increase
+ASC371,Spinach chickpeas cutlet,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,healthy snack,decrease,neutral,increase
+ASC372,Cheese toast,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/kapha,creamy snack,decrease,neutral,increase
+ASC375,Vegetable burger,tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,healthy snack,decrease,neutral,increase
+ASC376,Cheese pizza,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/kapha,rich cheesy snack,decrease,neutral,increase
+ASC377,Vegetable seekh kebab,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,healthy spicy snack,decrease,neutral,increase
+ASC378,Masala vada,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,spicy fried snack,decrease,neutral,increase
+ASC379,Peanut sago vada,madhura/katu,guru/snigdha,sattvavardhan,sheeta,katu,nutty fried snack,decrease,neutral,increase
+ASC380,Vegeterian scotch egg,madhura/katu,guru/snigdha,rajovardhan,sheeta,katu,protein fried snack,decrease,neutral,increase
+ASC381,Paneer shaslik/tikka,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/spicy,protein snack,decrease,increase,increase
+ASC382,Peanut brittle,madhura/katu,guru/snigdha,sattvavardhan,sheeta,katu,nutty sweet snack,decrease,neutral,increase
+ASC383,Spring roll,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,crispy snack,decrease,neutral,increase
+ASC384,Dry mango chutney,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy chutney,increase,increase,decrease
+ASC385,Peanut chutney,madhura/katu,guru/snigdha,sattvavardhan,sheeta,katu,nutty chutney,decrease,neutral,increase
+ASC386,Coconut chutney,madhura,guru/snigdha,sattvavardhan,sheeta,madhura,creamy chutney,decrease,neutral,increase
+ASC387,Mint and coriander chutney,tikta/katu,laghu/snigdha,ushna,sheeta,katu,refreshing spicy,decrease,increase,decrease
+ASC395,Custard tart,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura,kidlit tart,decrease,neutral,increase
+ASC396,Lemon tart,amla/katu,laghu/ushna,rajovardhan,sheeta,amla/katu,refreshing tart,decrease,increase,decrease
+ASC397,Jam tart,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura,kidlit tart,decrease,neutral,increase
+ASC398,Orange cream tart,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura,creamy tart,decrease,neutral,increase
+ASC399,Pineapple tart,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura,sweet tart,decrease,neutral,increase
+ASC400,Cheese and mushroom tart,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura,rich tart,decrease,neutral,increase
+ASC401,Cottage cheese pie,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura,rich pie,decrease,neutral,increase
+ASC402,Minced meat pie,katu,guru/snigdha,rajovardhan,ushna,katu,protein pie,increase,increase,decrease
+ASC403,Apple cinnamon pie,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura,sweet pie,decrease,neutral,increase
+ASC404,Lemon meringue pie,amla/katu,laghu/ushna,rajovardhan,sheeta,amla/katu,refreshing pie,decrease,increase,decrease
+ASC405,Chocolate meringue pie,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura,rich pie,decrease,neutral,increase
+ASC407,Cream puffs,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich dessert,decrease,neutral,increase
+ASC408,Chocolate eclairs,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich dessert,decrease,neutral,increase
+ASC409,Cheese balls,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,fried cheese balls,decrease,neutral,increase
+ASC411,Minced meat patties,katu,laghu/ushna,rajovardhan,ushna,katu,protein fried snack,increase,increase,decrease
+ASC412,Cheese patties,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,fried cheesy snack,decrease,neutral,increase
+ASC413,Hot cheese souffle,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,warm cheesy dessert,decrease,neutral,increase
+ASC414,Hot potato souffle,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,warm light dessert,decrease,neutral,increase
+ASC415,Hot fish souffle,katu,guru/snigdha,rajovardhan,sheeta,katu,warm protein dessert,increase,neutral,decrease
+ASC416,Hot spinach souffle,tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,warm green dessert,decrease,neutral,increase
+ASC417,Plain cream cake,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich cake,decrease,neutral,increase
+ASC418,Apple cake (Seb ka cake),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet cake,decrease,neutral,increase
+ASC419,Marble cake,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich cake,decrease,neutral,increase
+ASC420,Chocolate cake,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich cake,decrease,neutral,increase
+ASC421,Orange cake,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet cake,decrease,neutral,increase
+ASC422,Fruit Loaf,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet bread,decrease,neutral,increase
+ASC423,Banana cake (Kele ka cake),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet cake,decrease,neutral,increase
+ASC424,Chocolate chiffon cake,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet cake,decrease,neutral,increase
+ASC425,Christmas cake,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich festive cake,decrease,neutral,increase
+ASC426,Strawberry and vanilla cake with butter icing,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet cake,decrease,neutral,increase
+ASC427,Eggless cake,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet cake,decrease,neutral,increase
+ASC429,Swiss roll,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet cake,decrease,neutral,increase
+ASC430,Pineapple pastry,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet pastry,decrease,neutral,increase
+ASC431,Black forest pastry,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich pastry,decrease,neutral,increase
+ASC432,Coconut finger,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet pastry,decrease,neutral,increase
+ASC433,Pineapple cake,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet cake,decrease,neutral,increase
+ASC439,Chocolate walnut cookies,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet cookies,decrease,neutral,increase
+ASC440,Chocolate chip cookies,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet cookies,decrease,neutral,increase
+ASC441,Sweet plain biscuit,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet biscuit,decrease,neutral,increase
+ASC442,Chocolate biscuit,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet biscuit,decrease,neutral,increase
+ASC443,Coconut biscuit (Nariyal ke biscuit),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet biscuit,decrease,neutral,increase
+ASC444,Sweet and salty biscuit (Meethay aur namkeen biscuit),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,savory biscuit,decrease,neutral,increase
+ASC445,Peanut biscuit,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutty biscuit,decrease,neutral,increase
+ASC446,Pin wheel biscuit,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet biscuit,decrease,neutral,increase
+ASC447,Saffron biscuit (Kesar biscuit),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,flavored biscuit,decrease,neutral,increase
+ASC448,Masala biscuit,katu,laghu/ushna,rajovardhan,ushna,katu,spicy biscuit,increase,increase,decrease
+ASC449,Ice box cookies,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet biscuit,decrease,neutral,increase
+ASC450,Ginger bread man,katu/tikta,laghu/ushna,rajovardhan,ushna,katu/tikta,spicy biscuit,increase,increase,decrease
+ASC451,Danish cookies,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich biscuit,decrease,neutral,increase
+ASC452,Short bread cookies,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich biscuit,decrease,neutral,increase
+ASC453,Coffee biscuit,tikta/katu,laghu/ushna,rajovardhan,ushna,tikta/katu,caffeinated biscuit,increase,increase,decrease
+ASC454,Melting moments,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,soft biscuit,decrease,neutral,increase
+ASC455,Ginger biscuit (Adarak ke biscuit),katu/tikta,laghu/ushna,rajovardhan,ushna,katu/tikta,spicy biscuit,increase,increase,decrease
+ASC456,Soyabean muthias,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,nutritious snack,decrease,neutral,increase
+ASC457,Soyabean tikki,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,protein snack,decrease,neutral,increase
+ASC458,Soyabean namak paras,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,savory snack,increase,increase,decrease
+ASC459,Peanut burfi (Moongfali ki burfi),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutty dessert,decrease,neutral,increase
+ASC460,Spinach peanut namak paras (Palak moongfali namak paras),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura/tikta,nutritious savory,decrease,neutral,increase
+ASC461,Gram flour and semolina chilla/cheela/savory pancake (Besan suji chilla/cheela),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,protein snack,decrease,neutral,increase
+ASC462,Rice moong dal cheela (Chawal aur moong dal ka cheela),madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,nutritious pancake,decrease,neutral,increase
+ASC463,Split bengal gram sweet rice (Channa dal sweet rice),madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,sweet rice,decrease,neutral,increase
+ASC464,Sweet poori (Meethi poori),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet fried,decrease,neutral,increase
+ASC465,Wheat flour and moong dal burfi (Atta aur moong dal ki burfi),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious dessert,decrease,neutral,increase
+ASC466,Spinach burfi (Palak burfi),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura/tikta,vegetable dessert,decrease,neutral,increase
+ASC467,Sweet split chickpea roti (Sweet channa dal roti/Puranpoli),madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,sweet protein roti,decrease,neutral,increase
+ASC468,Sprouted moong daliya,madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,nutritious cereal,decrease,neutral,increase
+ASC469,Sprouted moong poha,madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,nutritious breakfast,decrease,neutral,increase
+ASC470,Pearl millet ladoo (Bajra ladoo),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious sweet,decrease,neutral,increase
+ASC471,Paushtik ladoo,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,energy sweet,decrease,neutral,increase
+ASC472,Paushtik roti,madhura/katu,laghu/snigdha,sattvavardhan,sheeta,madhura,energy roti,decrease,neutral,increase
+ASC473,Semolina carrot vada (Suji gajar vada),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,savory snack,decrease,neutral,increase
+ASC474,Dhokla,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,protein snack,decrease,neutral,increase
+BFP007,Kashmiri tea (Kehwa),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,refreshing drink,decrease,neutral,increase
+BFP008,Steeped hot coffee,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,caffeinated drink,increase,increase,decrease
+BFP011,Hot chocolate,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet drink,decrease,neutral,increase
+BFP013,Cold coffee (with cream),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,caffeinated milk drink,decrease,neutral,increase
+BFP015,Banana milkshake with ice cream (Kele ka milkshake ice cream ke saath),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet milkshake,decrease,neutral,increase
+BFP019,Flavoured milkshake,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet milkshake,decrease,neutral,increase
+BFP024,Jal jeera,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy drink,increase,increase,decrease
+BFP026,Gingo,tikta/katu,laghu/snigdha,sattvavardhan,sheeta,katu,herbal drink,decrease,neutral,increase
+BFP027,Mintade,tikta/katu,laghu/snigdha,sattvavardhan,sheeta,katu,refreshing drink,decrease,neutral,increase
+BFP029,Canjee,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,light porridge,decrease,neutral,increase
+BFP030,Cauliflower canjee (Phoolgobhi ki canjee),tikta/katu,laghu/snigdha,sattvavardhan,sheeta,katu,vegetable porridge,decrease,neutral,increase
+BFP031,Potato canjee (Aloo canjee),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,vegetable porridge,decrease,neutral,increase
+BFP036,Vermicelli porridge (Semiya/Seviyan porridge),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet porridge,decrease,neutral,increase
+BFP039,Semolina upma (Suji/Rava upma),madhura/katu,laghu/snigdha,sattvavardhan,sheeta,madhura/katu,light breakfast,decrease,neutral,increase
+BFP040,Vermicelli upma (Semiya/Seviyan upma),madhura/katu,laghu/snigdha,sattvavardhan,sheeta,madhura/katu,light breakfast,decrease,neutral,increase
+BFP041,Rice upma,madhura/katu,laghu/snigdha,sattvavardhan,sheeta,madhura/katu,light breakfast,decrease,neutral,increase
+BFP042,Bread upma,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,light breakfast,decrease,neutral,increase
+BFP043,Vegetable upma,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,healthy breakfast,decrease,neutral,increase
+BFP044,Poha,madhura/katu,laghu/snigdha,sattvavardhan,sheeta,madhura/katu,light breakfast,decrease,neutral,increase
+BFP045,Vegetable poha,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,healthy snack,decrease,neutral,increase
+BFP046,Moong dal stuffed cheela/chilla (Moong dal ka cheela/chilla),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein snack,decrease,neutral,increase
+BFP047,Paneer stuffed cheela/chilla,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein snack,decrease,neutral,increase
+BFP052,Indian style egg bhujia (Anda bhujia (Indian style)),katu,laghu/ushna,rajovardhan,ushna,katu,protein snack,increase,increase,decrease
+BFP054,French omelette/omlet,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein snack,decrease,neutral,increase
+BFP055,Puffy omelette/omlet,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein snack,decrease,neutral,increase
+BFP056,Orange omelette/omlet,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein snack,decrease,neutral,increase
+BFP057,Cheese and mushroom omelette/omlet,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein snack,decrease,neutral,increase
+BFP058,Spanish omelette/omlet,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein snack,decrease,neutral,increase
+BFP059,Mixed stock,madhura/katu,guru/snigdha,sattvavardhan,sheeta,neutral,neutral,decrease,neutral,increase
+BFP060,Meat stock,katu,laghu/ushna,rajovardhan,ushna,katu,protein stock,increase,increase,decrease
+BFP062,White stock,madhura/katu,laghu/ushna,sattvavardhan,sheeta,madhura,light stock,decrease,neutral,increase
+BFP065,Meat consomme (with mutton),katu,laghu/ushna,rajovardhan,ushna,katu,protein consommé,increase,increase,decrease
+BFP066,Consomme au julienne,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,light consommé,decrease,neutral,increase
+BFP067,Consomme au vermicelli,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,light consommé,decrease,neutral,increase
+BFP072,Green pea soup (Matar ka soup),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,vegetable soup,decrease,neutral,increase
+BFP073,Spinach soup (Palak ka soup),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,green soup,decrease,neutral,increase
+BFP074,Mixed vegetable soup,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,vegetable soup,decrease,neutral,increase
+BFP075,Cheese soup,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,creamy soup,decrease,neutral,increase
+BFP076,Mulligatawny soup,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy soup,increase,increase,decrease
+BFP079,Cream of carrot soup,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,creamy soup,decrease,neutral,increase
+BFP080,Cream of broccoli soup,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,creamy soup,decrease,neutral,increase
+BFP082,Cream of potato soup,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,creamy soup,decrease,neutral,increase
+BFP087,Almond soup (Badam ka soup),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutty soup,decrease,neutral,increase
+BFP088,Cold cucumber cream soup,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,cooling soup,decrease,neutral,increase
+BFP089,Cold tomato soup,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,cooling soup,decrease,neutral,increase
+BFP090,Chicken stew,katu,guru/snigdha,rajovardhan,ushna,katu,protein stew,increase,neutral,decrease
+BFP091,Veg paneer stew,tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,protein stew,decrease,neutral,increase
+BFP108,Onion-green chilli parantha/paratha (Pyaaz aur hari mirch ka parantha/paratha),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy parantha,increase,increase,decrease
+BFP110,Methi parantha/paratha,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,healthy parantha,increase,increase,decrease
+BFP114,Bathua poori,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,vegetable poori,decrease,neutral,increase
+BFP115,Gram flour poori (Besan poori),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet poori,decrease,neutral,increase
+BFP116,Beetroot poori (Chukandar ki poori),tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,vegetable poori,decrease,neutral,increase
+BFP117,Peas poori (Matar ki poori),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,vegetable poori,decrease,neutral,increase
+BFP118,Peas kachori (Matar kachori),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy snack,increase,increase,decrease
+BFP122,Pizza,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,fast food,decrease,neutral,increase
+BFP124,Bacon and mushroom pancake,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich pancake,decrease,neutral,increase
+BFP125,Cheese and tomato pancake,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich pancake,decrease,neutral,increase
+BFP127,Minced meat pancake (with chicken),katu,guru/snigdha,rajovardhan,ushna,katu,protein pancake,increase,increase,decrease
+BFP132,Eggplant/Brinjal rice (Vangi bhat),tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,vegetable rice,decrease,neutral,increase
+BFP133,Kashmiri 'tahar',madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dish,decrease,neutral,increase
+BFP134,Cumin pulao (Jeera/Zeera pulao),tikta/katu,laghu/snigdha,sattvavardhan,sheeta,katu,spicy rice,decrease,increase,decrease
+BFP136,Peas pulao (Matar pulao),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,vegetable rice,decrease,neutral,increase
+BFP137,Split bengal gram dal and vegetable pulao (Channa dal and vegetable pulao),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,healthy rice,decrease,neutral,increase
+BFP138,Black channa pulao/ Bengal gram pulao (Kale chane ka pulao),tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,healthy rice,decrease,neutral,increase
+BFP141,Mutton pulao,katu,guru/snigdha,rajovardhan,ushna,katu,protein rice,increase,increase,decrease
+BFP142,Chicken pulao,katu,guru/snigdha,rajovardhan,ushna,katu,protein rice,increase,increase,decrease
+BFP143,Mexican rice,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy rice,increase,increase,decrease
+BFP144,Plain khitchdi (Plain khichri/khichdi),madhura/katu,laghu/snigdha,sattvavardhan,sheeta,madhura/katu,light protein meal,decrease,neutral,increase
+BFP147,Instant idli (with semolina),madhura/katu,laghu/snigdha,sattvavardhan,sheeta,madhura/katu,light savory snack,decrease,neutral,increase
+BFP148,Plain dosa,madhura/katu,laghu/snigdha,sattvavardhan,sheeta,madhura/katu,light savory snack,decrease,neutral,increase
+BFP150,Masala dosa mixed vegetable fillings,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy savory snack,increase,increase,decrease
+BFP151,Masala dosa paneer fillings,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy savory snack,increase,increase,decrease
+BFP152,Uttapam,madhura/katu,laghu/snigdha,sattvavardhan,sheeta,madhura/katu,light savory snack,decrease,neutral,increase
+BFP153,Appam,madhura/katu,laghu/snigdha,sattvavardhan,sheeta,madhura/katu,sweet snack,decrease,neutral,increase
+BFP154,Beans and macaroni,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious meal,decrease,neutral,increase
+BFP155,Spaghetti bolognese,katu,laghu/ushna,rajovardhan,ushna,katu,spicy pasta,increase,increase,decrease
+BFP157,Meat and macaroni casserole,katu,laghu/ushna,rajovardhan,ushna,katu,spicy casserole,increase,increase,decrease
+BFP158,Spaghetti with meat balls and tomato sauce,katu,laghu/ushna,rajovardhan,ushna,katu,spicy pasta,increase,increase,decrease
+BFP159,Spaghetti with paneer balls and tomato sauce,madhura/katu,laghu/snigdha,sattvavardhan,sheeta,madhura/katu,protein pasta,decrease,neutral,increase
+BFP161,Lasagne with meat sauce,katu,laghu/ushna,rajovardhan,ushna,katu,protein pasta,increase,increase,decrease
+BFP162,Lasagne with vegetables,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,vegetable pasta,decrease,neutral,increase
+BFP165,Home made egg noodles,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein pasta,decrease,neutral,increase
+BFP170,Sour lentils (Khatti dal),amla/katu,laghu/snigdha,rajovardhan,sheeta,amla/katu,sour dal,decrease,increase,decrease
+BFP171,Urad special dehusked,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,healthy dal,decrease,neutral,increase
+BFP172,Arhar with spinach (Arhar dal aur palak),tikta/katu,laghu/snigdha,sattvavardhan,sheeta,katu,vegetable dal,decrease,neutral,increase
+BFP174,Moong dal with vadi,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,protein dal,decrease,neutral,increase
+BFP176,Rasam with tamarind (Puli rasam/ Chintapandu rasam/ Charu/Saaru),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy sour soup,increase,increase,decrease
+BFP177,Rasam with lemon (Nimmakaya rasam/Nimmakaya charu/Elumichai rasam/Nimbe hannina saaru),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy sour soup,increase,increase,decrease
+BFP178,Green gram whole with baghar (Sabut moong dal with tadka),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,protein dal,decrease,neutral,increase
+BFP179,Urad sabut special,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,healthy dal,decrease,neutral,increase
+BFP185,Kabuli channa curry,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein curry,decrease,neutral,increase
+BFP187,Besan gatte curry,tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,protein curry,decrease,neutral,increase
+BFP190,Dry masala chops,katu,laghu/ushna,rajovardhan,ushna,katu,spicy snack,increase,increase,decrease
+BFP194,Mutton korma,katu,guru/snigdha,rajovardhan,ushna,katu,protein curry,increase,increase,decrease
+BFP196,Shahi keema kofta curry,katu,guru/snigdha,rajovardhan,ushna,katu,protein curry,increase,increase,decrease
+BFP197,Minced meat ball curry,katu,guru/snigdha,rajovardhan,ushna,katu,protein curry,increase,increase,decrease
+BFP198,Boti kebab,katu,laghu/ushna,rajovardhan,ushna,katu,protein snack,increase,increase,decrease
+BFP199,Mutton seekh kebab,katu,laghu/ushna,rajovardhan,ushna,katu,protein snack,increase,increase,decrease
+BFP201,Indian lamb and egg curry (Nargisi kofta),katu,guru/snigdha,rajovardhan,ushna,katu,protein curry,increase,increase,decrease
+BFP203,Soya chunks sweet and sour (Nutrinugget sweet and sour),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein curry,decrease,neutral,increase
+BFP204,Soya chunks korma (Nutrinugget korma),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein curry,decrease,neutral,increase
+BFP205,Mushroom matar,tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,vegetable curry,decrease,neutral,increase
+BFP206,Soya chunks and peas (Nutrinugget matar),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein curry,decrease,neutral,increase
+BFP207,Vegetable yakhni,tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,vegetable curry,decrease,neutral,increase
+BFP208,Spinach mushroom (Palak mushroom),tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,vegetable curry,decrease,neutral,increase
+BFP210,Vegetarian nargisi kofta curry,tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,protein curry,decrease,neutral,increase
+BFP212,Roast chicken,katu,guru/snigdha,rajovardhan,ushna,katu,protein roast,increase,increase,decrease
+BFP214,Shahi chicken masala,katu,guru/snigdha,rajovardhan,ushna,katu,rich protein curry,increase,increase,decrease
+BFP216,Tomato chicken,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy protein curry,increase,increase,decrease
+BFP217,Creamy chicken,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,creamy protein,decrease,neutral,increase
+BFP218,Broccoli chicken ala king,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich creamy protein,decrease,neutral,increase
+BFP220,Ginger chicken,katu,laghu/ushna,rajovardhan,ushna,katu,spicy protein,increase,increase,decrease
+BFP221,Chicken sweet and sour,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet and sour protein,decrease,neutral,increase
+BFP222,Chicken korma,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich protein curry,decrease,neutral,increase
+BFP223,Bengal fish curry (Bengali machli curry),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy fish curry,increase,increase,decrease
+BFP226,Fish finger,katu,laghu/ushna,rajovardhan,ushna,katu,protein fried snack,increase,increase,decrease
+BFP229,Fish in coconut milk (Nariyal ke doodh ke saath machli),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,creamy fish curry,decrease,neutral,increase
+BFP230,Prawn curry (with coconut) (Jhinga curry),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,creamy prawn curry,decrease,neutral,increase
+BFP231,Baked stuffed fish,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich baked fish,decrease,neutral,increase
+BFP232,Fish pie,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich pie,decrease,neutral,increase
+BFP233,Crispy baked fish,katu,laghu/ushna,rajovardhan,ushna,katu,protein fried fish,increase,increase,decrease
+BFP234,Fish souffle,katu,guru/snigdha,rajovardhan,ushna,katu,protein soufflé,increase,neutral,decrease
+BFP239,Potato curry (Aloo ki sabzi),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,vegetable curry,decrease,neutral,increase
+BFP240,Egg curry (Anda curry),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein curry,decrease,neutral,increase
+BFP241,Vegetable curry with coconut,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,vegetable curry,decrease,neutral,increase
+BFP242,Curd with potatoes (Dahi aloo),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein curry,decrease,neutral,increase
+BFP246,Potato kofta curry (Aloo kofta curry),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein curry,decrease,neutral,increase
+BFP249,Yam kofta curry (Zimikand/Suran kofta curry),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein curry,decrease,neutral,increase
+BFP250,Jackfruit kofta curry (Kathal ka kofta curry),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein curry,decrease,neutral,increase
+BFP257,Spinach and potato (Palak aloo),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,vegetable curry,decrease,neutral,increase
+BFP258,Mooli bhujia,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy snack,increase,increase,decrease
+BFP259,Bathua bhujia,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,vegetable snack,decrease,neutral,increase
+BFP261,Cabbage rolls (dry) ((Pattagobhi rolls) (dry)),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,vegetable snack,decrease,neutral,increase
+BFP262,Cabbage rolls (curry) ((Pattagobhi rolls)(curry)),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,vegetable curry,decrease,neutral,increase
+BFP263,Dry arbi (Sookhi arbi),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy snack,increase,increase,decrease
+BFP264,Masala arbi,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy snack,increase,increase,decrease
+BFP266,Peas brinjal bhartha (Matar baingan bhartha),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,vegetable snack,decrease,neutral,increase
+BFP269,Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy snack,increase,increase,decrease
+BFP270,Crispy okra/Crispy lady's fingers (Karare bhindi),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy snack,increase,increase,decrease
+BFP272,Beans foogath,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,vegetable snack,decrease,neutral,increase
+BFP273,Stuffed bittergourd (wet) (Bharwa karele),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy vegetable snack,increase,increase,decrease
+BFP274,Jackfruit/Kathal (dry),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,vegetable snack,decrease,neutral,increase
+BFP275,Yam fried (Zimikand/Suran fried),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,vegetable snack,decrease,neutral,increase
+BFP276,"Cauliflower, pea and potato bhujia (Phoolgobhi, matar aur aloo bhujia)",tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,vegetable snack,decrease,neutral,increase
+BFP277,Vegetable jalfrezi,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,spicy vegetable dish,decrease,neutral,increase
+BFP278,Vegetables stir fry,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,vegetable dish,decrease,neutral,increase
+BFP279,Broccoli delight,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura,vegetable dish,decrease,neutral,increase
+BFP280,Dhansak (vegetarian),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy vegetable curry,increase,increase,decrease
+BFP282,Cauliflower basket,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,vegetable dish,decrease,neutral,increase
+BFP284,Stuffed bottle gourd (Stuffed ghiya/lauki),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,vegetable dish,decrease,neutral,increase
+BFP286,Ducheese potato,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich potato dish,decrease,neutral,increase
+BFP287,Roast potatoes,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,roasted potato dish,decrease,neutral,increase
+BFP288,Stuffed baked potatoes,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,stuffed potato dish,decrease,neutral,increase
+BFP289,Potato nests,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,potato snack,decrease,neutral,increase
+BFP290,Parsley potato,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,herbed potato dish,decrease,neutral,increase
+BFP291,Creamed spinach and mushroom,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,creamy vegetable dish,decrease,neutral,increase
+BFP292,Fricassee of Mushroom,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,creamy vegetable dish,decrease,neutral,increase
+BFP293,Cauliflower au gratin,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,creamy vegetable dish,decrease,neutral,increase
+BFP294,Vegetable and cheese pie,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich vegetable pie,decrease,neutral,increase
+BFP296,Spinach souffle,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,creamy vegetable dish,decrease,neutral,increase
+BFP299,Beetroot and egg salad (Chukandar aur ande ka salad),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein salad,decrease,neutral,increase
+BFP300,Sour cream potato salad,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,creamy potato salad,decrease,neutral,increase
+BFP301,Tossed green salad,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,healthy salad,decrease,neutral,increase
+BFP302,Spring basket salad,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein salad,decrease,neutral,increase
+BFP303,Cucumber and yogurt salad (Kheere aur dahi ka salad),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,healthy salad,decrease,neutral,increase
+BFP305,Chicken and tomato towers,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein dish,decrease,neutral,increase
+BFP306,Jellied sunshine fruit salad,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,fruit salad,decrease,neutral,increase
+BFP307,Tomato aspic,tikta/katu,laghu/snigdha,sattvavardhan,sheeta,katu,savory aspic,decrease,neutral,increase
+BFP308,Frozen frosty fruit salad (Phalon ka salaad),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,fruit salad,decrease,neutral,increase
+BFP310,French dressing,tikta/katu,laghu/snigdha,sattvavardhan,sheeta,katu,spicy dressing,decrease,neutral,increase
+BFP312,Mayonnaise without eggs,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,creamy dressing,decrease,neutral,increase
+BFP313,Curd dressing,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,creamy dressing,decrease,neutral,increase
+BFP316,Carrot raita (Gajar ka raita),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,vegetable raita,decrease,neutral,increase
+BFP318,Pumpkin raita (Kaddu ka raita),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,vegetable raita,decrease,neutral,increase
+BFP320,Mint and peanut raita (Pudinay aur moongfali ka raita),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,refreshing raita,decrease,neutral,increase
+BFP321,Spinach raita (Palak ka raita),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,vegetable raita,decrease,neutral,increase
+BFP322,Bathua raita,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy raita,increase,increase,decrease
+BFP325,Pineapple raita (Ananas ka raita),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,fruit raita,decrease,neutral,increase
+BFP326,Banana raita (Kele ka raita),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,fruit raita,decrease,neutral,increase
+BFP327,Mango raita (Aam ka raita),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,fruit raita,decrease,neutral,increase
+BFP328,Guava raita (Amarood ka raita),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,fruit raita,decrease,neutral,increase
+BFP329,Grapes raita (Angoor ka raita),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,fruit raita,decrease,neutral,increase
+BFP334,Bottle gourd kheer (Ghiya/Lauki kheer),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet kheer,decrease,neutral,increase
+BFP336,Pumpkin kheer (Kaddu ki kheer),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet kheer,decrease,neutral,increase
+BFP338,Apple kheer (Seb ki kheer),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet kheer,decrease,neutral,increase
+BFP345,Caramel custard (baked),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+BFP346,Vanilla ice cream without egg,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet ice cream,decrease,neutral,increase
+BFP347,Vanilla ice cream with egg,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet ice cream,decrease,neutral,increase
+BFP348,Strawberry ice cream,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet ice cream,decrease,neutral,increase
+BFP350,Chocochip ice cream,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet ice cream,decrease,neutral,increase
+BFP351,Choconut ice cream,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet ice cream,decrease,neutral,increase
+BFP352,Pear chocholate sunday,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+BFP353,Chocolate sauce,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet sauce,decrease,neutral,increase
+BFP354,Coffee ice cream,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet ice cream,decrease,neutral,increase
+BFP355,Coffee pear alaska,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+BFP356,Crunchy butterscotch,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+BFP358,Peach melba ice cream,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+BFP359,Vanilla ice cream with apples in hot cherry sauce,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet ice cream,decrease,neutral,increase
+BFP361,Grape and orange whip,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+BFP362,Honey banana cream,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+BFP363,Raspberry bavarian cream,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+BFP364,Fruit delight,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+BFP365,Creamy chocolate mousse,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+BFP366,Cold lemon souffle,amla/katu,laghu/snigdha,rajovardhan,sheeta,amla/katu,cooling dessert,decrease,increase,decrease
+BFP367,Cold orange souffle,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,cooling dessert,decrease,neutral,increase
+BFP368,Cold pineapple souffle,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,cooling dessert,decrease,neutral,increase
+BFP369,Cold vanilla souffle,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,cooling dessert,decrease,neutral,increase
+BFP370,Cold chocolate souffle,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,cooling dessert,decrease,neutral,increase
+BFP371,Stewed fruit (with pear),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,fruit dessert,decrease,neutral,increase
+BFP372,Apricot fool,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,fruit dessert,decrease,neutral,increase
+BFP373,Pavlova,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+BFP379,Apple crumb pudding,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+BFP380,Steamed cake with chocolate sauce,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+BFP382,Hot lemon souffle,amla/katu,laghu/snigdha,rajovardhan,sheeta,amla/katu,cooling dessert,decrease,increase,decrease
+BFP386,Gulab jamun with milk powder,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+BFP388,Chum chum,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+BFP389,Dil bahar,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+BFP390,Rasbhari,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet fruit,decrease,neutral,increase
+BFP391,Rajbogh,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+BFP392,Rasgulla,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+BFP393,Rasmalai,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+BFP396,Khoa coconut burfi,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+BFP397,Danedar burfi,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+BFP401,Semolina burfi (Suji/Rava burfi),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+BFP403,Pumpkin coconut burfi (Kaddu aur nariyal ki burfi),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+BFP404,Khoa ladoo,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+BFP406,Wheat and gram flour ladoo (Atta besan ladoo),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+BFP407,Semolina ladoo with nuts (Suji/Rava ladoo with nuts),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+BFP412,Sesame chickpeas brittle (Til aur channe ki chikki),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet snack,decrease,neutral,increase
+BFP413,Murmura chikki,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,light snack,decrease,neutral,increase
+BFP415,Masala onion pakora/pakoda (Pyaaz ke pakode),katu,laghu/ushna,rajovardhan,ushna,katu,spicy snack,increase,increase,decrease
+BFP416,Masala green chilli pakora/pakoda (Hari mirch kay pakode),katu,laghu/ushna,rajovardhan,ushna,katu,spicy snack,increase,increase,decrease
+BFP420,Chicken pakora/pakoda,katu,laghu/ushna,rajovardhan,ushna,katu,protein snack,increase,increase,decrease
+BFP421,Fish pakora/pakoda,katu,laghu/ushna,rajovardhan,ushna,katu,protein snack,increase,increase,decrease
+BFP424,Paneer cutlet,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein snack,decrease,neutral,increase
+BFP425,Sago cutlet/vadas (Sabudana cutlet/vadas),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,carbohydrate snack,decrease,neutral,increase
+BFP427,Poshtik cutlet,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious snack,decrease,neutral,increase
+BFP428,Egg cutlet (Anda cutlet),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein snack,decrease,neutral,increase
+BFP430,Minced meat cutlet,katu,laghu/ushna,rajovardhan,ushna,katu,protein snack,increase,increase,decrease
+BFP431,Vegetable samosa,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,snack,decrease,neutral,increase
+BFP436,Plain urad dal vada (Uzunne vada/Minapa garelu/Ulundu vadai/Medu vada),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,protein snack,decrease,neutral,increase
+BFP437,Masala urad dal vada,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,protein snack,decrease,neutral,increase
+BFP439,Khaman (dhokla),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,protein snack,decrease,neutral,increase
+BFP440,Instant dhokla,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,protein snack,decrease,neutral,increase
+BFP442,Tomato ginger chutney (Tamatar adarak ki chutney),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy chutney,increase,increase,decrease
+BFP443,Mint tomato chutney (Pudinay aur tamatar ki chutney),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy chutney,increase,increase,decrease
+BFP444,Coriander chutney (Hare dhaniye ki chutney),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy chutney,increase,increase,decrease
+BFP445,Gooseberry chutney (Amla chutney),amla/katu,laghu/snigdha,rajovardhan,sheeta,amla/katu,healthy chutney,decrease,increase,decrease
+BFP446,Walnut chutney (Akhrot ki chutney),katu,laghu/ushna,rajovardhan,sheeta,katu,nutritious chutney,increase,increase,decrease
+BFP447,Saunth/Sonth chutney with ginger,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy chutney,increase,increase,decrease
+BFP448,Gun powder chutney,katu,laghu/ushna,rajovardhan,ushna,katu,spicy chutney,increase,increase,decrease
+BFP450,Dessicated coconut chutney (Sookhe kase nariyal ki chutney),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious chutney,decrease,neutral,increase
+BFP451,Curd mint dip,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy dip,increase,increase,decrease
+BFP452,Curd vegetable dip,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious dip,decrease,neutral,increase
+BFP453,Mayonnaise vegetable dip,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,creamy dip,decrease,neutral,increase
+BFP455,Tomato and cucumber sandwich (Tamatar aur kheere ka sandwich),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy sandwich,increase,increase,decrease
+BFP456,Tomato sandwich (grilled),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy sandwich,increase,increase,decrease
+BFP457,French sandwich (toasted),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious sandwich,decrease,neutral,increase
+BFP458,Peanut butter cucumber sandwich,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious sandwich,decrease,neutral,increase
+BFP459,Mint and peanut sandwich,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy sandwich,increase,increase,decrease
+BFP460,Spicy chutney sandwich,katu,laghu/ushna,rajovardhan,ushna,katu,spicy sandwich,increase,increase,decrease
+BFP461,Chicken walnut sandwich (Chicken aur akhrot ke sandwich),katu,guru/snigdha,rajovardhan,ushna,katu,protein sandwich,increase,increase,decrease
+BFP463,Rolled sandwich,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious sandwich,decrease,neutral,increase
+BFP466,Ribbon sandwich,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious sandwich,decrease,neutral,increase
+BFP467,Checker board sandwich,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious sandwich,decrease,neutral,increase
+BFP468,Submarine sandwich,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious sandwich,decrease,neutral,increase
+BFP470,Cheese open sandwich,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich protein sandwich,decrease,neutral,increase
+BFP471,Sunset and sunrise open sandwich,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich sandwich,decrease,neutral,increase
+BFP472,Danish luncheon sandwich,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich sandwich,decrease,neutral,increase
+BFP473,Chicken and corn open sandwich,katu,guru/snigdha,rajovardhan,ushna,katu,protein sandwich,increase,increase,decrease
+BFP476,Chocolate sponge cake,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet cake,decrease,neutral,increase
+BFP478,Chocolate swiss roll,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet cake,decrease,neutral,increase
+BFP479,Lemon curd filling,tikta/katu,laghu/snigdha,rajovardhan,sheeta,katu,spicy filling,increase,increase,decrease
+BFP480,Jam filling,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet filling,decrease,neutral,increase
+BFP482,Chocolate pastry,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet pastry,decrease,neutral,increase
+BFP483,Assorted pastry,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet pastry,decrease,neutral,increase
+BFP484,Orange gateau,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet cake,decrease,neutral,increase
+BFP485,Black forest gateau,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet cake,decrease,neutral,increase
+BFP489,Lemon cake,tikta/katu,laghu/snigdha,rajovardhan,sheeta,katu,spicy cake,increase,increase,decrease
+BFP491,Dundee cake,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet cake,decrease,neutral,increase
+BFP492,Victorian sandwich cake,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich sandwich,decrease,neutral,increase
+BFP495,Chocolate eggless cake,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet cake,decrease,neutral,increase
+BFP496,Orange eggless cake,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet cake,decrease,neutral,increase
+BFP498,Chocolate glace icing,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet icing,decrease,neutral,increase
+BFP499,Butter icing,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet icing,decrease,neutral,increase
+BFP500,Chocolate butter icing,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet icing,decrease,neutral,increase
+BFP502,Almond biscuit (Badam ke biscuit),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet biscuit,decrease,neutral,increase
+BFP505,Orange biscuit,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet biscuit,decrease,neutral,increase
+BFP506,Gingerman biscuit,tikta/katu,laghu/snigdha,rajovardhan,sheeta,katu,spicy biscuit,decrease,neutral,increase
+BFP507,Coffee drops,katu/tikta,laghu/ushna,rajovardhan,ushna,katu/tikta,spicy snack,increase,increase,decrease
+BFP508,Christmas biscuit,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,festive biscuit,decrease,neutral,increase
+BFP509,Christmas wreath biscuit,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,festive biscuit,decrease,neutral,increase
+BFP510,Christmas bell biscuit,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,festive biscuit,decrease,neutral,increase
+BFP511,Christmas star biscuit,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,festive biscuit,decrease,neutral,increase
+BFP512,Christmas tree biscuit,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,festive biscuit,decrease,neutral,increase
+BFP513,Chocolate cream shells,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet cookies,decrease,neutral,increase
+BFP516,Jelly biscuit,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet biscuit,decrease,neutral,increase
+BFP517,Cherry and walnut cookies,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet cookies,decrease,neutral,increase
+BFP518,Cheese straws,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet snack,decrease,neutral,increase
+BFP519,Butterfly biscuit,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet biscuit,decrease,neutral,increase
+BFP521,Flan pastry,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet pastry,decrease,neutral,increase
+BFP522,Fruit flan,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet pastry,decrease,neutral,increase
+BFP523,Orange cream flan,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet pastry,decrease,neutral,increase
+BFP527,Fruit puree tart,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet tart,decrease,neutral,increase
+BFP529,Apple banana pie,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet pie,decrease,neutral,increase
+BFP531,Lemon chiffon pie,tikta/katu,laghu/snigdha,rajovardhan,sheeta,katu,spicy pie,increase,increase,decrease
+BFP532,Orange chiffon pie,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet pie,decrease,neutral,increase
+BFP534,Cream buns,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet buns,decrease,neutral,increase
+BFP535,Savoury puffs,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,savory puff,decrease,neutral,increase
+BFP536,Choux swans,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet pastry,decrease,neutral,increase
+BFP539,Potato aigrettes,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,potato snack,decrease,neutral,increase
+BFP541,Cream horns,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet pastry,decrease,neutral,increase
+BFP542,Savoury cheese horns,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,savory pastry,decrease,neutral,increase
+BFP544,Paneer patties,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein snack,decrease,neutral,increase
+BFP545,Vegetable patties,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,vegetable snack,decrease,neutral,increase
+BFP546,Pearl millet infant food (Bajra shishu aahaar),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,infant food,decrease,neutral,increase
+BFP547,Sajina,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious cereal,decrease,neutral,increase
+BFP548,Cereal mix,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious cereal,decrease,neutral,increase
+BFP549,Pulse mix,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious pulse mix,decrease,neutral,increase
+BFP550,Shishu ahar,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,infant food,decrease,neutral,increase
+BFP552,Cereal pulse mix with amylase rice flour,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious mix,decrease,neutral,increase
+BFP553,Banana groundnut paste/puree,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious puree,decrease,neutral,increase
+BFP554,Rice dal porridge (Chawal dal ki khichdi/khichri),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein porridge,decrease,neutral,increase
+BFP555,Lentils and semolina porridge (Dal suji porridge/daliya),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein porridge,decrease,neutral,increase
+BFP556,Spinach khichri (Palak khichri/khichdi),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,healthy protein meal,decrease,neutral,increase
+BFP557,Vegetable mix,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,healthy vegetable mix,decrease,neutral,increase
+BFP558,Lentils and wheat porridge (Dal wheat porridge/daliya ),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein porridge,decrease,neutral,increase
+BFP559,Maize porridge,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious porridge,decrease,neutral,increase
+BFP560,Spinach peanut burfi (Palak aur mungfali ki burfi),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,nutritious dessert,decrease,neutral,increase
+BFP561,Split bengal gram burfi/fudge (Channa dal burfi),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious dessert,decrease,neutral,increase
+BFP563,Chickpea flour cookies (Sweet besan rounds/cookies),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet cookies,decrease,neutral,increase
+BFP564,Pearl millet mathri (Bajra mathri),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet snack,decrease,neutral,increase
+BFP565,Sesame biscuit (Til ke biscuit),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet biscuit,decrease,neutral,increase
+BFP566,Fermented bengal gram vada (Khameerikrit/Ufna hua channa dal ka vada),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,savory snack,increase,increase,decrease
+BFP568,Poshtik namak paras,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,savory snack,increase,increase,decrease
+BFP569,Soya chikki,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet snack,decrease,neutral,increase
+BFP570,Besan bathua chilla/cheela,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein snack,decrease,neutral,increase
+BFP571,Wheat flour and nuts ladoos (Atta nuts ladoos),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious dessert,decrease,neutral,increase
+BFP573,Gram flour and semolina dhokla (Besan suji dhokla),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein snack,decrease,neutral,increase
+BFP574,Atta dal burfi,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious dessert,decrease,neutral,increase
+BFP575,Soya roti,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious roti,decrease,neutral,increase
+BFP576,Poshtik khichdi/khichri,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious porridge,decrease,neutral,increase
+BFP577,Namkeen daliya,katu,laghu/ushna,rajovardhan,ushna,katu,savory snack,increase,increase,decrease
+BFP578,Sprouts upma,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious snack,decrease,neutral,increase
+BFP579,Semolina idli (Suji/Rava idli),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,light protein snack,decrease,neutral,increase
+BFP580,Poshtik chilla/cheela,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein snack,decrease,neutral,increase
+BFP604,Stuffed bittergourd (dry) (Bharwa karela),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy vegetable snack,increase,increase,decrease
+BFP605,Cauliflower potato canjee,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,vegetable snack,decrease,neutral,increase
+BFP606,Creamed spinach,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,creamy vegetable dish,decrease,neutral,increase
+BFP607,Mango milkshake with ice cream (Aam milkshake ice cream ke saath),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet milkshake,decrease,neutral,increase
+BFP608,Pineapple milkshake with ice cream (Ananas milkshake ice cream ke saath),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet milkshake,decrease,neutral,increase
+BFP609,Orange milkshake with ice cream (Narangi milkshake ice cream ke saath),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet milkshake,decrease,neutral,increase
+OSR001,Woodapple juice (Bel ka sharbat),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,refreshing juice,decrease,neutral,increase
+OSR002,Sattu drink,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,energizing drink,increase,increase,decrease
+OSR004,Apple and honey sorbet (Seb aur shehad ka sharbat),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet sorbet,decrease,neutral,increase
+OSR005,Thandai,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet drink,decrease,neutral,increase
+OSR006,Cucumber sharbat (Kheere ka sharbat),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,refreshing drink,decrease,neutral,increase
+OSR007,Apple oats chia seed smoothie,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious smoothie,decrease,neutral,increase
+OSR008,Nannari sharbat,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,refreshing drink,decrease,neutral,increase
+OSR009,Semolina milk drink (Thari kanji),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious milk drink,decrease,neutral,increase
+OSR010,Saffron milk (Kesariya doodh),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious milk drink,decrease,neutral,increase
+OSR011,Black rice kheer (Chak-hao kheer),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+OSR012,Coconut kheer (Nariyal ki kheer),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+OSR013,Apple sago payasam (Seb aur sabudana ki kheer),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+OSR014,Kesari bath,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+OSR015,Putharekulu,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+OSR016,Mango malpua,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+OSR017,Mango vanilla custard,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet custard,decrease,neutral,increase
+OSR018,Kiwi granola pudding,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,nutritious dessert,decrease,neutral,increase
+OSR019,Oats burfi,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet snack,decrease,neutral,increase
+OSR020,Lotus seed halwa (Kamal gattay ka halwa),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+OSR021,Amaranth ladoo (Rajgira ladoo),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet snack,decrease,neutral,increase
+OSR022,Chhena poda,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+OSR023,Sweet couscous dessert,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+OSR024,Sweetened yogurt (Shrikhand),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dairy dessert,decrease,neutral,increase
+OSR025,Thickened sweetened milk (Rabri),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich dessert,decrease,neutral,increase
+OSR026,Gram flour halwa (Besan halwa),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+OSR027,Prawn sandwich,katu,laghu/ushna,rajovardhan,ushna,katu,spicy sandwich,increase,increase,decrease
+OSR028,Watercress sandwich,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,nutritious sandwich,decrease,neutral,increase
+OSR029,Fish sandwich,katu,laghu/snigdha,rajovardhan,ushna,katu,protein sandwich,increase,increase,decrease
+OSR030,Kidney bean sandwich with cottage cheese,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein sandwich,decrease,neutral,increase
+OSR031,Finger millet biscuit (Ragi biscuit),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,nutritious snack,decrease,neutral,increase
+OSR032,Buttermilk biscuit,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet biscuit,decrease,neutral,increase
+OSR033,Lemon cookies,tikta/katu,laghu/snigdha,rajovardhan,sheeta,katu,spicy biscuit,decrease,neutral,increase
+OSR034,Sweet potato biscuit (Shakarkand ke biscuit),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet biscuit,decrease,neutral,increase
+OSR035,Raspberry shortbread cookies,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet biscuit,decrease,neutral,increase
+OSR036,Pumpkin cookies,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet biscuit,decrease,neutral,increase
+OSR037,Greenpea cookies,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet biscuit,decrease,neutral,increase
+OSR038,Sunflower cookies,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet biscuit,decrease,neutral,increase
+OSR039,Cardamom cookies (Elaichi cookies),tikta/katu,laghu/snigdha,rajovardhan,sheeta,katu,spicy biscuit,decrease,neutral,increase
+OSR040,Hazelnut cookies,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet biscuit,decrease,neutral,increase
+OSR041,Milk cookies,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet biscuit,decrease,neutral,increase
+OSR042,Cranberry cookies,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet biscuit,decrease,neutral,increase
+OSR043,Olive biscuit,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet biscuit,decrease,neutral,increase
+OSR045,Tutti fruitti biscuit,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet biscuit,decrease,neutral,increase
+OSR046,Peach blueberry preserves,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet preserves,decrease,neutral,increase
+OSR047,Pear preserves (Naashpati ka murabba),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet preserves,decrease,neutral,increase
+OSR048,Starfruit preserves,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet preserves,decrease,neutral,increase
+OSR049,Gooseberry pickle (Amla ka achaar),amla/katu,laghu/snigdha,rajovardhan,sheeta,amla/katu,healthy pickle,decrease,increase,decrease
+OSR050,Lotus stem pickle (Kamal kakdi ka achar),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy pickle,increase,increase,decrease
+OSR051,Date pickle (Khajoor ka achaar),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy pickle,increase,increase,decrease
+OSR052,Garlic pickle (Lahasun ka achar),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy pickle,increase,increase,decrease
+OSR053,Fermented bamboo shoot pickle (Mesu pickle),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy pickle,increase,increase,decrease
+OSR054,Sweet peach pickle (Aadoo ka achaar),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet pickle,decrease,neutral,increase
+OSR055,Pickled mustard greens,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy pickle,increase,increase,decrease
+OSR056,Small onion pickle,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy pickle,increase,increase,decrease
+OSR057,Green tomato pickle (Haray tamatar ka achaar),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy pickle,increase,increase,decrease
+OSR058,Pickled cabbage,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy pickle,increase,increase,decrease
+OSR059,Coconut pickle (Nariyal ka aachar),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy pickle,increase,increase,decrease
+OSR060,Potato pickle (Aloo ka achaar),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy pickle,increase,increase,decrease
+OSR061,Mango murabba candy,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet candy,decrease,neutral,increase
+OSR062,Afghani chicken,katu,guru/snigdha,rajovardhan,ushna,katu,protein dish,increase,increase,decrease
+OSR063,Fish orly,katu,laghu/ushna,rajovardhan,ushna,katu,protein fried fish,increase,increase,decrease
+OSR064,Hariyali Fish Tikka,tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,protein protein dish,decrease,neutral,increase
+OSR065,Chicken manchurian,katu,guru/snigdha,rajovardhan,ushna,katu,protein dish,increase,increase,decrease
+OSR066,Handi chicken,katu,guru/snigdha,rajovardhan,ushna,katu,protein dish,increase,increase,decrease
+OSR067,Lemon chicken,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy protein,increase,increase,decrease
+OSR068,Lemon butter fish,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich fish dish,decrease,neutral,increase
+OSR069,Baked eggs in tomato sauce,katu,guru/snigdha,rajovardhan,ushna,katu,protein egg dish,increase,increase,decrease
+OSR070,Egg in a pepper,katu,laghu/ushna,rajovardhan,ushna,katu,spicy egg dish,increase,increase,decrease
+OSR071,Spinach mushroom scrambled egg (Palak mushroom bhurji),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,protein vegetable dish,decrease,neutral,increase
+OSR072,Corn omelette/omlet,madhura/katu,laghu/snigdha,sattvavardhan,sheeta,madhura/katu,protein dish,decrease,neutral,increase
+OSR073,Cajun chicken,katu,laghu/ushna,rajovardhan,ushna,katu,spicy protein,increase,increase,decrease
+OSR074,Paaner do pyaza,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich paneer dish,decrease,neutral,increase
+OSR075,Cabbage manchurian (Pattagobhi manchurian),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy vegetable,increase,increase,decrease
+OSR076,Gobi 65,katu,laghu/ushna,rajovardhan,ushna,katu,spicy vegetable,increase,increase,decrease
+OSR077,Paneer lababdar,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,rich paneer dish,decrease,neutral,increase
+OSR078,Roasted cauliflower steak,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,vegetable dish,decrease,neutral,increase
+OSR079,Sauteed radishes with green beans,tikta/katu,laghu/snigdha,sattvavardhan,sheeta,katu,vegetable dish,decrease,neutral,increase
+OSR080,Garlic chutney/Poondu chutney (Lahasun ki chutney),katu,laghu/ushna,rajovardhan,ushna,katu,spicy chutney,increase,increase,decrease
+OSR081,Schezwan chutney,katu,laghu/ushna,rajovardhan,ushna,katu,spicy chutney,increase,increase,decrease
+OSR083,Onion chutney (Pyaaz ki chutney/Vengaya chutney),katu,laghu/ushna,rajovardhan,ushna,katu,spicy chutney,increase,increase,decrease
+OSR085,Dates chutney (Khajoor ki chutney),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet chutney,decrease,neutral,increase
+OSR086,Chicken salad,katu,laghu/ushna,rajovardhan,ushna,katu,protein salad,increase,increase,decrease
+OSR087,Macaroni salad,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet salad,decrease,neutral,increase
+OSR088,Cabbage raita (Pattagobhi raita),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,vegetable raita,decrease,neutral,increase
+OSR089,Pomegranate raita (Anaar ka raita),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,fruit raita,decrease,neutral,increase
+OSR090,Onion raita (Pyaaz ka raita),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy raita,increase,increase,decrease
+OSR091,Green chilli raita (Hari mirch ka raita),katu,laghu/ushna,rajovardhan,ushna,katu,spicy raita,increase,increase,decrease
+OSR092,Kale salad,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,healthy salad,decrease,neutral,increase
+OSR093,Spinach and paneer souffle,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein souffle,decrease,neutral,increase
+OSR094,Masala souffle,katu,laghu/ushna,rajovardhan,ushna,katu,spicy souffle,increase,increase,decrease
+OSR095,Chicken and cheese souffle,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein souffle,decrease,neutral,increase
+OSR096,Tamarind chutney (Chintapandu pachadi/Puli chutney),katu,laghu/ushna,rajovardhan,ushna,katu,spicy chutney,increase,increase,decrease
+OSR097,Pav bhaji masala,katu,laghu/ushna,rajovardhan,ushna,katu,spicy masala,increase,increase,decrease
+OSR098,Green chutney,katu,laghu/ushna,rajovardhan,ushna,katu,spicy chutney,increase,increase,decrease
+OSR099,Sago khitchdi/khichri (Sabudana khitchdi/khichri),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,light porridge,decrease,neutral,increase
+OSR100,Gram flour chilla/cheela (Besan chilla/cheela),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,protein snack,decrease,neutral,increase
+OSR101,Vegetable namkeen jave,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,savory snack,decrease,neutral,increase
+OSR102,Khakhra,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,savory snack,decrease,neutral,increase
+OSR103,Moong bean dosa (Pesarattu),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,protein snack,decrease,neutral,increase
+OSR104,Methi thepla,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy snack,increase,increase,decrease
+OSR105,Rice puttu (Ari puttu),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein snack,decrease,neutral,increase
+OSR106,Buckwheat pancake (Khura),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,protein snack,decrease,neutral,increase
+OSR107,Quinoa khichdi/khichri,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein snack,decrease,neutral,increase
+OSR108,Khakhra chaat,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,savory snack,decrease,neutral,increase
+OSR110,Banana appam,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet snack,decrease,neutral,increase
+OSR111,Veg manchurian,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy snack,increase,increase,decrease
+OSR112,Pav bhaji,katu,laghu/ushna,rajovardhan,ushna,katu,spicy snack,increase,increase,decrease
+OSR113,Rice murukku,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,savory snack,decrease,neutral,increase
+OSR114,Bhel puri,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,savory snack,decrease,neutral,increase
+OSR115,Semolina dhokla (Suji/Rava dhokla),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,protein snack,decrease,neutral,increase
+OSR116,Spicy corn chaat,katu,laghu/ushna,rajovardhan,ushna,katu,spicy snack,increase,increase,decrease
+OSR118,Jackfruit fritters (Ponsa mulik/Kathal ka pakora),katu,laghu/ushna,rajovardhan,ushna,katu,spicy snack,increase,increase,decrease
+OSR119,Banana chips (Kele ke chips),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet snack,decrease,neutral,increase
+OSR120,Wheat cake,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet cake,decrease,neutral,increase
+OSR121,Mango cheesecake,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+OSR122,Carrot cake (Gajar ka cake),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+OSR123,Semolina cake (Suji/Rava cake),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+OSR124,Finger millet cake (Ragi cake),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+OSR125,Honey cake,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+OSR126,Almond cardamom cake (Badam elaichi cake),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+OSR127,Tutti frutti cake,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+OSR128,Ham and Bean soup,katu,laghu/ushna,rajovardhan,ushna,katu,protein soup,increase,increase,decrease
+OSR129,Whey soup,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein soup,decrease,neutral,increase
+OSR130,Bottle gourd soup (Ghiya/Lauki soup),tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,vegetable soup,decrease,neutral,increase
+OSR131,Baked potato soup,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,vegetable soup,decrease,neutral,increase
+OSR132,Pumpkin soup,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,vegetable soup,decrease,neutral,increase
+OSR133,Sweet corn soup,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet soup,decrease,neutral,increase
+OSR134,Paneer soup,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein soup,decrease,neutral,increase
+OSR135,Curried Cauliflower soup,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,vegetable soup,decrease,neutral,increase
+OSR136,Millet soup,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,vegetable soup,decrease,neutral,increase
+OSR137,Lemon coriander soup,tikta/katu,laghu/snigdha,rajovardhan,sheeta,katu,spicy soup,increase,increase,decrease
+OSR138,Garlic soup,katu,laghu/ushna,rajovardhan,ushna,katu,spicy soup,increase,increase,decrease
+OSR139,Dal makhani,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein dal,decrease,neutral,increase
+OSR141,Dalma,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,protein dal,decrease,neutral,increase
+OSR142,Split bengal gram dal (Channa dal),tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,protein dal,decrease,neutral,increase
+OSR143,Horsegram dal (Kulthi dal),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,protein dal,increase,increase,decrease
+OSR144,Panchmel dal,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,protein dal,decrease,neutral,increase
+OSR145,Dal dhokli,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,protein dal,decrease,neutral,increase
+OSR146,Gujarati handvo,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,savory snack,decrease,neutral,increase
+OSR147,Sev (Omapodi/Karapusa),tikta/katu,laghu/snigdha,sattvavardhan,sheeta,katu,savory snack,decrease,neutral,increase
+OSR148,Papdi,katu,laghu/ushna,rajovardhan,ushna,katu,savory snack,increase,increase,decrease
+OSR151,Jowar dosa,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,savory snack,increase,increase,decrease
+OSR152,Bread roll,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,savory snack,decrease,neutral,increase
+OSR153,Soya seekh kebab,katu,laghu/ushna,rajovardhan,ushna,katu,protein snack,increase,increase,decrease
+OSR154,Classic seasoned black beans,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,protein dish,increase,increase,decrease
+OSR155,Maa chaane ki dal,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,protein dal,decrease,neutral,increase
+OSR156,Garlic chickpea soup (Lahasun aur chane ka shoraba),katu,laghu/ushna,rajovardhan,ushna,katu,protein soup,increase,increase,decrease
+ASC071,White sauce (thin),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sauce,decrease,neutral,increase
+ASC072,White sauce (medium),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sauce,decrease,neutral,increase
+ASC073,White sauce (thick),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sauce,decrease,neutral,increase
+ASC074,Cheese sauce,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sauce,decrease,neutral,increase
+ASC075,Egg sauce,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sauce,decrease,neutral,increase
+ASC076,Mushroom sauce,tikta/madhura,guru/snigdha,sattvavardhan,sheeta,madhura,sauce,decrease,neutral,increase
+ASC077,Mustard sauce,katu,laghu/ushna,rajovardhan,ushna,katu,spicy sauce,increase,increase,decrease
+ASC078,Brown sauce,katu,laghu/ushna,rajovardhan,ushna,katu,spicy sauce,increase,increase,decrease
+ASC130,Classic italian pasta,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,pasta,decrease,neutral,increase
+ASC131,Pasta spinach sauce,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,vegetable pasta sauce,decrease,neutral,increase
+ASC132,Pasta cheese sauce,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,cheese pasta sauce,decrease,neutral,increase
+ASC266,Mayonnaise,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,condiment,decrease,neutral,increase
+ASC267,Low calorie quick mayonnaise,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,condiment,decrease,neutral,increase
+ASC268,Thousand island dressing,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,condiment,decrease,neutral,increase
+ASC388,Curd dip,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,dip,decrease,neutral,increase
+ASC394,Short crust pastry,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,pastry,decrease,neutral,increase
+ASC406,Choux pastry,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,pastry,decrease,neutral,increase
+ASC410,Flaky pastry,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,pastry,decrease,neutral,increase
+ASC428,Sponge cake,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,cake,decrease,neutral,increase
+ASC434,Glace icing,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,icing,decrease,neutral,increase
+ASC436,Royal icing,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,icing,decrease,neutral,increase
+ASC437,American frosting,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,frosting,decrease,neutral,increase
+ASC438,Gum icing,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,icing,decrease,neutral,increase
+ASC475,Channa murmura premix,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,snack mix,decrease,neutral,increase
+ASC476,Cracked wheat and green gram dal premix (Dalia moong dal premix),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,healthy mix,decrease,neutral,increase
+ASC477,Rice flakes and roasted channa,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,healthy snack,decrease,neutral,increase
+ASC479,Spinach soup in milk,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,healthy soup,decrease,neutral,increase
+ASC480,Vegetable soup,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,vegetable soup,decrease,neutral,increase
+ASC481,Mashed banana with milk,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,nutritious dessert,decrease,neutral,increase
+ASC484,Poha with curd (Poha aur dahi),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,breakfast dish,decrease,neutral,increase
+ASC485,Potato with curd,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,healthy dish,decrease,neutral,increase
+ASC486,Sweet wheat porridge (Sweet dalia),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet porridge,decrease,neutral,increase
+ASC487,Vegetable khichdi/khichri,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,healthy porridge,decrease,neutral,increase
+ASC489,Moong dal mixture,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,healthy snack,decrease,neutral,increase
+ASC490,Cracked wheat khichri/khichdi (Dalia khichri/khichdi),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,healthy porridge,decrease,neutral,increase
+ASC492,Stewed apple,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet dessert,decrease,neutral,increase
+ASC493,Lemon squash (Nimbu ka squash),tikta/katu,laghu/snigdha,rajovardhan,sheeta,katu,spicy beverage,increase,increase,decrease
+ASC494,Orange squash (Santre ka squash),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet beverage,decrease,neutral,increase
+ASC495,Lichi squash,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet beverage,decrease,neutral,increase
+ASC496,Mango squash (Aam ka squash),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet beverage,decrease,neutral,increase
+ASC497,Pineapple squash (Ananas ka squash),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet beverage,decrease,neutral,increase
+ASC498,Lemon and ginger squash (Nimbu aur adrak ka squash),tikta/katu,laghu/snigdha,rajovardhan,sheeta,katu,spicy beverage,increase,increase,decrease
+ASC499,Apple jam (Seb ka murabba),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet preserve,decrease,neutral,increase
+ASC500,Plum jam (Aloo bukhara jam),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet preserve,decrease,neutral,increase
+ASC501,Pineapple jam,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet preserve,decrease,neutral,increase
+ASC502,Guava jelly (Amrood ki jelly),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet preserve,decrease,neutral,increase
+ASC503,Orange marmalade (Santray ka murabba),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet preserve,decrease,neutral,increase
+ASC504,Carrot murabba (Gajar ka murabba),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet preserve,decrease,neutral,increase
+ASC505,Gooseberry marmalade (Amla murabba),amla/katu,laghu/snigdha,rajovardhan,sheeta,amla/katu,healthy preserve,decrease,increase,decrease
+ASC506,Ginger candy (Adrak ki candy),katu,laghu/ushna,rajovardhan,ushna,katu,spicy candy,increase,increase,decrease
+ASC507,Mango pickle (Aam ka achaar),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,spicy pickle,decrease,neutral,increase
+ASC509,Mixed vegetable pickle (Sabziyoon ka achaar),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy pickle,increase,increase,decrease
+ASC511,Sweet lemon pickle (Neembu ka meetha achaar),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet pickle,decrease,neutral,increase
+ASC512,Plum chutney (Aloo bukhara ki chutney),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet chutney,decrease,neutral,increase
+ASC513,Raw mango chutney (Kachhe aam/Kairi ki chutney),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy chutney,increase,increase,decrease
+ASC514,Tomato sauce,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy sauce,increase,increase,decrease
+ASC515,Tomato puree,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy sauce,increase,increase,decrease
+BFP001,Garam masala,katu,laghu/ushna,rajovardhan,ushna,katu,spicy masala,increase,increase,decrease
+BFP002,Chat masala,katu,laghu/ushna,rajovardhan,ushna,katu,spicy masala,increase,increase,decrease
+BFP003,Kashmiri masala,tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy masala,increase,increase,decrease
+BFP004,Rasam powder (Rasam masala),katu,laghu/ushna,rajovardhan,ushna,katu,spicy masala,increase,increase,decrease
+BFP005,Sambar powder (Sambar masala),katu,laghu/ushna,rajovardhan,ushna,katu,spicy masala,increase,increase,decrease
+BFP095,Tartare sauce,katu,laghu/ushna,rajovardhan,ushna,katu,spicy sauce,increase,increase,decrease
+BFP096,Barbeque sauce,katu,laghu/ushna,rajovardhan,ushna,katu,spicy sauce,increase,increase,decrease
+BFP097,Bread sauce,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet sauce,decrease,neutral,increase
+BFP163,Green chilli sauce,katu,laghu/ushna,rajovardhan,ushna,katu,spicy sauce,increase,increase,decrease
+BFP164,Home made plain noodles,madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,carbohydrate dish,decrease,neutral,increase
+BFP166,Dal moong,tikta/madhura,laghu/snigdha,sattvavardhan,sheeta,madhura,protein dal,decrease,neutral,increase
+BFP167,Cumin seeds baghar (Jeera baghar/tadka),katu,laghu/ushna,rajovardhan,ushna,katu,spicy seasoning,increase,increase,decrease
+BFP168,Onion tomato baghar (Pyaaz tamatar ka tadka),katu,laghu/ushna,rajovardhan,ushna,katu,spicy seasoning,increase,increase,decrease
+BFP169,Mustard seeds baghar (Mustard seed tadka),katu,laghu/ushna,rajovardhan,ushna,katu,spicy seasoning,increase,increase,decrease
+BFP360,Hot cherry sauce,tikta/katu,laghu/snigdha,rajovardhan,sheeta,katu,spicy sauce,increase,increase,decrease
+BFP583,Apple jelly (Seb ki jelly),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet jelly,decrease,neutral,increase
+BFP585,Marmalade (Murabba),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet preserve,decrease,neutral,increase
+BFP589,Plum squash (Aloo bukhara squash),madhura/katu,guru/snigdha,sattvavardhan,sheeta,madhura/katu,sweet beverage,decrease,neutral,increase
+BFP595,Lemon green chilli pickle (Nimboo aur hari mirch ka achaar),katu,laghu/ushna,rajovardhan,ushna,katu,spicy pickle,increase,increase,decrease
+BFP597,Brinjal pickle (Baingan ka achaar),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy pickle,increase,increase,decrease
+BFP598,Sweet and sour tomato pickle (Khatta meetha tamatar ka achaar),tikta/katu,laghu/ushna,rajovardhan,ushna,katu,spicy pickle,increase,increase,decrease
+BFP599,Jhatpat achar with carrot (Jhatpat achaar gajar ke saath),katu,laghu/ushna,rajovardhan,ushna,katu,spicy pickle,increase,increase,decrease
+BFP601,Tomato chutney (Tamatar ki chutney),katu,laghu/ushna,rajovardhan,ushna,katu,spicy chutney,increase,increase,decrease
+BFP602,Tomato ketchup,katu,laghu/ushna,rajovardhan,ushna,katu,spicy sauce,increase,increase,decrease
+OSR082,Bengal 5 Spice Blend (Panch Phoran),katu,laghu/ushna,rajovardhan,ushna,katu,spice blend,increase,increase,decrease

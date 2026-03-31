@@ -1,0 +1,8 @@
+# Enhanced LangGraph Configuration
+{
+    "dependencies": ["requirements.txt"],
+    "graphs": {
+        "ayurveda_enhanced_agent": "./graph_builder_enhanced.py:build_agent"
+    },
+    "env": "./.env"
+}
