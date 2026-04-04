@@ -45,19 +45,20 @@ _STRICT_WRAPPER: Optional[StrictLLMWrapper] = None
 
 
 def _parse_allowed_origins() -> list[str]:
-    raw = os.getenv(
-        "CORS_ORIGINS",
-        ",".join(
-            [
-                "http://localhost:5173",
-                "http://127.0.0.1:5173",
-                "http://localhost:3000",
-                "http://127.0.0.1:3000",
-            ]
-        ),
-    )
-    origins = [o.strip() for o in raw.split(",") if o.strip() and o.strip() != "*"]
-    return origins or ["http://localhost:5173", "http://localhost:3000"]
+    default_dev_origins = [
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+    ]
+
+    raw = os.getenv("CORS_ORIGINS", "")
+    env_origins = [o.strip() for o in raw.split(",") if o.strip() and o.strip() != "*"]
+
+    # Always allow local frontend origins for development/debugging, even when
+    # CORS_ORIGINS is set in Render env vars.
+    merged = list(dict.fromkeys(default_dev_origins + env_origins))
+    return merged or default_dev_origins
 
 
 app.add_middleware(
