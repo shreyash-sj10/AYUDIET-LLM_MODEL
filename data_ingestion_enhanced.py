@@ -15,7 +15,7 @@ class AyurvedicDataIngestion:
     """Enhanced data ingestion with Ayurvedic properties integration"""
     
     def __init__(self, data_directory: str = "data"):
-        self.data_directory = Path(data)
+        self.data_directory = Path(data_directory)
         self.datasets = {}
         self.knowledge_retriever = None
         

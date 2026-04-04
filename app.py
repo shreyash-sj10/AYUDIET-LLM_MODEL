@@ -5,6 +5,9 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
 import sys
+from datetime import datetime, timezone
+import time
+from collections import deque
 from chatbot_core import get_chatbot_response, clear_session, get_system_info
 
 # Ensure Unicode log/output works on Windows consoles.
@@ -13,7 +16,48 @@ if hasattr(sys.stdout, "reconfigure"):
 
 # Initialize Flask app
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+
+cors_origins_env = os.getenv("CORS_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000").strip()
+allowed_origins = [origin.strip() for origin in cors_origins_env.split(",") if origin.strip() and origin.strip() != "*"]
+if not allowed_origins:
+    allowed_origins = ["http://localhost:3000"]
+CORS(app, resources={r"/*": {"origins": allowed_origins}})
+
+API_KEY = os.getenv("AYUDIET_API_KEY", "").strip()
+RATE_LIMIT_PER_MINUTE = int(os.getenv("RATE_LIMIT_PER_MINUTE", "60"))
+_RATE_BUCKETS = {}
+
+
+def _enforce_api_key():
+    if not API_KEY:
+        return None
+    provided = request.headers.get("X-API-Key", "").strip()
+    if provided != API_KEY:
+        return jsonify({"error": "Invalid API key", "status": "error"}), 401
+    return None
+
+
+def _enforce_rate_limit():
+    ip = request.remote_addr or "unknown"
+    now = time.time()
+    bucket = _RATE_BUCKETS.setdefault(ip, deque())
+    while bucket and now - bucket[0] > 60:
+        bucket.popleft()
+    if len(bucket) >= RATE_LIMIT_PER_MINUTE:
+        return jsonify({"error": "Rate limit exceeded", "status": "error"}), 429
+    bucket.append(now)
+    return None
+
+
+@app.before_request
+def _security_guard():
+    if request.path in ["/chat", "/clear"]:
+        auth_error = _enforce_api_key()
+        if auth_error:
+            return auth_error
+        rate_error = _enforce_rate_limit()
+        if rate_error:
+            return rate_error
 
 @app.route('/', methods=['GET'])
 def home():
@@ -22,6 +66,7 @@ def home():
         system_info = get_system_info()
         return jsonify({
             "message": "🌿 Ayurvedic Dietitian Chatbot API",
+            "deprecation_notice": "Use FastAPI production entrypoint: uvicorn main:app",
             "version": system_info.get('version', '2.0 Enhanced - API'),
             "status": "active",
             "endpoints": {
@@ -51,7 +96,7 @@ def health_check():
         return jsonify({
             "status": "healthy",
             "message": "API is running and agent is initialized",
-            "timestamp": str(os.popen('date /t & time /t').read().strip())
+            "timestamp": datetime.now(timezone.utc).isoformat()
         })
     except Exception as e:
         return jsonify({
@@ -222,9 +267,11 @@ if __name__ == '__main__':
     print("=" * 50)
     
     # Run the Flask app
+    debug_mode = os.getenv("FLASK_DEBUG", "false").lower() == "true"
     app.run(
         host='0.0.0.0',  # Allow access from other devices on the network
         port=5000,       # Default Flask port
-        debug=True       # Enable debug mode for development
+        debug=debug_mode
     )
+
 

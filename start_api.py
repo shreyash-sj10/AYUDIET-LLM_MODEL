@@ -68,6 +68,7 @@ def get_local_ip():
 
 def main():
     """Main startup function"""
+    print("DEPRECATED launcher: use `uvicorn main:app --host 0.0.0.0 --port 8000` for production.")
     print("🌿 Ayurvedic Chatbot API - Quick Start")
     print("=" * 50)
     
@@ -102,7 +103,8 @@ def main():
     # Start the Flask app
     try:
         from app import app
-        app.run(host='0.0.0.0', port=5000, debug=True)
+        debug_mode = os.getenv("FLASK_DEBUG", "false").lower() == "true"
+        app.run(host='0.0.0.0', port=5000, debug=debug_mode)
     except KeyboardInterrupt:
         print("\n👋 Server stopped. Goodbye!")
     except Exception as e:

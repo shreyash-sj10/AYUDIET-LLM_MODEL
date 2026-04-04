@@ -1,4 +1,5 @@
 import re
+from difflib import SequenceMatcher
 from typing import Dict, List, Optional, Tuple
 
 from llm_schemas_strict import (
@@ -116,19 +117,64 @@ class OutputValidator:
 
 class ContextValidator:
     @staticmethod
+    def _normalize(text: str) -> str:
+        cleaned = re.sub(r"\s+", " ", (text or "").strip().lower())
+        return re.sub(r"[^a-z0-9\s\.\,\-\(\)]", "", cleaned)
+
+    @staticmethod
+    def _split_sentences(text: str) -> List[str]:
+        sample = ContextValidator._normalize(text)
+        parts = re.split(r"[.!?]+", sample)
+        return [p.strip() for p in parts if len(p.strip()) >= 12]
+
+    @staticmethod
+    def _sentence_supported(sentence: str, context_sentences: List[str]) -> bool:
+        if not sentence:
+            return True
+        for chunk in context_sentences:
+            if sentence in chunk or chunk in sentence:
+                return True
+            ratio = SequenceMatcher(None, sentence, chunk).ratio()
+            if ratio >= 0.82:
+                return True
+            sentence_tokens = set(re.findall(r"\b[a-z0-9]{4,}\b", sentence))
+            chunk_tokens = set(re.findall(r"\b[a-z0-9]{4,}\b", chunk))
+            if sentence_tokens:
+                overlap = len(sentence_tokens & chunk_tokens) / len(sentence_tokens)
+                if overlap >= 0.75:
+                    return True
+        return False
+
+    @staticmethod
     def check_context_adherence(explanation: str, context_chunks: List[str]) -> Tuple[bool, float]:
         if not context_chunks:
             return True, 0.0
 
-        context = " ".join(context_chunks).lower()
-        tokens = set(re.findall(r"\b[a-z]{4,}\b", explanation.lower()))
-        if not tokens:
+        explanation_sentences = ContextValidator._split_sentences(explanation)
+        context_sentences: List[str] = []
+        for chunk in context_chunks:
+            context_sentences.extend(ContextValidator._split_sentences(chunk))
+
+        if not explanation_sentences or not context_sentences:
             return False, 1.0
 
-        matched = sum(1 for token in tokens if token in context)
-        adherence = matched / len(tokens)
-        has_external_claims = adherence < 0.5
+        supported = sum(
+            1 for sentence in explanation_sentences if ContextValidator._sentence_supported(sentence, context_sentences)
+        )
+        adherence = supported / len(explanation_sentences)
+        has_external_claims = adherence < 0.7
         return has_external_claims, adherence
+
+    @staticmethod
+    def confidence_penalty(adherence: float) -> float:
+        score = max(0.0, min(1.0, float(adherence)))
+        if score >= 0.9:
+            return 0.0
+        if score >= 0.75:
+            return 0.1
+        if score >= 0.6:
+            return 0.2
+        return 0.35
 
 
 class FallbackGenerator:

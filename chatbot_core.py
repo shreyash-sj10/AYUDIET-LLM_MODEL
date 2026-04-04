@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from langchain_core.messages import HumanMessage, AIMessage
 
 # Import the fixed graph builder (using the working version)
-from graph_builder_fixed_final import build_agent, get_system_info
+from graph_builder_fixed_final import build_agent, get_system_info as graph_get_system_info
 
 # Load environment variables
 load_dotenv()
@@ -131,8 +131,8 @@ def clear_session(session_id):
 def get_system_info():
     """Get system information for the API"""
     try:
-        return get_system_info()
-    except:
+        return graph_get_system_info()
+    except Exception:
         return {
             'version': '2.0 Enhanced - API',
             'capabilities': [

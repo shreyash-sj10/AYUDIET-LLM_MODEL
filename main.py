@@ -1,106 +1,135 @@
+from __future__ import annotations
+
 import asyncio
-import json
+import logging
 import os
-import re
-from typing import Any, Dict, Optional
+import time
+from collections import deque
+from typing import Any, Deque, Dict, Optional
 
-from fastapi import FastAPI
-from pydantic import BaseModel, Field
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
-from llm_prompts_strict import (
-    get_feedback_parsing_prompt,
-    get_profiling_prompt,
-    get_rag_explanation_prompt,
+from llm_hallucination_control import ContextValidator, OutputValidator
+from llm_strict_wrapper import StrictLLMWrapper
+from schemas import (
+    DoshaEstimate,
+    Envelope,
+    ErrorBody,
+    ExplainRequest,
+    ExplainResponse,
+    HealthData,
+    ProfileRequest,
+    ProfileResponse,
 )
-from llm_schemas_strict import create_fallback_output
-from llm_hallucination_control import ContextValidator
 
 try:
     from langchain_groq import ChatGroq
-    from langchain_core.messages import HumanMessage
 except Exception:  # pragma: no cover
     ChatGroq = None
-    HumanMessage = None
 
 
-app = FastAPI(title="AYUDIET AI Service", version="1.0.0")
+logging.basicConfig(level=os.getenv("LOG_LEVEL", "INFO"))
+log = logging.getLogger("ayudiet.api")
+
+app = FastAPI(title="AYUDIET AI Service", version="2.0.0")
 
 LLM_TIMEOUT_SECONDS = float(os.getenv("LLM_TIMEOUT_SECONDS", "12"))
+API_KEY = os.getenv("AYUDIET_API_KEY", "").strip()
+RATE_LIMIT_PER_MINUTE = int(os.getenv("RATE_LIMIT_PER_MINUTE", "60"))
+_RATE_BUCKETS: Dict[str, Deque[float]] = {}
+_STRICT_WRAPPER: Optional[StrictLLMWrapper] = None
 
 
-class ProfileRequest(BaseModel):
-    text: str = Field(default="")
+def _parse_allowed_origins() -> list[str]:
+    raw = os.getenv("CORS_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000")
+    origins = [o.strip() for o in raw.split(",") if o.strip() and o.strip() != "*"]
+    return origins or ["http://localhost:3000"]
 
 
-class ExplainRequest(BaseModel):
-    context: str = Field(default="")
-    reasoning: str = Field(default="")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=_parse_allowed_origins(),
+    allow_credentials=False,
+    allow_methods=["GET", "POST"],
+    allow_headers=["Content-Type", "X-API-Key", "X-Request-ID", "X-Trace-ID"],
+)
 
 
-class FeedbackRequest(BaseModel):
-    text: str = Field(default="")
+def _request_meta(request: Request) -> tuple[str, str]:
+    request_id = request.headers.get("X-Request-ID", "").strip() or "unknown"
+    trace_id = request.headers.get("X-Trace-ID", "").strip() or request_id
+    return request_id, trace_id
 
 
-def ok_response(data: Dict[str, Any]) -> Dict[str, Any]:
-    return {"success": True, "data": data, "error": None}
+def _success(data: Any) -> Dict[str, Any]:
+    if hasattr(data, "model_dump"):
+        payload = data.model_dump()
+    else:
+        payload = data
+    return {"success": True, "data": payload, "error": None}
 
 
-def error_response(error_type: str, message: str) -> Dict[str, Any]:
-    return {
-        "success": False,
-        "data": None,
-        "error": {"type": error_type, "message": message},
-    }
+def _error(message: str) -> Dict[str, Any]:
+    return {"success": False, "data": None, "error": ErrorBody(message=message).model_dump()}
 
 
-def _log(prefix: str, payload: Any) -> None:
-    print(f"[{prefix}] {payload}")
+def _build_profile_fallback() -> ProfileResponse:
+    return ProfileResponse(
+        symptom_tags=["none"],
+        primary_dosha="pitta",
+        dosha_estimate=DoshaEstimate(vata=0.33, pitta=0.33, kapha=0.34),
+        confidence=0.2,
+        fallback=True,
+    )
 
 
-def _extract_json_block(raw_text: str) -> Optional[Dict[str, Any]]:
-    if not raw_text:
-        return None
-    candidate = raw_text.strip()
-    try:
-        return json.loads(candidate)
-    except Exception:
-        pass
-
-    fenced = re.search(r"```(?:json)?\s*([\s\S]*?)```", candidate, re.IGNORECASE)
-    if fenced:
-        try:
-            return json.loads(fenced.group(1).strip())
-        except Exception:
-            pass
-
-    first = candidate.find("{")
-    last = candidate.rfind("}")
-    if first != -1 and last != -1 and last > first:
-        try:
-            return json.loads(candidate[first : last + 1])
-        except Exception:
-            return None
-    return None
+def _build_explain_fallback() -> ExplainResponse:
+    return ExplainResponse(
+        explanation="insufficient context to provide safe explanation",
+        reasoning=["fallback"],
+        confidence=0.1,
+        sources=[],
+        fallback=True,
+    )
 
 
-def _build_profile_fallback() -> Dict[str, Any]:
-    return create_fallback_output("profiling", 0.3)
+def _normalize_text(value: str) -> str:
+    return " ".join(str(value).strip().split())
 
 
-def _build_feedback_fallback() -> Dict[str, Any]:
-    return {"feedback_type": "DISLIKE", "target": ""}
+def _primary_dosha_from_scores(scores: DoshaEstimate) -> str:
+    ordered = ["vata", "pitta", "kapha"]
+    values = {"vata": scores.vata, "pitta": scores.pitta, "kapha": scores.kapha}
+    return max(ordered, key=lambda name: (values[name], -ordered.index(name)))
 
 
-def _build_explain_fallback(context: str) -> Dict[str, Any]:
-    safe_context = (context or "").strip()
-    explanation = "Insufficient context to provide explanation."
-    if safe_context:
-        explanation = safe_context[:200]
-    return {"explanation": explanation}
+def sanitize_ai_output(text: str) -> str:
+    forbidden = [
+        "meal",
+        "recipe",
+        "select",
+        "choose",
+        "recommend food",
+        "eat",
+        "plan",
+        "diet plan",
+        "ranking",
+        "optimize",
+    ]
+    cleaned = _normalize_text(text)
+    lowered = cleaned.lower()
+    for word in forbidden:
+        if word in lowered:
+            raise ValueError("AI boundary violation")
+    return cleaned
 
 
 def _get_llm() -> Optional[Any]:
-    if ChatGroq is None or HumanMessage is None:
+    if ChatGroq is None:
         return None
     api_key = os.getenv("GROQ_API_KEY")
     if not api_key:
@@ -112,116 +141,318 @@ def _get_llm() -> Optional[Any]:
         return None
 
 
-async def _invoke_llm_json(prompt: str) -> Optional[Dict[str, Any]]:
+def _get_strict_wrapper() -> Optional[StrictLLMWrapper]:
+    global _STRICT_WRAPPER
+    if _STRICT_WRAPPER is not None:
+        return _STRICT_WRAPPER
     llm = _get_llm()
     if llm is None:
-        raise RuntimeError("LLM unavailable")
-
-    def _call() -> str:
-        response = llm.invoke([HumanMessage(content=prompt)])
-        return str(response.content).strip()
-
-    raw_output = await asyncio.wait_for(asyncio.to_thread(_call), timeout=LLM_TIMEOUT_SECONDS)
-    _log("LLM raw output", raw_output)
-    parsed = _extract_json_block(raw_output)
-    _log("LLM parsed output", parsed)
-    return parsed
+        return None
+    _STRICT_WRAPPER = StrictLLMWrapper(llm)
+    return _STRICT_WRAPPER
 
 
-@app.get("/health")
-async def health() -> Dict[str, str]:
-    return {"status": "ok"}
+def _enforce_api_key(request: Request) -> None:
+    if not API_KEY:
+        return
+    provided = request.headers.get("X-API-Key", "").strip()
+    if provided != API_KEY:
+        raise HTTPException(status_code=401, detail="Invalid API key")
 
 
-@app.post("/ai/profile")
-async def ai_profile(payload: ProfileRequest) -> Dict[str, Any]:
-    _log("request received", {"endpoint": "/ai/profile", "text": payload.text})
-    fallback = _build_profile_fallback()
-    try:
-        prompt = get_profiling_prompt(payload.text)
-        parsed = await _invoke_llm_json(prompt)
-        if not parsed:
-            return ok_response(fallback)
-
-        required = {"risk_flags", "dosha_estimate", "confidence"}
-        if not required.issubset(parsed.keys()):
-            return ok_response(fallback)
-
-        dosha = parsed.get("dosha_estimate", {})
-        if not {"vata", "pitta", "kapha"}.issubset(dosha.keys()):
-            return ok_response(fallback)
-
-        return ok_response(
-            {
-                "risk_flags": parsed.get("risk_flags", []),
-                "dosha_estimate": {
-                    "vata": float(dosha.get("vata", 0.33)),
-                    "pitta": float(dosha.get("pitta", 0.33)),
-                    "kapha": float(dosha.get("kapha", 0.34)),
-                },
-                "confidence": float(parsed.get("confidence", 0.3)),
-            }
-        )
-    except asyncio.TimeoutError:
-        _log("errors", "profile timeout")
-        return ok_response(fallback)
-    except Exception as exc:
-        _log("errors", str(exc))
-        return ok_response(fallback)
+def _enforce_rate_limit(request: Request) -> None:
+    ip = request.client.host if request.client else "unknown"
+    now = time.time()
+    bucket = _RATE_BUCKETS.setdefault(ip, deque())
+    while bucket and now - bucket[0] > 60:
+        bucket.popleft()
+    if len(bucket) >= RATE_LIMIT_PER_MINUTE:
+        raise HTTPException(status_code=429, detail="Rate limit exceeded")
+    bucket.append(now)
 
 
-@app.post("/ai/explain")
-async def ai_explain(payload: ExplainRequest) -> Dict[str, Any]:
-    _log(
-        "request received",
-        {"endpoint": "/ai/explain", "context": payload.context, "reasoning": payload.reasoning},
+@app.middleware("http")
+async def auth_and_rate_limit(request: Request, call_next):
+    if request.url.path in {"/profile", "/explain"}:
+        _enforce_api_key(request)
+        _enforce_rate_limit(request)
+    return await call_next(request)
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    request_id, trace_id = _request_meta(request)
+    log.warning(
+        "validation_error",
+        extra={
+            "request_id": request_id,
+            "trace_id": trace_id,
+            "endpoint": request.url.path,
+            "errors": exc.errors(),
+        },
     )
-    fallback = _build_explain_fallback(payload.context)
-    try:
-        prompt = get_rag_explanation_prompt(payload.context, payload.reasoning)
-        parsed = await _invoke_llm_json(prompt)
-        if not parsed:
-            return ok_response(fallback)
+    return JSONResponse(status_code=422, content=_error("Invalid request payload"))
 
-        explanation = str(parsed.get("explanation", "")).strip()
-        if not explanation:
-            return ok_response(fallback)
 
-        has_external_claims, adherence = ContextValidator.check_context_adherence(
-            explanation, [payload.context]
+@app.exception_handler(HTTPException)
+async def http_exception_handler(request: Request, exc: HTTPException):
+    request_id, trace_id = _request_meta(request)
+    log.warning(
+        "http_error",
+        extra={
+            "request_id": request_id,
+            "trace_id": trace_id,
+            "endpoint": request.url.path,
+            "status_code": exc.status_code,
+            "detail": str(exc.detail),
+        },
+    )
+    return JSONResponse(status_code=exc.status_code, content=_error(str(exc.detail)))
+
+
+@app.exception_handler(StarletteHTTPException)
+async def starlette_http_exception_handler(request: Request, exc: StarletteHTTPException):
+    request_id, trace_id = _request_meta(request)
+    log.warning(
+        "http_error",
+        extra={
+            "request_id": request_id,
+            "trace_id": trace_id,
+            "endpoint": request.url.path,
+            "status_code": exc.status_code,
+            "detail": str(exc.detail),
+        },
+    )
+    return JSONResponse(status_code=exc.status_code, content=_error(str(exc.detail)))
+
+
+@app.exception_handler(Exception)
+async def general_exception_handler(request: Request, exc: Exception):
+    request_id, trace_id = _request_meta(request)
+    log.error(
+        "runtime_error",
+        extra={
+            "request_id": request_id,
+            "trace_id": trace_id,
+            "endpoint": request.url.path,
+            "error": str(exc),
+        },
+    )
+    return JSONResponse(status_code=500, content=_error("Internal server error"))
+
+
+@app.get("/health", response_model=Envelope[HealthData])
+async def health(request: Request) -> Dict[str, Any]:
+    request_id, trace_id = _request_meta(request)
+    log.info(
+        "health_request",
+        extra={
+            "request_id": request_id,
+            "trace_id": trace_id,
+            "endpoint": "/health",
+        },
+    )
+    return _success(HealthData(status="ok", entrypoint="main.py"))
+
+
+@app.post("/profile", response_model=Envelope[ProfileResponse])
+async def profile(payload: ProfileRequest, request: Request) -> Dict[str, Any]:
+    request_id, trace_id = _request_meta(request)
+    start = time.perf_counter()
+    wrapper = _get_strict_wrapper()
+
+    log.info(
+        "profile_request",
+        extra={
+            "request_id": request_id,
+            "trace_id": trace_id,
+            "endpoint": "/profile",
+        },
+    )
+
+    if wrapper is None:
+        fallback = _build_profile_fallback()
+        log.warning(
+            "fallback_triggered",
+            extra={
+                "request_id": request_id,
+                "trace_id": trace_id,
+                "endpoint": "/profile",
+                "reason": "LLM unavailable",
+            },
         )
-        if has_external_claims:
-            _log("errors", f"context adherence low: {adherence}")
-            return ok_response(fallback)
+        return _success(fallback)
 
-        return ok_response({"explanation": explanation})
-    except asyncio.TimeoutError:
-        _log("errors", "explain timeout")
-        return ok_response(fallback)
-    except Exception as exc:
-        _log("errors", str(exc))
-        return ok_response(fallback)
-
-
-@app.post("/ai/feedback")
-async def ai_feedback(payload: FeedbackRequest) -> Dict[str, Any]:
-    _log("request received", {"endpoint": "/ai/feedback", "text": payload.text})
-    fallback = _build_feedback_fallback()
     try:
-        prompt = get_feedback_parsing_prompt(payload.text)
-        parsed = await _invoke_llm_json(prompt)
-        if not parsed:
-            return ok_response(fallback)
+        result = await asyncio.wait_for(
+            asyncio.to_thread(wrapper.extract_health_profile, payload.symptoms, {}),
+            timeout=LLM_TIMEOUT_SECONDS,
+        )
+        data = result.get("data", {})
+        is_valid, parsed, _ = OutputValidator.validate_profile_output(data)
+        if not is_valid or parsed is None:
+            fallback = _build_profile_fallback()
+            log.warning(
+                "fallback_triggered",
+                extra={
+                    "request_id": request_id,
+                    "trace_id": trace_id,
+                    "endpoint": "/profile",
+                    "reason": "schema_validation_failed",
+                },
+            )
+            return _success(fallback)
 
-        feedback_type = str(parsed.get("feedback_type", "DISLIKE")).upper()
-        if feedback_type not in {"LIKE", "DISLIKE", "REPLACE"}:
-            feedback_type = "DISLIKE"
+        profile_data = ProfileResponse(
+            symptom_tags=[str(flag) for flag in parsed.risk_flags],
+            primary_dosha=_primary_dosha_from_scores(parsed.dosha_estimate),
+            dosha_estimate=parsed.dosha_estimate,
+            confidence=round(float(parsed.confidence), 2),
+            fallback=False,
+        )
 
-        target = str(parsed.get("target", "")).strip()
-        return ok_response({"feedback_type": feedback_type, "target": target})
+        latency_ms = int((time.perf_counter() - start) * 1000)
+        log.info(
+            "profile_response",
+            extra={
+                "request_id": request_id,
+                "trace_id": trace_id,
+                "endpoint": "/profile",
+                "latency_ms": latency_ms,
+                "fallback": False,
+            },
+        )
+        return _success(profile_data)
+
     except asyncio.TimeoutError:
-        _log("errors", "feedback timeout")
-        return ok_response(fallback)
+        fallback = _build_profile_fallback()
+        log.error(
+            "ai_failure",
+            extra={
+                "request_id": request_id,
+                "trace_id": trace_id,
+                "endpoint": "/profile",
+                "reason": "timeout",
+            },
+        )
+        return _success(fallback)
     except Exception as exc:
-        _log("errors", str(exc))
-        return ok_response(fallback)
+        fallback = _build_profile_fallback()
+        log.error(
+            "ai_failure",
+            extra={
+                "request_id": request_id,
+                "trace_id": trace_id,
+                "endpoint": "/profile",
+                "reason": str(exc),
+            },
+        )
+        return _success(fallback)
+
+
+@app.post("/explain", response_model=Envelope[ExplainResponse])
+async def explain(payload: ExplainRequest, request: Request) -> Dict[str, Any]:
+    request_id, trace_id = _request_meta(request)
+    start = time.perf_counter()
+    wrapper = _get_strict_wrapper()
+
+    log.info(
+        "explain_request",
+        extra={
+            "request_id": request_id,
+            "trace_id": trace_id,
+            "endpoint": "/explain",
+        },
+    )
+
+    if wrapper is None:
+        fallback = _build_explain_fallback()
+        log.warning(
+            "fallback_triggered",
+            extra={
+                "request_id": request_id,
+                "trace_id": trace_id,
+                "endpoint": "/explain",
+                "reason": "LLM unavailable",
+            },
+        )
+        return _success(fallback)
+
+    try:
+        result = await asyncio.wait_for(
+            asyncio.to_thread(wrapper.generate_explanation, [payload.context], payload.reasoning),
+            timeout=LLM_TIMEOUT_SECONDS,
+        )
+
+        data = result.get("data", {})
+        raw_explanation = str(data.get("explanation", "")).strip()
+        sanitized = sanitize_ai_output(raw_explanation)
+
+        has_external_claims, _ = ContextValidator.check_context_adherence(sanitized, [payload.context])
+        if has_external_claims:
+            raise ValueError("Context adherence violation")
+
+        sources = data.get("sources", [])
+        if not isinstance(sources, list) or any(not isinstance(src, str) for src in sources):
+            raise ValueError("Invalid sources")
+
+        penalty = float(data.get("confidence_penalty", 0.0))
+        confidence = round(max(0.0, min(1.0, 1.0 - penalty)), 2)
+
+        explain_data = ExplainResponse(
+            explanation=sanitized,
+            reasoning=[_normalize_text(payload.reasoning)],
+            confidence=confidence,
+            sources=[_normalize_text(src) for src in sources],
+            fallback=False,
+        )
+
+        latency_ms = int((time.perf_counter() - start) * 1000)
+        log.info(
+            "explain_response",
+            extra={
+                "request_id": request_id,
+                "trace_id": trace_id,
+                "endpoint": "/explain",
+                "latency_ms": latency_ms,
+                "fallback": False,
+            },
+        )
+        return _success(explain_data)
+
+    except asyncio.TimeoutError:
+        fallback = _build_explain_fallback()
+        log.error(
+            "ai_failure",
+            extra={
+                "request_id": request_id,
+                "trace_id": trace_id,
+                "endpoint": "/explain",
+                "reason": "timeout",
+            },
+        )
+        return _success(fallback)
+    except ValueError as exc:
+        fallback = _build_explain_fallback()
+        log.warning(
+            "fallback_triggered",
+            extra={
+                "request_id": request_id,
+                "trace_id": trace_id,
+                "endpoint": "/explain",
+                "reason": str(exc),
+            },
+        )
+        return _success(fallback)
+    except Exception as exc:
+        fallback = _build_explain_fallback()
+        log.error(
+            "ai_failure",
+            extra={
+                "request_id": request_id,
+                "trace_id": trace_id,
+                "endpoint": "/explain",
+                "reason": str(exc),
+            },
+        )
+        return _success(fallback)

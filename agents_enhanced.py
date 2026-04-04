@@ -3,19 +3,19 @@
 
 import os
 import re
-import json
 import pandas as pd
 from typing import Annotated, TypedDict, Optional, Dict, Any, List
 from dotenv import load_dotenv
 load_dotenv()
 
-from langchain_core.messages import BaseMessage, HumanMessage, AIMessage
-from langchain_core.output_parsers import JsonOutputParser
+from langchain_core.messages import BaseMessage, AIMessage
 from pydantic import BaseModel, Field
 from langchain_groq import ChatGroq
 from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
 import numpy as np
+from llm_strict_wrapper import StrictLLMWrapper
+from deterministic_engine import DeterministicDecisionEngine
 
 # Enhanced UserProfile with comprehensive Ayurvedic fields
 class UserProfile(BaseModel):
@@ -66,6 +66,8 @@ class State(TypedDict):
 GLOBAL_CONFIG = {}
 _LLM_INSTANCE = None
 _LLM_MODEL = None
+_STRICT_WRAPPER = None
+_DECISION_ENGINE = None
 
 def set_global_config(config):
     global GLOBAL_CONFIG
@@ -112,9 +114,6 @@ def get_llm():
                 temperature=float(os.getenv("TEMPERATURE", "0.1")),
                 api_key=api_key
             )
-
-            # Warm up once so inaccessible models fail here and we can fall back.
-            llm.invoke([HumanMessage(content="Reply with: ok")])
             _LLM_INSTANCE = llm
             _LLM_MODEL = model_name
             print(f"Using Groq model: {model_name}")
@@ -124,6 +123,28 @@ def get_llm():
 
     print("Error initializing Groq LLM: no accessible Groq models were available")
     return None
+
+
+def get_strict_wrapper() -> Optional[StrictLLMWrapper]:
+    """Return a cached strict wrapper bound to the configured LLM."""
+    global _STRICT_WRAPPER
+
+    if _STRICT_WRAPPER is not None:
+        return _STRICT_WRAPPER
+
+    llm = get_llm()
+    if llm is None:
+        return None
+
+    _STRICT_WRAPPER = StrictLLMWrapper(llm)
+    return _STRICT_WRAPPER
+
+
+def get_decision_engine() -> DeterministicDecisionEngine:
+    global _DECISION_ENGINE
+    if _DECISION_ENGINE is None:
+        _DECISION_ENGINE = DeterministicDecisionEngine()
+    return _DECISION_ENGINE
 
 # ROUTING AGENT - Enhanced query classification
 def route_query(state: State) -> State:
@@ -197,96 +218,108 @@ def route_query(state: State) -> State:
 
 # PROFILE AGENT - Enhanced profile management
 def profile_agent(state: State) -> State:
-    """Enhanced profile agent with comprehensive extraction and validation"""
+    """Profile agent backed by strict wrapper and deterministic field extraction."""
     messages = state["messages"]
     session_id = state.get("session_id", "default")
     current_profile = state.get("user_profile", {})
-    
-    llm = get_llm()
-    if not llm:
+
+    wrapper = get_strict_wrapper()
+    if not wrapper:
         state["final_response"] = "I'm having technical difficulties. Please try again."
         return state
-    
-    # Enhanced profile extraction prompt
-    profile_prompt = f"""
-    You are an expert Ayurvedic consultant. Extract and update user profile information from this conversation.
-    
-    Current Profile: {json.dumps(current_profile, indent=2)}
-    
-    User Message: "{messages[-1].content}"
-    
-    Extract ALL available information and return ONLY a JSON object with these fields:
-    {{
-        "name": "string or null",
-        "age": "number or null", 
-        "gender": "string or null",
-        "weight": "number in kg or null",
-        "height": "string (cm or feet'inches) or null",
-        "activity_level": "sedentary/moderate/active/very_active or null",
-        "health_conditions": ["list of conditions"],
-        "medications": ["list of medications"],
-        "allergies": ["list of allergies"],
-        "dietary_preferences": ["vegetarian/vegan/non-veg etc"],
-        "food_dislikes": ["list of foods to avoid"],
-        "meal_frequency": "number or null",
-        "health_goals": ["weight_loss/weight_gain/maintenance/health_improvement"],
-        "preferred_cuisine": ["Indian/South_Indian/North_Indian etc"],
-        "cooking_skill": "beginner/intermediate/expert or null",
-        "digestion_strength": "strong/moderate/weak or null",
-        "bowel_movement": "regular/irregular/constipated or null",
-        "water_intake": "string describing daily intake or null",
-        "sleep_pattern": "string describing sleep or null"
-    }}
-    
-    Only include fields that have actual values. Return ONLY the JSON, nothing else.
-    """
-    
+
+    user_text = messages[-1].content if messages else ""
+
     try:
-        # Get LLM response
-        response = llm.invoke([HumanMessage(content=profile_prompt)])
-        profile_text = response.content.strip()
-        
-        # Parse JSON
-        parser = JsonOutputParser(pydantic_object=UserProfile)
-        new_profile_data = parser.parse(profile_text)
-        
-        # Merge with existing profile
+        strict_result = wrapper.extract_health_profile(user_text, current_profile=current_profile)
+        strict_profile = strict_result.get("data", {})
+        deterministic_profile = _extract_basic_profile_fields(user_text)
+
         updated_profile = {**current_profile}
-        for key, value in new_profile_data.items():
+        for key, value in deterministic_profile.items():
             if value is not None and value != [] and value != "":
                 updated_profile[key] = value
-        
-        # Assess Dosha if we have enough information
-        if updated_profile.get("age") and updated_profile.get("weight"):
-            dosha_assessment = assess_dosha_comprehensive(updated_profile)
-            updated_profile.update(dosha_assessment)
-        
-        # Save profile
+
+        risk_flags = strict_profile.get("risk_flags", [])
+        dosha = strict_profile.get("dosha_estimate", {})
+        if risk_flags:
+            updated_profile["health_conditions"] = sorted(
+                list(set(updated_profile.get("health_conditions", []) + risk_flags))
+            )
+        if dosha:
+            updated_profile["dosha_scores"] = dosha
+            updated_profile["primary_dosha"] = max(dosha, key=dosha.get)
+            updated_profile["constitution"] = updated_profile["primary_dosha"]
+
+        if updated_profile.get("age") and updated_profile.get("weight") and not updated_profile.get("dosha_scores"):
+            updated_profile.update(assess_dosha_comprehensive(updated_profile))
+
         PROFILE_STORAGE[session_id] = updated_profile
         state["user_profile"] = updated_profile
-        
-        # Generate response
+
         profile_summary = generate_profile_summary(updated_profile)
-        
-        response_text = f"""Thank you for sharing that information! I've updated your profile.
-        
+        confidence = float(strict_profile.get("confidence", 0.2))
+        confidence_label = "high" if confidence >= 0.7 else "moderate" if confidence >= 0.45 else "low"
+
+        state["final_response"] = f"""Thank you for sharing that information! I've updated your profile.
+
 {profile_summary}
 
+Profile confidence: {confidence_label} ({confidence:.2f})
+
 I can now provide you with personalized Ayurvedic recommendations. You can ask me for:
-• Personalized diet plans
-• Recipe suggestions
-• Ayurvedic advice
-• Food recommendations based on your constitution
+- Personalized diet plans
+- Recipe suggestions
+- Ayurvedic advice
+- Food recommendations based on your constitution
 
 What would you like to know?"""
-        
-        state["final_response"] = response_text
-        
+
     except Exception as e:
         print(f"Error in profile agent: {e}")
         state["final_response"] = "I've noted your information. What else can I help you with regarding your Ayurvedic diet and health?"
-    
+
     return state
+
+
+def _extract_basic_profile_fields(user_text: str) -> Dict[str, Any]:
+    """Extract deterministic profile fields from plain user text."""
+    text = (user_text or "").strip()
+    lower = text.lower()
+    updates: Dict[str, Any] = {}
+
+    age_match = re.search(r"\b(?:age\s*[:=]?\s*)?(\d{1,2})\s*(?:years?|yrs?)\b", lower)
+    if age_match:
+        updates["age"] = int(age_match.group(1))
+
+    weight_match = re.search(r"\b(?:weight\s*[:=]?\s*)?(\d{2,3}(?:\.\d+)?)\s*(?:kg|kgs)\b", lower)
+    if weight_match:
+        updates["weight"] = float(weight_match.group(1))
+
+    height_match = re.search(r"\b(?:height\s*[:=]?\s*)?(\d{2,3})\s*cm\b", lower)
+    if height_match:
+        updates["height"] = f"{height_match.group(1)} cm"
+
+    if "vegetarian" in lower:
+        updates["dietary_preferences"] = ["vegetarian"]
+    elif "vegan" in lower:
+        updates["dietary_preferences"] = ["vegan"]
+    elif "non-veg" in lower or "non veg" in lower:
+        updates["dietary_preferences"] = ["non-veg"]
+
+    allergies = []
+    allergy_match = re.search(r"allergic to ([a-z,\s]+)", lower)
+    if allergy_match:
+        allergies = [item.strip() for item in allergy_match.group(1).split(",") if item.strip()]
+    if allergies:
+        updates["allergies"] = allergies
+
+    if "weight loss" in lower or "lose weight" in lower:
+        updates["health_goals"] = ["weight_loss"]
+    elif "weight gain" in lower or "gain weight" in lower:
+        updates["health_goals"] = ["weight_gain"]
+
+    return updates
 
 # ENHANCED DOSHA ASSESSMENT
 def assess_dosha_comprehensive(profile: Dict) -> Dict:
@@ -417,145 +450,88 @@ def generate_profile_summary(profile: Dict) -> str:
 
 # KNOWLEDGE RETRIEVAL AGENT - Enhanced with fallback
 def knowledge_retrieval_agent(state: State) -> State:
-    """Enhanced knowledge agent with PDF retrieval and LLM fallback"""
+    """Knowledge agent using strict explanation generation from retrieved context."""
     messages = state["messages"]
     query = messages[-1].content
-    
+
     knowledge_retriever = GLOBAL_CONFIG.get("knowledge_retriever")
-    llm = get_llm()
-    
-    if not llm:
+    wrapper = get_strict_wrapper()
+
+    if not wrapper:
         state["final_response"] = "I'm experiencing technical difficulties. Please try again."
         return state
-    
+
     try:
-        # First, try to retrieve from Ayurvedic knowledge base
         if knowledge_retriever:
             try:
                 relevant_docs = knowledge_retriever.invoke(query)
-                
+
                 if relevant_docs and len(relevant_docs) > 0:
-                    # Found relevant information in knowledge base
-                    context = "\n\n".join([doc.page_content for doc in relevant_docs[:3]])
-                    
-                    knowledge_prompt = f"""
-                    You are an expert Ayurvedic consultant. Answer the user's question using the provided Ayurvedic texts.
-                    
-                    Context from Ayurvedic Texts:
-                    {context}
-                    
-                    User Question: {query}
-                    
-                    Provide a comprehensive answer based on the Ayurvedic principles from the texts. 
-                    Include practical advice where applicable.
-                    """
-                    
-                    response = llm.invoke([HumanMessage(content=knowledge_prompt)])
-                    
-                    state["final_response"] = f"🔍 **Based on Ayurvedic Texts:**\n\n{response.content}"
-                    return state
-                    
+                    context_chunks = [doc.page_content for doc in relevant_docs[:3]]
+                    result = wrapper.generate_explanation(context_chunks, query)
+                    data = result.get("data", {})
+                    explanation = str(data.get("explanation", "")).strip()
+                    if explanation:
+                        state["final_response"] = f"Based on Ayurvedic Texts:\n\n{explanation}"
+                        return state
+
             except Exception as e:
                 print(f"Error retrieving from knowledge base: {e}")
-        
-        # Fallback to LLM knowledge with warning
-        fallback_prompt = f"""
-        You are an expert in Ayurveda and nutrition. Answer this question about Ayurvedic principles, 
-        food properties, or health guidance: {query}
-        
-        Provide accurate information based on traditional Ayurvedic knowledge.
-        Keep the response practical and helpful.
-        """
-        
-        response = llm.invoke([HumanMessage(content=fallback_prompt)])
-        
-        state["final_response"] = f"⚠️ **Note:** Answer based on general Ayurvedic knowledge (specific texts not available)\n\n{response.content}"
-        
+
+        state["final_response"] = (
+            "I could not find grounded reference chunks for that question right now. "
+            "Please rephrase with a specific herb, recipe, or condition so I can answer from retrieved texts only."
+        )
+
     except Exception as e:
         print(f"Error in knowledge retrieval: {e}")
         state["final_response"] = "I apologize, but I'm having difficulty accessing information right now. Please try again."
-    
+
     return state
 
 # DIET PLAN AGENT - Professional diet planning
 def diet_plan_agent(state: State) -> State:
-    """Enhanced diet plan agent with comprehensive planning"""
+    """Deterministic diet plan agent using constraint-first decision engine."""
     messages = state["messages"]
     user_profile = state.get("user_profile", {})
     query = messages[-1].content
-    
-    llm = get_llm()
-    if not llm:
-        state["final_response"] = "I'm experiencing technical difficulties. Please try again."
-        return state
-    
-    # Extract timeframe from query
-    timeframe = extract_timeframe(query)
-    
-    # Get datasets
     datasets = GLOBAL_CONFIG.get("datasets", {})
-    
+
     try:
-        # Calculate caloric needs
-        calories = calculate_daily_calories(user_profile)
-        
-        # Get dosha-appropriate foods
-        dosha = user_profile.get("primary_dosha", "pitta")
-        suitable_foods = get_dosha_appropriate_foods(dosha, datasets)
-        
-        # Generate comprehensive diet plan
-        plan_prompt = f"""
-        Create a detailed {timeframe}-day Ayurvedic diet plan for this user:
-        
-        User Profile:
-        {json.dumps(user_profile, indent=2)}
-        
-        Daily Calorie Target: {calories} kcal
-        Primary Dosha: {dosha}
-        
-        Available Food Options:
-        {suitable_foods[:500]}...
-        
-        Create a balanced meal plan with:
-        1. Breakfast, Lunch, Dinner, and 2 snacks
-        2. Ayurvedic principles (6 tastes, dosha balancing)
-        3. Nutritional balance (protein, carbs, healthy fats)
-        4. Practical Indian recipes
-        5. Meal timing recommendations
-        
-        Format as a clear day-by-day plan with recipes and portions.
-        """
-        
-        response = llm.invoke([HumanMessage(content=plan_prompt)])
-        
-        # Enhance response with additional info
-        enhanced_response = f"""
-🍽️ **Personalized {timeframe}-Day Ayurvedic Diet Plan**
+        engine = get_decision_engine()
+        session_id = state.get("session_id", "default")
+        decision = engine.recommend_meal(
+            session_id=session_id,
+            user_profile=user_profile,
+            query=query,
+            datasets=datasets,
+            template_id="lunch_roti_dal_sabzi",
+        )
 
-**Your Details:**
-• Constitution: {user_profile.get('constitution', 'Not assessed')}
-• Daily Calorie Target: {calories} kcal
-• Primary Focus: {dosha.title()}-balancing foods
+        meal = decision.meal
+        trace = decision.trace
+        selected_lines = [f"- {slot}: {food}" for slot, food in meal.items()]
+        relax_line = decision.relaxation_level_used or "None"
 
-{response.content}
+        state["context"]["latest_decision_trace"] = decision.model_dump()
+        state["final_response"] = (
+            "Deterministic Meal Recommendation\n\n"
+            f"Template: {decision.template_id}\n"
+            f"Confidence: {decision.confidence:.2f}\n"
+            f"Fallback Used: {decision.fallback_used}\n"
+            f"Relaxation Level Used: {relax_line}\n\n"
+            "Selected Meal:\n"
+            + "\n".join(selected_lines)
+            + "\n\nTop Optimization Steps:\n"
+            + "\n".join([f"- {step}" for step in trace.optimization_steps[:6]])
+        )
 
-📝 **Additional Guidelines:**
-• Eat in a calm environment
-• Chew food thoroughly
-• Largest meal should be at lunch (12-1 PM)
-• Early dinner (6-7 PM) for better digestion
-• Drink warm water throughout the day
-
-Would you like me to explain any specific recipe or modify the plan?
-        """
-        
-        state["final_response"] = enhanced_response
-        
     except Exception as e:
         print(f"Error in diet plan generation: {e}")
         state["final_response"] = "I'd be happy to create a diet plan for you! Could you share more about your preferences and goals?"
-    
+
     return state
+
 
 def calculate_daily_calories(profile: Dict) -> int:
     """Calculate daily caloric needs using Mifflin-St Jeor equation"""
@@ -684,52 +660,23 @@ def extract_timeframe(query: str) -> int:
 
 # RECIPE AGENT - Enhanced recipe recommendations
 def recipe_agent(state: State) -> State:
-    """Enhanced recipe agent with detailed recipe information"""
+    """Deterministic recipe agent from curated dataset lookups only."""
     messages = state["messages"]
     user_profile = state.get("user_profile", {})
     query = messages[-1].content
-    
-    llm = get_llm()
-    if not llm:
-        state["final_response"] = "I'm experiencing technical difficulties. Please try again."
-        return state
-    
+
     datasets = GLOBAL_CONFIG.get("datasets", {})
-    
+
     try:
-        # Get recipe information from datasets
-        recipe_info = get_recipe_details(query, datasets, user_profile)
-        
-        recipe_prompt = f"""
-        You are an expert Ayurvedic chef. Provide a detailed recipe based on this information:
-        
-        User Query: {query}
-        User Profile: {json.dumps(user_profile, indent=2)}
-        
-        Available Recipe Data:
-        {recipe_info}
-        
-        Provide:
-        1. Recipe name and description
-        2. Ingredients list with quantities
-        3. Step-by-step preparation method
-        4. Cooking time and servings
-        5. Ayurvedic properties and benefits
-        6. Nutritional highlights
-        7. Variations or substitutions
-        
-        Make it practical and easy to follow.
-        """
-        
-        response = llm.invoke([HumanMessage(content=recipe_prompt)])
-        
-        state["final_response"] = f"👨‍🍳 **Recipe Recommendation**\n\n{response.content}"
-        
+        recipe_text = get_recipe_details(query, datasets, user_profile)
+        state["final_response"] = f"Recipe Recommendation\n\n{recipe_text}"
+
     except Exception as e:
         print(f"Error in recipe agent: {e}")
         state["final_response"] = "I'd love to help you with recipes! Could you tell me what dish you're interested in?"
-    
+
     return state
+
 
 def get_recipe_details(query: str, datasets: Dict, user_profile: Dict) -> str:
     """Get recipe details from available datasets"""
@@ -810,39 +757,39 @@ I'm here to help with your Ayurvedic nutrition journey! 🌿"""
 
 # FEEDBACK AND CLARIFICATION AGENT
 def feedback_agent(state: State) -> State:
-    """Handle feedback and ask for clarification when needed"""
+    """Handle feedback by using strict feedback parsing and deterministic replies."""
     messages = state["messages"]
     last_message = messages[-1].content if messages else ""
-    
-    llm = get_llm()
-    if not llm:
+
+    wrapper = get_strict_wrapper()
+    if not wrapper:
         state["final_response"] = "I'm here to help! Could you please rephrase your question?"
         return state
-    
-    clarification_prompt = f"""
-    The user seems unsatisfied or needs clarification. Their message: "{last_message}"
-    
-    Provide a helpful response that:
-    1. Acknowledges their concern
-    2. Asks specific clarifying questions
-    3. Offers alternative approaches
-    4. Remains encouraging and supportive
-    
-    Focus on Ayurvedic nutrition and diet planning context.
-    """
-    
+
     try:
-        response = llm.invoke([HumanMessage(content=clarification_prompt)])
-        state["final_response"] = f"🤝 **I'm here to help better!**\n\n{response.content}"
+        result = wrapper.parse_feedback(last_message)
+        feedback = result.get("data", {})
+        feedback_type = str(feedback.get("feedback_type", "DISLIKE")).upper()
+        target = str(feedback.get("target", "")).strip()
+
+        if feedback_type == "LIKE":
+            state["final_response"] = "Happy that helped. Tell me what you want next, and I will build on it."
+        elif feedback_type == "REPLACE":
+            focus = f" for '{target}'" if target else ""
+            state["final_response"] = (
+                f"Understood. I will replace the previous recommendation{focus}. "
+                "Share any preferences (budget, taste, time, medical constraints) so I can tailor it."
+            )
+        else:
+            focus = f" about '{target}'" if target else ""
+            state["final_response"] = (
+                f"Thanks for the feedback{focus}. I will correct the direction. "
+                "Tell me one thing you want changed most, and I will update the plan."
+            )
     except Exception as e:
         print(f"Error in feedback agent: {e}")
-        state["final_response"] = """I want to make sure I'm providing exactly what you need! 
-        
-Could you help me understand:
-• What specific information are you looking for?
-• Are you interested in diet plans, recipes, or general advice?
-• Any particular health goals or dietary preferences?
+        state["final_response"] = "I want to make sure I'm providing exactly what you need. Tell me what to change first."
 
-I'm committed to giving you the best Ayurvedic guidance possible! 🌿"""
-    
     return state
+
+

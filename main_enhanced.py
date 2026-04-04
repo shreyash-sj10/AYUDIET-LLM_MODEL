@@ -294,4 +294,5 @@ def main():
         print("💡 Please restart the application.")
 
 if __name__ == "__main__":
+    print("DEPRECATED entrypoint: use FastAPI service via `uvicorn main:app` for production.")
     main()

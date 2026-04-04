@@ -65,6 +65,8 @@ LLM_TIMEOUT_SECONDS=12
 uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 
+Production entrypoint: `main.py` (FastAPI). Other runners are retained for legacy/dev use and marked deprecated.
+
 ### Flask API (legacy)
 ```bash
 python app.py
