@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: ayudiet-ai-service
+    env: python
+    plan: free
+    branch: main
+    autoDeploy: true
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GROQ_MODEL
+        value: llama-3.1-8b-instant
+      - key: LLM_TIMEOUT_SECONDS
+        value: "12"
+      - key: AYUDIET_API_KEY
+        sync: false
+      - key: RATE_LIMIT_PER_MINUTE
+        value: "60"
+      - key: CORS_ORIGINS
+        value: https://your-frontend-domain.com
