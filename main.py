@@ -183,6 +183,9 @@ def _enforce_rate_limit(request: Request) -> None:
 
 @app.middleware("http")
 async def auth_and_rate_limit(request: Request, call_next):
+    if request.method == "OPTIONS":
+        return await call_next(request)
+
     if request.url.path in {"/profile", "/explain"}:
         _enforce_api_key(request)
         _enforce_rate_limit(request)
