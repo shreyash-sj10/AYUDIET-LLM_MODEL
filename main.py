@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import json
 import logging
 import os
 import time
@@ -16,7 +17,6 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from llm_hallucination_control import ContextValidator, OutputValidator
 from llm_strict_wrapper import StrictLLMWrapper
 from schemas import (
-    AIExplainRequest,
     DoshaEstimate,
     Envelope,
     ErrorBody,
@@ -25,7 +25,6 @@ from schemas import (
     HealthData,
     ProfileRequest,
     ProfileResponse,
-    RagRequest,
 )
 
 try:
@@ -42,6 +41,9 @@ app = FastAPI(title="AYUDIET AI Service", version="2.0.0")
 LLM_TIMEOUT_SECONDS = float(os.getenv("LLM_TIMEOUT_SECONDS", "12"))
 API_KEY = os.getenv("AYUDIET_API_KEY", "").strip()
 RATE_LIMIT_PER_MINUTE = int(os.getenv("RATE_LIMIT_PER_MINUTE", "60"))
+REQUIRE_AUTH_ON_COMPAT_ENDPOINTS = (
+    os.getenv("REQUIRE_AUTH_ON_COMPAT_ENDPOINTS", "false").strip().lower() == "true"
+)
 _RATE_BUCKETS: Dict[str, Deque[float]] = {}
 _STRICT_WRAPPER: Optional[StrictLLMWrapper] = None
 
@@ -133,6 +135,38 @@ def _normalize_text(value: str) -> str:
     return " ".join(str(value).strip().split())
 
 
+async def _safe_json_body(request: Request) -> Dict[str, Any]:
+    try:
+        body = await request.json()
+        if isinstance(body, dict):
+            return body
+    except json.JSONDecodeError:
+        return {}
+    except Exception:
+        return {}
+    return {}
+
+
+def _extract_query(payload: Dict[str, Any]) -> str:
+    keys = ("query", "question", "prompt", "message")
+    for key in keys:
+        value = payload.get(key)
+        if isinstance(value, str):
+            normalized = _normalize_text(value)
+            if normalized:
+                return normalized
+    return ""
+
+
+def _extract_context(payload: Dict[str, Any]) -> str:
+    value = payload.get("context")
+    if isinstance(value, str):
+        normalized = _normalize_text(value)
+        if normalized:
+            return normalized
+    return "ayurvedic diet"
+
+
 def _primary_dosha_from_scores(scores: DoshaEstimate) -> str:
     ordered = ["vata", "pitta", "kapha"]
     values = {"vata": scores.vata, "pitta": scores.pitta, "kapha": scores.kapha}
@@ -208,7 +242,11 @@ async def auth_and_rate_limit(request: Request, call_next):
     if request.method == "OPTIONS":
         return await call_next(request)
 
-    if request.url.path in {"/profile", "/explain", "/ai/explain", "/rag"}:
+    protected_paths = {"/profile", "/explain"}
+    if REQUIRE_AUTH_ON_COMPAT_ENDPOINTS:
+        protected_paths.update({"/ai/explain", "/rag"})
+
+    if request.url.path in protected_paths:
         _enforce_api_key(request)
         _enforce_rate_limit(request)
     return await call_next(request)
@@ -494,10 +532,12 @@ async def explain(payload: ExplainRequest, request: Request) -> Dict[str, Any]:
 
 
 @app.post("/ai/explain")
-async def ai_explain(payload: AIExplainRequest, request: Request) -> Dict[str, Any]:
+async def ai_explain(request: Request) -> Dict[str, Any]:
     request_id, trace_id = _request_meta(request)
     start = time.perf_counter()
     wrapper = _get_strict_wrapper()
+    payload = await _safe_json_body(request)
+    query = _extract_query(payload)
 
     log.info(
         "ai_explain_request",
@@ -505,8 +545,12 @@ async def ai_explain(payload: AIExplainRequest, request: Request) -> Dict[str, A
             "request_id": request_id,
             "trace_id": trace_id,
             "endpoint": "/ai/explain",
+            "has_query": bool(query),
         },
     )
+
+    if not query:
+        return JSONResponse(status_code=400, content=_error("query is required"))
 
     if wrapper is None:
         fallback = _build_explain_fallback()
@@ -525,8 +569,8 @@ async def ai_explain(payload: AIExplainRequest, request: Request) -> Dict[str, A
         result = await asyncio.wait_for(
             asyncio.to_thread(
                 wrapper.generate_explanation,
-                [payload.query],
-                f"Explain this Ayurvedic query clearly: {_normalize_text(payload.query)}",
+                [query],
+                f"Explain this Ayurvedic query clearly: {query}",
             ),
             timeout=LLM_TIMEOUT_SECONDS,
         )
@@ -587,10 +631,13 @@ async def ai_explain(payload: AIExplainRequest, request: Request) -> Dict[str, A
 
 
 @app.post("/rag")
-async def rag(payload: RagRequest, request: Request) -> Dict[str, Any]:
+async def rag(request: Request) -> Dict[str, Any]:
     request_id, trace_id = _request_meta(request)
     start = time.perf_counter()
     wrapper = _get_strict_wrapper()
+    payload = await _safe_json_body(request)
+    query = _extract_query(payload)
+    context = _extract_context(payload)
 
     log.info(
         "rag_request",
@@ -598,8 +645,12 @@ async def rag(payload: RagRequest, request: Request) -> Dict[str, Any]:
             "request_id": request_id,
             "trace_id": trace_id,
             "endpoint": "/rag",
+            "has_query": bool(query),
         },
     )
+
+    if not query:
+        return JSONResponse(status_code=400, content=_error("query is required"))
 
     if wrapper is None:
         fallback = _build_explain_fallback()
@@ -618,10 +669,10 @@ async def rag(payload: RagRequest, request: Request) -> Dict[str, Any]:
         result = await asyncio.wait_for(
             asyncio.to_thread(
                 wrapper.generate_explanation,
-                [_normalize_text(payload.context), _normalize_text(payload.query)],
+                [context, query],
                 (
                     "Use the provided context first and answer the Ayurvedic query. "
-                    f"Context: {_normalize_text(payload.context)}. Query: {_normalize_text(payload.query)}"
+                    f"Context: {context}. Query: {query}"
                 ),
             ),
             timeout=LLM_TIMEOUT_SECONDS,
