@@ -8,29 +8,30 @@ import time
 from collections import deque
 from typing import Any, Deque, Dict, Optional
 
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from llm_hallucination_control import ContextValidator, OutputValidator
 from llm_strict_wrapper import StrictLLMWrapper
 from schemas import (
     DoshaEstimate,
-    Envelope,
-    ErrorBody,
     ExplainRequest,
-    ExplainResponse,
-    HealthData,
     ProfileRequest,
-    ProfileResponse,
 )
 
 try:
     from langchain_groq import ChatGroq
 except Exception:  # pragma: no cover
     ChatGroq = None
+
+load_dotenv()
+if not os.getenv("GROQ_API_KEY"):
+    raise RuntimeError("Missing GROQ_API_KEY")
+print("LLM INITIALIZED SUCCESSFULLY")
 
 
 logging.basicConfig(level=os.getenv("LOG_LEVEL", "INFO"))
@@ -46,6 +47,7 @@ REQUIRE_AUTH_ON_COMPAT_ENDPOINTS = (
 )
 _RATE_BUCKETS: Dict[str, Deque[float]] = {}
 _STRICT_WRAPPER: Optional[StrictLLMWrapper] = None
+_CHAT_MEMORY: Dict[str, Deque[Dict[str, str]]] = {}
 _CORE_PROTECTED_PATHS = {
     "/profile",
     "/explain",
@@ -71,9 +73,26 @@ _COMPAT_PROTECTED_PATHS = {
     "/api/ai/rag/",
 }
 
+_FOLLOWUP_PHRASES = {
+    "why",
+    "how",
+    "what does that mean",
+    "then what",
+}
+_GREETING_PHRASES = {
+    "hi",
+    "hello",
+    "helo",
+    "hey",
+}
+
 
 def _parse_allowed_origins() -> list[str]:
     default_dev_origins = [
+        "http://localhost:8000",
+        "http://127.0.0.1:8000",
+        "http://localhost:8011",
+        "http://127.0.0.1:8011",
         "http://localhost:5173",
         "http://127.0.0.1:5173",
         "http://localhost:3000",
@@ -98,61 +117,91 @@ app.add_middleware(
 )
 
 
+@app.get("/")
+@app.get("/ui")
+def serve_ui() -> FileResponse:
+    return FileResponse("index.html")
+
+
 def _request_meta(request: Request) -> tuple[str, str]:
     request_id = request.headers.get("X-Request-ID", "").strip() or "unknown"
     trace_id = request.headers.get("X-Trace-ID", "").strip() or request_id
     return request_id, trace_id
 
 
-def _success(data: Any) -> Dict[str, Any]:
-    if hasattr(data, "model_dump"):
-        payload = data.model_dump()
-    else:
-        payload = data
-    return {"success": True, "data": payload, "error": None}
+class SafetyBlockedError(ValueError):
+    pass
 
 
-def _error(message: str) -> Dict[str, Any]:
-    return {"success": False, "data": None, "error": ErrorBody(message=message).model_dump()}
+class AdherenceError(ValueError):
+    pass
 
 
-def _build_profile_fallback() -> ProfileResponse:
-    return ProfileResponse(
-        symptom_tags=["none"],
-        primary_dosha="pitta",
-        dosha_estimate=DoshaEstimate(vata=0.33, pitta=0.33, kapha=0.34),
-        confidence=0.2,
-        fallback=True,
-    )
+class NoContextError(ValueError):
+    pass
 
 
-def _build_explain_fallback() -> ExplainResponse:
-    return ExplainResponse(
-        explanation="insufficient context to provide safe explanation",
-        reasoning=["fallback"],
-        confidence=0.1,
-        sources=[],
-        fallback=True,
-    )
+def _build_meta(*, fallback: bool, reason: Optional[str], mode: str, retryable: bool) -> Dict[str, Any]:
+    return {"fallback": fallback, "reason": reason, "mode": mode, "retryable": retryable}
 
 
-def _build_ai_explain_data(text: str) -> Dict[str, str]:
+def _success(
+    data: Dict[str, Any],
+    *,
+    fallback: bool,
+    reason: Optional[str],
+    mode: str,
+    retryable: bool,
+) -> Dict[str, Any]:
+    return {"success": True, "data": data, "error": None, "meta": _build_meta(fallback=fallback, reason=reason, mode=mode, retryable=retryable)}
+
+
+def _error(
+    message: str,
+    *,
+    mode: str,
+    fallback: bool = False,
+    reason: Optional[str] = None,
+    retryable: bool = False,
+) -> Dict[str, Any]:
+    return {"success": False, "data": None, "error": message, "meta": _build_meta(fallback=fallback, reason=reason, mode=mode, retryable=retryable)}
+
+
+def _build_profile_fallback_data() -> Dict[str, Any]:
+    return {
+        "text": "Insufficient context to infer a reliable dosha profile.",
+        "profile": {
+            "primary_dosha": "pitta",
+            "symptom_tags": ["none"],
+            "confidence": 0.2,
+            "dosha_estimate": {"vata": 0.33, "pitta": 0.33, "kapha": 0.34},
+        },
+    }
+
+
+def _build_explain_fallback_text() -> str:
+    return "insufficient context to provide safe explanation"
+
+
+def _build_text_data(text: str, **extra: Any) -> Dict[str, Any]:
     cleaned = _normalize_text(text)
     if not cleaned:
-        cleaned = _build_explain_fallback().explanation
-    return {"text": cleaned[:2000]}
+        cleaned = _build_explain_fallback_text()
+    payload: Dict[str, Any] = {"text": cleaned[:2000]}
+    payload.update(extra)
+    return payload
 
 
 def _build_rag_data(answer: str, sources: Any) -> Dict[str, Any]:
     cleaned_answer = _normalize_text(answer)
     if not cleaned_answer:
-        cleaned_answer = _build_explain_fallback().explanation
+        cleaned_answer = _build_explain_fallback_text()
 
     clean_sources: list[str] = []
     if isinstance(sources, list):
         clean_sources = [_normalize_text(src) for src in sources if isinstance(src, str) and src.strip()]
 
-    return {"answer": cleaned_answer[:2000], "sources": clean_sources}
+    return {"text": cleaned_answer[:2000], "sources": clean_sources}
 
 
 def _normalize_text(value: str) -> str:
@@ -191,6 +240,81 @@ def _extract_context(payload: Dict[str, Any]) -> str:
     return "ayurvedic diet"
 
 
+def _extract_explain_query(payload: Dict[str, Any]) -> str:
+    query = _extract_query(payload)
+    if query:
+        return query
+
+    context = payload.get("context")
+    if isinstance(context, str):
+        normalized = _normalize_text(context)
+        if normalized:
+            return normalized
+    if isinstance(context, dict):
+        parts = []
+        for key in ("user_profile", "selected_meal", "constraints_applied", "trace"):
+            value = context.get(key)
+            if value:
+                parts.append(f"{key}: {value}")
+        text = _normalize_text(" | ".join(str(part) for part in parts))
+        if text:
+            return text
+    return ""
+
+
+def _extract_session_id(payload: Dict[str, Any]) -> str:
+    session_id = payload.get("session_id")
+    if isinstance(session_id, str):
+        normalized = _normalize_text(session_id)
+        if normalized:
+            return normalized
+    return "default"
+
+
+def _extract_chat_history(payload: Dict[str, Any], session_id: str) -> list[str]:
+    history: list[str] = []
+
+    external = payload.get("chat_history")
+    if isinstance(external, list):
+        for item in external[-8:]:
+            if isinstance(item, str):
+                text = _normalize_text(item)
+                if text:
+                    history.append(text)
+            elif isinstance(item, dict):
+                role = _normalize_text(item.get("role", ""))
+                content = _normalize_text(item.get("content", ""))
+                if content:
+                    history.append(f"{role or 'message'}: {content}")
+
+    memory = _CHAT_MEMORY.get(session_id)
+    if memory:
+        for turn in list(memory)[-8:]:
+            role = _normalize_text(turn.get("role", "message"))
+            content = _normalize_text(turn.get("content", ""))
+            if content:
+                history.append(f"{role}: {content}")
+
+    return history[-8:]
+
+
+def _remember_turn(session_id: str, role: str, content: str) -> None:
+    if not content.strip():
+        return
+    memory = _CHAT_MEMORY.setdefault(session_id, deque(maxlen=20))
+    memory.append({"role": role, "content": content[:2000]})
+
+
+def _is_followup_query(query: str) -> bool:
+    sample = _normalize_text(query).lower()
+    return sample in _FOLLOWUP_PHRASES
+
+
+def _is_greeting(query: str) -> bool:
+    sample = _normalize_text(query).lower()
+    return sample in _GREETING_PHRASES
+
+
 def _primary_dosha_from_scores(scores: DoshaEstimate) -> str:
     ordered = ["vata", "pitta", "kapha"]
     values = {"vata": scores.vata, "pitta": scores.pitta, "kapha": scores.kapha}
@@ -199,45 +323,36 @@ def _primary_dosha_from_scores(scores: DoshaEstimate) -> str:
 
 def sanitize_ai_output(text: str) -> str:
     forbidden = [
-        "meal",
-        "recipe",
-        "select",
-        "choose",
-        "recommend food",
-        "eat",
-        "plan",
-        "diet plan",
-        "ranking",
-        "optimize",
+        "give me a diet plan",
+        "what should i eat",
+        "suggest meals",
     ]
     cleaned = _normalize_text(text)
     lowered = cleaned.lower()
     for word in forbidden:
         if word in lowered:
-            raise ValueError("AI boundary violation")
+            raise SafetyBlockedError("safety_blocked")
     return cleaned
 
 
-def _get_llm() -> Optional[Any]:
+def _get_llm() -> Any:
     if ChatGroq is None:
-        return None
+        raise RuntimeError("Missing GROQ_API_KEY")
     api_key = os.getenv("GROQ_API_KEY")
     if not api_key:
-        return None
+        raise RuntimeError("Missing GROQ_API_KEY")
     model = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
     try:
         return ChatGroq(model=model, temperature=0, api_key=api_key)
-    except Exception:
-        return None
+    except Exception as exc:
+        raise RuntimeError("Missing GROQ_API_KEY") from exc
 
 
-def _get_strict_wrapper() -> Optional[StrictLLMWrapper]:
+def _get_strict_wrapper() -> StrictLLMWrapper:
     global _STRICT_WRAPPER
     if _STRICT_WRAPPER is not None:
         return _STRICT_WRAPPER
     llm = _get_llm()
-    if llm is None:
-        return None
     _STRICT_WRAPPER = StrictLLMWrapper(llm)
     return _STRICT_WRAPPER
 
@@ -265,6 +380,15 @@ def _enforce_rate_limit(request: Request) -> None:
     bucket.append(now)
 
 
+def _mode_from_path(path: str) -> str:
+    lowered = (path or "").lower()
+    if "profile" in lowered:
+        return "profile"
+    if "rag" in lowered:
+        return "rag"
+    return "explain"
+
+
 @app.middleware("http")
 async def auth_and_rate_limit(request: Request, call_next):
     if request.method == "OPTIONS":
@@ -279,7 +403,10 @@ async def auth_and_rate_limit(request: Request, call_next):
             _enforce_api_key(request)
             _enforce_rate_limit(request)
         except HTTPException as exc:
-            return JSONResponse(status_code=exc.status_code, content=_error(str(exc.detail)))
+            return JSONResponse(
+                status_code=exc.status_code,
+                content=_error(str(exc.detail), mode=_mode_from_path(request.url.path), reason="safety_blocked"),
+            )
     return await call_next(request)
 
 
@@ -295,7 +422,10 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
             "errors": exc.errors(),
         },
     )
-    return JSONResponse(status_code=422, content=_error("Invalid request payload"))
+    return JSONResponse(
+        status_code=422,
+        content=_error("Invalid request payload", mode=_mode_from_path(request.url.path), reason="no_context"),
+    )
 
 
 @app.exception_handler(HTTPException)
@@ -311,7 +441,10 @@ async def http_exception_handler(request: Request, exc: HTTPException):
             "detail": str(exc.detail),
         },
     )
-    return JSONResponse(status_code=exc.status_code, content=_error(str(exc.detail)))
+    return JSONResponse(
+        status_code=exc.status_code,
+        content=_error(str(exc.detail), mode=_mode_from_path(request.url.path), reason="safety_blocked"),
+    )
 
 
 @app.exception_handler(StarletteHTTPException)
@@ -327,7 +460,10 @@ async def starlette_http_exception_handler(request: Request, exc: StarletteHTTPE
             "detail": str(exc.detail),
         },
     )
-    return JSONResponse(status_code=exc.status_code, content=_error(str(exc.detail)))
+    return JSONResponse(
+        status_code=exc.status_code,
+        content=_error(str(exc.detail), mode=_mode_from_path(request.url.path), reason="safety_blocked"),
+    )
 
 
 @app.exception_handler(Exception)
@@ -342,15 +478,23 @@ async def general_exception_handler(request: Request, exc: Exception):
             "error": str(exc),
         },
     )
-    return JSONResponse(status_code=500, content=_error("Internal server error"))
+    return JSONResponse(
+        status_code=500,
+        content=_error(
+            "Internal server error",
+            mode=_mode_from_path(request.url.path),
+            reason="timeout",
+            retryable=True,
+        ),
+    )
 
 
-@app.get("/health", response_model=Envelope[HealthData])
-@app.get("/health/", response_model=Envelope[HealthData])
-@app.get("/ai/health", response_model=Envelope[HealthData])
-@app.get("/ai/health/", response_model=Envelope[HealthData])
-@app.get("/api/health", response_model=Envelope[HealthData])
-@app.get("/api/health/", response_model=Envelope[HealthData])
+@app.get("/health")
+@app.get("/health/")
+@app.get("/ai/health")
+@app.get("/ai/health/")
+@app.get("/api/health")
+@app.get("/api/health/")
 async def health(request: Request) -> Dict[str, Any]:
     request_id, trace_id = _request_meta(request)
     log.info(
@@ -361,19 +505,34 @@ async def health(request: Request) -> Dict[str, Any]:
             "endpoint": "/health",
         },
     )
-    return _success(HealthData(status="ok", entrypoint="main.py"))
+    return _success(
+        {"text": "Service is healthy", "status": "ok", "entrypoint": "main.py"},
+        fallback=False,
+        reason=None,
+        mode="explain",
+        retryable=False,
+    )
 
 
-@app.post("/profile", response_model=Envelope[ProfileResponse])
-@app.post("/profile/", response_model=Envelope[ProfileResponse])
-@app.post("/ai/profile", response_model=Envelope[ProfileResponse])
-@app.post("/ai/profile/", response_model=Envelope[ProfileResponse])
-@app.post("/api/ai/profile", response_model=Envelope[ProfileResponse])
-@app.post("/api/ai/profile/", response_model=Envelope[ProfileResponse])
+@app.post("/profile")
+@app.post("/profile/")
+@app.post("/ai/profile")
+@app.post("/ai/profile/")
+@app.post("/api/ai/profile")
+@app.post("/api/ai/profile/")
 async def profile(payload: ProfileRequest, request: Request) -> Dict[str, Any]:
     request_id, trace_id = _request_meta(request)
     start = time.perf_counter()
-    wrapper = _get_strict_wrapper()
+    try:
+        wrapper = _get_strict_wrapper()
+    except Exception:
+        return _success(
+            _build_profile_fallback_data(),
+            fallback=True,
+            reason="llm_not_initialized",
+            mode="profile",
+            retryable=True,
+        )
 
     log.info(
         "profile_request",
@@ -384,19 +543,6 @@ async def profile(payload: ProfileRequest, request: Request) -> Dict[str, Any]:
         },
     )
 
-    if wrapper is None:
-        fallback = _build_profile_fallback()
-        log.warning(
-            "fallback_triggered",
-            extra={
-                "request_id": request_id,
-                "trace_id": trace_id,
-                "endpoint": "/profile",
-                "reason": "LLM unavailable",
-            },
-        )
-        return _success(fallback)
-
     try:
         result = await asyncio.wait_for(
             asyncio.to_thread(wrapper.extract_health_profile, payload.symptoms, {}),
@@ -405,7 +551,7 @@ async def profile(payload: ProfileRequest, request: Request) -> Dict[str, Any]:
         data = result.get("data", {})
         is_valid, parsed, _ = OutputValidator.validate_profile_output(data)
         if not is_valid or parsed is None:
-            fallback = _build_profile_fallback()
+            fallback = _build_profile_fallback_data()
             log.warning(
                 "fallback_triggered",
                 extra={
@@ -415,15 +561,27 @@ async def profile(payload: ProfileRequest, request: Request) -> Dict[str, Any]:
                     "reason": "schema_validation_failed",
                 },
             )
-            return _success(fallback)
+            return _success(fallback, fallback=True, reason="no_context", mode="profile", retryable=False)
 
-        profile_data = ProfileResponse(
-            symptom_tags=[str(flag) for flag in parsed.risk_flags],
-            primary_dosha=_primary_dosha_from_scores(parsed.dosha_estimate),
-            dosha_estimate=parsed.dosha_estimate,
-            confidence=round(float(parsed.confidence), 2),
-            fallback=False,
-        )
+        dosha_raw = parsed.dosha_estimate.model_dump() if hasattr(parsed.dosha_estimate, "model_dump") else parsed.dosha_estimate
+        dosha_scores = DoshaEstimate.model_validate(dosha_raw)
+        normalized_tags: list[str] = []
+        for flag in parsed.risk_flags:
+            raw = str(flag)
+            if "." in raw:
+                raw = raw.split(".")[-1]
+            normalized_tags.append(raw.lower().replace(" ", "_"))
+
+        primary = _primary_dosha_from_scores(dosha_scores)
+        profile_data = {
+            "text": f"User shows signs of {primary} imbalance with symptom-linked indicators.",
+            "profile": {
+                "primary_dosha": primary,
+                "symptom_tags": normalized_tags or ["none"],
+                "confidence": round(float(parsed.confidence), 2),
+                "dosha_estimate": dosha_scores.model_dump(),
+            },
+        }
 
         latency_ms = int((time.perf_counter() - start) * 1000)
         log.info(
@@ -436,10 +594,10 @@ async def profile(payload: ProfileRequest, request: Request) -> Dict[str, Any]:
                 "fallback": False,
             },
         )
-        return _success(profile_data)
+        return _success(profile_data, fallback=False, reason="profile_generated", mode="profile", retryable=False)
 
     except asyncio.TimeoutError:
-        fallback = _build_profile_fallback()
+        fallback = _build_profile_fallback_data()
         log.error(
             "ai_failure",
             extra={
@@ -449,9 +607,9 @@ async def profile(payload: ProfileRequest, request: Request) -> Dict[str, Any]:
                 "reason": "timeout",
             },
         )
-        return _success(fallback)
+        return _success(fallback, fallback=True, reason="timeout", mode="profile", retryable=True)
     except Exception as exc:
-        fallback = _build_profile_fallback()
+        fallback = _build_profile_fallback_data()
         log.error(
             "ai_failure",
             extra={
@@ -461,17 +619,27 @@ async def profile(payload: ProfileRequest, request: Request) -> Dict[str, Any]:
                 "reason": str(exc),
             },
         )
-        return _success(fallback)
+        reason = "llm_not_initialized" if "Missing GROQ_API_KEY" in str(exc) else "timeout"
+        return _success(fallback, fallback=True, reason=reason, mode="profile", retryable=True)
 
 
-@app.post("/explain", response_model=Envelope[ExplainResponse])
-@app.post("/explain/", response_model=Envelope[ExplainResponse])
-@app.post("/api/explain", response_model=Envelope[ExplainResponse])
-@app.post("/api/explain/", response_model=Envelope[ExplainResponse])
+@app.post("/explain")
+@app.post("/explain/")
+@app.post("/api/explain")
+@app.post("/api/explain/")
 async def explain(payload: ExplainRequest, request: Request) -> Dict[str, Any]:
     request_id, trace_id = _request_meta(request)
     start = time.perf_counter()
-    wrapper = _get_strict_wrapper()
+    try:
+        wrapper = _get_strict_wrapper()
+    except Exception:
+        return _success(
+            _build_text_data(_build_explain_fallback_text(), sources=[]),
+            fallback=True,
+            reason="llm_not_initialized",
+            mode="explain",
+            retryable=True,
+        )
 
     log.info(
         "explain_request",
@@ -482,19 +650,6 @@ async def explain(payload: ExplainRequest, request: Request) -> Dict[str, Any]:
         },
     )
 
-    if wrapper is None:
-        fallback = _build_explain_fallback()
-        log.warning(
-            "fallback_triggered",
-            extra={
-                "request_id": request_id,
-                "trace_id": trace_id,
-                "endpoint": "/explain",
-                "reason": "LLM unavailable",
-            },
-        )
-        return _success(fallback)
-
     try:
         result = await asyncio.wait_for(
             asyncio.to_thread(wrapper.generate_explanation, [payload.context], payload.reasoning),
@@ -504,25 +659,18 @@ async def explain(payload: ExplainRequest, request: Request) -> Dict[str, Any]:
         data = result.get("data", {})
         raw_explanation = str(data.get("explanation", "")).strip()
         sanitized = sanitize_ai_output(raw_explanation)
+        if not sanitized:
+            raise NoContextError("no_context")
 
         has_external_claims, _ = ContextValidator.check_context_adherence(sanitized, [payload.context])
         if has_external_claims:
-            raise ValueError("Context adherence violation")
+            raise AdherenceError("adherence_failed")
 
         sources = data.get("sources", [])
         if not isinstance(sources, list) or any(not isinstance(src, str) for src in sources):
-            raise ValueError("Invalid sources")
+            raise NoContextError("no_context")
 
-        penalty = float(data.get("confidence_penalty", 0.0))
-        confidence = round(max(0.0, min(1.0, 1.0 - penalty)), 2)
-
-        explain_data = ExplainResponse(
-            explanation=sanitized,
-            reasoning=[_normalize_text(payload.reasoning)],
-            confidence=confidence,
-            sources=[_normalize_text(src) for src in sources],
-            fallback=False,
-        )
+        explain_data = _build_text_data(sanitized, sources=[_normalize_text(src) for src in sources])
 
         latency_ms = int((time.perf_counter() - start) * 1000)
         log.info(
@@ -535,10 +683,10 @@ async def explain(payload: ExplainRequest, request: Request) -> Dict[str, Any]:
                 "fallback": False,
             },
         )
-        return _success(explain_data)
+        return _success(explain_data, fallback=False, reason="explanation_generated", mode="explain", retryable=False)
 
     except asyncio.TimeoutError:
-        fallback = _build_explain_fallback()
+        fallback = _build_text_data(_build_explain_fallback_text())
         log.error(
             "ai_failure",
             extra={
@@ -548,21 +696,27 @@ async def explain(payload: ExplainRequest, request: Request) -> Dict[str, Any]:
                 "reason": "timeout",
             },
         )
-        return _success(fallback)
-    except ValueError as exc:
-        fallback = _build_explain_fallback()
+        return _success(fallback, fallback=True, reason="timeout", mode="explain", retryable=True)
+    except SafetyBlockedError:
+        fallback = _build_text_data(_build_explain_fallback_text())
         log.warning(
             "fallback_triggered",
             extra={
                 "request_id": request_id,
                 "trace_id": trace_id,
                 "endpoint": "/explain",
-                "reason": str(exc),
+                "reason": "safety_blocked",
             },
         )
-        return _success(fallback)
+        return _success(fallback, fallback=True, reason="safety_blocked", mode="explain", retryable=False)
+    except AdherenceError:
+        fallback = _build_text_data(_build_explain_fallback_text())
+        return _success(fallback, fallback=True, reason="adherence_failed", mode="explain", retryable=False)
+    except NoContextError:
+        fallback = _build_text_data(_build_explain_fallback_text())
+        return _success(fallback, fallback=True, reason="no_context", mode="explain", retryable=False)
     except Exception as exc:
-        fallback = _build_explain_fallback()
+        fallback = _build_text_data(_build_explain_fallback_text())
         log.error(
             "ai_failure",
             extra={
@@ -572,7 +726,8 @@ async def explain(payload: ExplainRequest, request: Request) -> Dict[str, Any]:
                 "reason": str(exc),
             },
         )
-        return _success(fallback)
+        reason = "llm_not_initialized" if "Missing GROQ_API_KEY" in str(exc) else "timeout"
+        return _success(fallback, fallback=True, reason=reason, mode="explain", retryable=True)
 
 
 @app.post("/ai/explain")
@@ -582,9 +737,25 @@ async def explain(payload: ExplainRequest, request: Request) -> Dict[str, Any]:
 async def ai_explain(request: Request) -> Dict[str, Any]:
     request_id, trace_id = _request_meta(request)
     start = time.perf_counter()
-    wrapper = _get_strict_wrapper()
+    try:
+        wrapper = _get_strict_wrapper()
+    except Exception:
+        return _success(
+            _build_text_data(_build_explain_fallback_text()),
+            fallback=True,
+            reason="llm_not_initialized",
+            mode="explain",
+            retryable=True,
+        )
     payload = await _safe_json_body(request)
-    query = _extract_query(payload)
+    session_id = _extract_session_id(payload)
+    chat_history = _extract_chat_history(payload, session_id)
+    query = _extract_explain_query(payload)
+    if not query:
+        return JSONResponse(
+            status_code=400,
+            content=_error("query (min 3 chars) is required", mode="explain", reason="no_context"),
+        )
 
     log.info(
         "ai_explain_request",
@@ -596,28 +767,13 @@ async def ai_explain(request: Request) -> Dict[str, Any]:
         },
     )
 
-    if not query:
-        return JSONResponse(status_code=400, content=_error("query is required"))
-
-    if wrapper is None:
-        fallback = _build_explain_fallback()
-        log.warning(
-            "fallback_triggered",
-            extra={
-                "request_id": request_id,
-                "trace_id": trace_id,
-                "endpoint": "/ai/explain",
-                "reason": "LLM unavailable",
-            },
-        )
-        return _success(_build_ai_explain_data(fallback.explanation))
-
     try:
+        convo_context = "\n".join(chat_history[-6:]) if chat_history else "No prior conversation."
         result = await asyncio.wait_for(
             asyncio.to_thread(
                 wrapper.generate_explanation,
                 [query],
-                f"Explain this Ayurvedic query clearly: {query}",
+                f"Conversation Context:\n{convo_context}\n\nCurrent Question:\n{query}",
             ),
             timeout=LLM_TIMEOUT_SECONDS,
         )
@@ -625,7 +781,19 @@ async def ai_explain(request: Request) -> Dict[str, Any]:
         raw_explanation = str(data.get("explanation", "")).strip()
         sanitized = sanitize_ai_output(raw_explanation)
         if not sanitized:
-            raise ValueError("Empty explanation generated")
+            safe_result = await asyncio.wait_for(
+                asyncio.to_thread(
+                    wrapper.generate_safe_text,
+                    f"Explain this safely and clearly: {query}",
+                    _build_explain_fallback_text(),
+                    max_chars=2000,
+                ),
+                timeout=LLM_TIMEOUT_SECONDS,
+            )
+            safe_data = safe_result.get("data", {})
+            sanitized = sanitize_ai_output(str(safe_data.get("response", "")).strip())
+            if not sanitized:
+                raise NoContextError("no_context")
         text = sanitized[:2000]
         latency_ms = int((time.perf_counter() - start) * 1000)
         log.info(
@@ -638,9 +806,11 @@ async def ai_explain(request: Request) -> Dict[str, Any]:
                 "fallback": False,
             },
         )
-        return _success(_build_ai_explain_data(text))
+        _remember_turn(session_id, "user", query)
+        _remember_turn(session_id, "assistant", text)
+        return _success(_build_text_data(text), fallback=False, reason="explanation_generated", mode="explain", retryable=False)
     except asyncio.TimeoutError:
-        fallback = _build_explain_fallback()
+        fallback = _build_text_data(_build_explain_fallback_text())
         log.error(
             "ai_failure",
             extra={
@@ -650,21 +820,24 @@ async def ai_explain(request: Request) -> Dict[str, Any]:
                 "reason": "timeout",
             },
         )
-        return _success(_build_ai_explain_data(fallback.explanation))
-    except ValueError as exc:
-        fallback = _build_explain_fallback()
+        return _success(fallback, fallback=True, reason="timeout", mode="explain", retryable=True)
+    except SafetyBlockedError:
+        fallback = _build_text_data(_build_explain_fallback_text())
         log.warning(
             "fallback_triggered",
             extra={
                 "request_id": request_id,
                 "trace_id": trace_id,
                 "endpoint": "/ai/explain",
-                "reason": str(exc),
+                "reason": "safety_blocked",
             },
         )
-        return _success(_build_ai_explain_data(fallback.explanation))
+        return _success(fallback, fallback=True, reason="safety_blocked", mode="explain", retryable=False)
+    except NoContextError:
+        fallback = _build_text_data(_build_explain_fallback_text())
+        return _success(fallback, fallback=True, reason="no_context", mode="explain", retryable=False)
     except Exception as exc:
-        fallback = _build_explain_fallback()
+        fallback = _build_text_data(_build_explain_fallback_text())
         log.error(
             "ai_failure",
             extra={
@@ -674,7 +847,8 @@ async def ai_explain(request: Request) -> Dict[str, Any]:
                 "reason": str(exc),
             },
         )
-        return _success(_build_ai_explain_data(fallback.explanation))
+        reason = "llm_not_initialized" if "Missing GROQ_API_KEY" in str(exc) else "timeout"
+        return _success(fallback, fallback=True, reason=reason, mode="explain", retryable=True)
 
 
 @app.post("/rag")
@@ -688,10 +862,22 @@ async def ai_explain(request: Request) -> Dict[str, Any]:
 async def rag(request: Request) -> Dict[str, Any]:
     request_id, trace_id = _request_meta(request)
     start = time.perf_counter()
-    wrapper = _get_strict_wrapper()
+    try:
+        wrapper = _get_strict_wrapper()
+    except Exception:
+        return _success(
+            _build_text_data(_build_explain_fallback_text(), sources=[]),
+            fallback=True,
+            reason="llm_not_initialized",
+            mode="rag",
+            retryable=True,
+        )
     payload = await _safe_json_body(request)
+    session_id = _extract_session_id(payload)
+    chat_history = _extract_chat_history(payload, session_id)
     query = _extract_query(payload)
     context = _extract_context(payload)
+    retrieved_documents = payload.get("retrieved_documents")
 
     log.info(
         "rag_request",
@@ -704,41 +890,99 @@ async def rag(request: Request) -> Dict[str, Any]:
     )
 
     if not query:
-        return JSONResponse(status_code=400, content=_error("query is required"))
+        return JSONResponse(status_code=400, content=_error("query is required", mode="rag", reason="no_context"))
 
-    if wrapper is None:
-        fallback = _build_explain_fallback()
-        log.warning(
-            "fallback_triggered",
-            extra={
-                "request_id": request_id,
-                "trace_id": trace_id,
-                "endpoint": "/rag",
-                "reason": "LLM unavailable",
-            },
+    if _is_greeting(query):
+        greeting_text = (
+            "Hello! I can help you understand Ayurveda, your symptoms, or explain your diet plan. "
+            "What would you like to know?"
         )
-        return _success(_build_rag_data(fallback.explanation, fallback.sources))
+        _remember_turn(session_id, "user", query)
+        _remember_turn(session_id, "assistant", greeting_text)
+        return _success(
+            _build_text_data(greeting_text, sources=["conversation"]),
+            fallback=False,
+            reason="rag_answer_generated",
+            mode="rag",
+            retryable=False,
+        )
 
     try:
-        result = await asyncio.wait_for(
-            asyncio.to_thread(
-                wrapper.generate_explanation,
-                [context, query],
-                (
-                    "Use the provided context first and answer the Ayurvedic query. "
-                    f"Context: {context}. Query: {query}"
+        is_followup = _is_followup_query(query)
+        convo_context = "\n".join(chat_history[-6:]) if chat_history else "No prior conversation."
+        context_chunks = [context, query]
+        allow_general_knowledge = False
+
+        if isinstance(retrieved_documents, list):
+            docs = [_normalize_text(str(doc)) for doc in retrieved_documents if str(doc).strip()]
+            if docs:
+                context_chunks = docs + [query]
+            else:
+                allow_general_knowledge = True
+        elif retrieved_documents is None:
+            allow_general_knowledge = True
+        else:
+            normalized_doc = _normalize_text(str(retrieved_documents))
+            if normalized_doc:
+                context_chunks = [normalized_doc, query]
+            else:
+                allow_general_knowledge = True
+
+        if allow_general_knowledge:
+            result = await asyncio.wait_for(
+                asyncio.to_thread(
+                    wrapper.generate_safe_text,
+                    (
+                        "You are a conversational Ayurveda assistant. Answer naturally in 3-6 sentences.\n"
+                        f"Conversation Context:\n{convo_context}\n\n"
+                        f"Current Question:\n{query}\n\n"
+                        "Answer style:\n"
+                        "1) direct answer\n"
+                        "2) simple explanation\n"
+                        "3) practical meaning\n"
+                        "Avoid specific diet plans or food prescriptions."
+                    ),
+                    _build_explain_fallback_text(),
+                    max_chars=2000,
                 ),
-            ),
-            timeout=LLM_TIMEOUT_SECONDS,
-        )
-        data = result.get("data", {})
-        raw_answer = str(data.get("explanation", "")).strip()
-        answer = sanitize_ai_output(raw_answer)
-        if not answer:
-            raise ValueError("Empty answer generated")
-        sources = data.get("sources", [])
-        if not isinstance(sources, list):
-            sources = []
+                timeout=LLM_TIMEOUT_SECONDS,
+            )
+            data = result.get("data", {})
+            raw_answer = str(data.get("response", "")).strip()
+            answer = sanitize_ai_output(raw_answer)
+            if not answer:
+                raise NoContextError("no_context")
+            sources = ["general_knowledge"]
+        else:
+            followup_instruction = (
+                "This is a follow-up question. Use the previous assistant response for continuity."
+                if is_followup
+                else "Answer based on available conversation context."
+            )
+            result = await asyncio.wait_for(
+                asyncio.to_thread(
+                    wrapper.generate_explanation,
+                    context_chunks + [f"Conversation Context: {convo_context}"],
+                    (
+                        "Use provided documents/context first.\n"
+                        f"{followup_instruction}\n"
+                        "Structure: direct answer -> simple explanation -> practical meaning.\n"
+                        "Target 3-6 sentences.\n"
+                        "Avoid specific diet plans or food prescriptions.\n"
+                        f"Current Question: {query}"
+                    ),
+                ),
+                timeout=LLM_TIMEOUT_SECONDS,
+            )
+            data = result.get("data", {})
+            raw_answer = str(data.get("explanation", "")).strip()
+            answer = sanitize_ai_output(raw_answer)
+            if not answer:
+                raise NoContextError("no_context")
+            sources = data.get("sources", [])
+            if not isinstance(sources, list):
+                sources = []
+
         latency_ms = int((time.perf_counter() - start) * 1000)
         log.info(
             "rag_response",
@@ -750,9 +994,11 @@ async def rag(request: Request) -> Dict[str, Any]:
                 "fallback": False,
             },
         )
-        return _success(_build_rag_data(answer, sources))
+        _remember_turn(session_id, "user", query)
+        _remember_turn(session_id, "assistant", answer)
+        return _success(_build_rag_data(answer, sources), fallback=False, reason="rag_answer_generated", mode="rag", retryable=False)
     except asyncio.TimeoutError:
-        fallback = _build_explain_fallback()
+        fallback = _build_text_data(_build_explain_fallback_text(), sources=[])
         log.error(
             "ai_failure",
             extra={
@@ -762,21 +1008,24 @@ async def rag(request: Request) -> Dict[str, Any]:
                 "reason": "timeout",
             },
         )
-        return _success(_build_rag_data(fallback.explanation, fallback.sources))
-    except ValueError as exc:
-        fallback = _build_explain_fallback()
+        return _success(fallback, fallback=True, reason="timeout", mode="rag", retryable=True)
+    except SafetyBlockedError:
+        fallback = _build_text_data(_build_explain_fallback_text(), sources=[])
         log.warning(
             "fallback_triggered",
             extra={
                 "request_id": request_id,
                 "trace_id": trace_id,
                 "endpoint": "/rag",
-                "reason": str(exc),
+                "reason": "safety_blocked",
             },
         )
-        return _success(_build_rag_data(fallback.explanation, fallback.sources))
+        return _success(fallback, fallback=True, reason="safety_blocked", mode="rag", retryable=False)
+    except NoContextError:
+        fallback = _build_text_data(_build_explain_fallback_text(), sources=[])
+        return _success(fallback, fallback=True, reason="no_context", mode="rag", retryable=False)
     except Exception as exc:
-        fallback = _build_explain_fallback()
+        fallback = _build_text_data(_build_explain_fallback_text(), sources=[])
         log.error(
             "ai_failure",
             extra={
@@ -786,4 +1035,88 @@ async def rag(request: Request) -> Dict[str, Any]:
                 "reason": str(exc),
             },
         )
-        return _success(_build_rag_data(fallback.explanation, fallback.sources))
+        reason = "llm_not_initialized" if "Missing GROQ_API_KEY" in str(exc) else "timeout"
+        return _success(fallback, fallback=True, reason=reason, mode="rag", retryable=True)
+
+
+def run_system_tests():
+    import requests
+
+    base = "http://localhost:8000"
+
+    tests = [
+        {
+            "name": "GENERAL KNOWLEDGE",
+            "endpoint": "/ai/rag",
+            "payload": {"query": "What is Ayurveda?"},
+        },
+        {
+            "name": "EXPLAIN",
+            "endpoint": "/ai/explain",
+            "payload": {
+                "type": "EXPLAIN_DECISION",
+                "context": {
+                    "user_profile": {"dosha": "pitta"},
+                    "selected_meal": {"items": ["rice"]},
+                    "constraints_applied": ["no spicy"],
+                    "trace": "cooling foods selected",
+                },
+            },
+        },
+        {
+            "name": "SYMPTOMS",
+            "endpoint": "/ai/profile",
+            "payload": {"query": "I feel acidity and heat"},
+        },
+    ]
+
+    for test in tests:
+        try:
+            response = requests.post(base + test["endpoint"], json=test["payload"], timeout=30)
+            print("\nTEST:", test["name"])
+            print("STATUS:", response.status_code)
+            print("RESPONSE:", response.json())
+        except Exception as exc:
+            print("ERROR:", str(exc))
+
+
+def run_final_tests():
+    import requests
+
+    BASE = "http://localhost:8000"
+
+    tests = [
+        {
+            "name": "GENERAL",
+            "endpoint": "/ai/rag",
+            "payload": {"query": "What is Ayurveda?"},
+        },
+        {
+            "name": "EXPLAIN",
+            "endpoint": "/ai/explain",
+            "payload": {
+                "type": "EXPLAIN_DECISION",
+                "context": {
+                    "user_profile": {"dosha": "pitta"},
+                    "selected_meal": {"items": ["rice"]},
+                    "constraints_applied": ["no spicy"],
+                    "trace": "cooling foods selected",
+                },
+            },
+        },
+        {
+            "name": "PROFILE",
+            "endpoint": "/ai/profile",
+            "payload": {"query": "I feel acidity and heat"},
+        },
+    ]
+
+    for test in tests:
+        try:
+            response = requests.post(BASE + test["endpoint"], json=test["payload"], timeout=45)
+            print("\nTEST:", test["name"])
+            print(response.json())
+        except Exception as exc:
+            print("ERROR:", str(exc))
+
+    print("LLM SERVICE READY FOR DEPLOYMENT")

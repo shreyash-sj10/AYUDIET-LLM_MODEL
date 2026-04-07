@@ -162,7 +162,7 @@ class ContextValidator:
             1 for sentence in explanation_sentences if ContextValidator._sentence_supported(sentence, context_sentences)
         )
         adherence = supported / len(explanation_sentences)
-        has_external_claims = adherence < 0.7
+        has_external_claims = adherence < 0.4
         return has_external_claims, adherence
 
     @staticmethod

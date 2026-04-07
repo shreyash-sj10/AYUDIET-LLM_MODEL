@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Generic, List, Literal, Optional, TypeVar
+from typing import Any, Dict, Generic, List, Literal, Optional, TypeVar
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
@@ -23,7 +23,25 @@ class DoshaEstimate(StrictModel):
 
 
 class ProfileRequest(StrictModel):
-    symptoms: str = Field(..., min_length=3)
+    symptoms: Optional[str] = Field(default=None, min_length=3)
+    query: Optional[str] = Field(default=None, min_length=3)
+    question: Optional[str] = Field(default=None, min_length=3)
+    prompt: Optional[str] = Field(default=None, min_length=3)
+    message: Optional[str] = Field(default=None, min_length=3)
+
+    @model_validator(mode="after")
+    def normalize_symptoms(self) -> "ProfileRequest":
+        if self.symptoms and self.symptoms.strip():
+            self.symptoms = self.symptoms.strip()
+            return self
+
+        for field_name in ("query", "question", "prompt", "message"):
+            value = getattr(self, field_name)
+            if isinstance(value, str) and value.strip():
+                self.symptoms = value.strip()
+                return self
+
+        raise ValueError("symptoms/query/question/prompt/message is required (min 3 chars)")
 
 
 class ExplainRequest(StrictModel):
@@ -74,6 +92,11 @@ class ErrorBody(StrictModel):
     message: str
 
 
+class ResponseMeta(StrictModel):
+    fallback: bool
+    reason: str
+
+
 T = TypeVar("T", bound=StrictModel)
 
 
@@ -81,3 +104,4 @@ class Envelope(StrictModel, Generic[T]):
     success: bool
     data: Optional[T]
     error: Optional[ErrorBody]
+    meta: ResponseMeta
