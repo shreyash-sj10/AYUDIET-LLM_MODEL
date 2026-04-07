@@ -479,6 +479,7 @@ async def explain(payload: ExplainRequest, request: Request) -> Dict[str, Any]:
 @app.post("/ai/explain", response_model=Envelope[AIExplainData])
 async def ai_explain(payload: AIExplainRequest, request: Request) -> Dict[str, Any]:
     request_id, trace_id = _request_meta(request)
+    start = time.perf_counter()
     wrapper = _get_strict_wrapper()
 
     log.info(
@@ -491,7 +492,17 @@ async def ai_explain(payload: AIExplainRequest, request: Request) -> Dict[str, A
     )
 
     if wrapper is None:
-        return _success(AIExplainData(text=_build_explain_fallback().explanation))
+        fallback = _build_explain_fallback()
+        log.warning(
+            "fallback_triggered",
+            extra={
+                "request_id": request_id,
+                "trace_id": trace_id,
+                "endpoint": "/ai/explain",
+                "reason": "LLM unavailable",
+            },
+        )
+        return _success(AIExplainData(text=fallback.explanation))
 
     try:
         result = await asyncio.wait_for(
@@ -507,18 +518,61 @@ async def ai_explain(payload: AIExplainRequest, request: Request) -> Dict[str, A
         sanitized = sanitize_ai_output(raw_explanation)
         if not sanitized:
             raise ValueError("Empty explanation generated")
-        return _success(AIExplainData(text=sanitized))
+        text = sanitized[:2000]
+        latency_ms = int((time.perf_counter() - start) * 1000)
+        log.info(
+            "ai_explain_response",
+            extra={
+                "request_id": request_id,
+                "trace_id": trace_id,
+                "endpoint": "/ai/explain",
+                "latency_ms": latency_ms,
+                "fallback": False,
+            },
+        )
+        return _success(AIExplainData(text=text))
     except asyncio.TimeoutError:
-        return JSONResponse(status_code=504, content=_error("LLM timeout"))
+        fallback = _build_explain_fallback()
+        log.error(
+            "ai_failure",
+            extra={
+                "request_id": request_id,
+                "trace_id": trace_id,
+                "endpoint": "/ai/explain",
+                "reason": "timeout",
+            },
+        )
+        return _success(AIExplainData(text=fallback.explanation))
     except ValueError as exc:
-        return JSONResponse(status_code=500, content=_error(str(exc)))
-    except Exception:
-        return JSONResponse(status_code=500, content=_error("Failed to generate explanation"))
+        fallback = _build_explain_fallback()
+        log.warning(
+            "fallback_triggered",
+            extra={
+                "request_id": request_id,
+                "trace_id": trace_id,
+                "endpoint": "/ai/explain",
+                "reason": str(exc),
+            },
+        )
+        return _success(AIExplainData(text=fallback.explanation))
+    except Exception as exc:
+        fallback = _build_explain_fallback()
+        log.error(
+            "ai_failure",
+            extra={
+                "request_id": request_id,
+                "trace_id": trace_id,
+                "endpoint": "/ai/explain",
+                "reason": str(exc),
+            },
+        )
+        return _success(AIExplainData(text=fallback.explanation))
 
 
 @app.post("/rag", response_model=Envelope[RagData])
 async def rag(payload: RagRequest, request: Request) -> Dict[str, Any]:
     request_id, trace_id = _request_meta(request)
+    start = time.perf_counter()
     wrapper = _get_strict_wrapper()
 
     log.info(
@@ -532,6 +586,15 @@ async def rag(payload: RagRequest, request: Request) -> Dict[str, Any]:
 
     if wrapper is None:
         fallback = _build_explain_fallback()
+        log.warning(
+            "fallback_triggered",
+            extra={
+                "request_id": request_id,
+                "trace_id": trace_id,
+                "endpoint": "/rag",
+                "reason": "LLM unavailable",
+            },
+        )
         return _success(RagData(answer=fallback.explanation, sources=fallback.sources))
 
     try:
@@ -555,10 +618,51 @@ async def rag(payload: RagRequest, request: Request) -> Dict[str, Any]:
         if not isinstance(sources, list):
             sources = []
         clean_sources = [_normalize_text(src) for src in sources if isinstance(src, str) and src.strip()]
-        return _success(RagData(answer=answer, sources=clean_sources))
+        latency_ms = int((time.perf_counter() - start) * 1000)
+        log.info(
+            "rag_response",
+            extra={
+                "request_id": request_id,
+                "trace_id": trace_id,
+                "endpoint": "/rag",
+                "latency_ms": latency_ms,
+                "fallback": False,
+            },
+        )
+        return _success(RagData(answer=answer[:2000], sources=clean_sources))
     except asyncio.TimeoutError:
-        return JSONResponse(status_code=504, content=_error("LLM timeout"))
+        fallback = _build_explain_fallback()
+        log.error(
+            "ai_failure",
+            extra={
+                "request_id": request_id,
+                "trace_id": trace_id,
+                "endpoint": "/rag",
+                "reason": "timeout",
+            },
+        )
+        return _success(RagData(answer=fallback.explanation, sources=fallback.sources))
     except ValueError as exc:
-        return JSONResponse(status_code=500, content=_error(str(exc)))
-    except Exception:
-        return JSONResponse(status_code=500, content=_error("Failed to generate RAG response"))
+        fallback = _build_explain_fallback()
+        log.warning(
+            "fallback_triggered",
+            extra={
+                "request_id": request_id,
+                "trace_id": trace_id,
+                "endpoint": "/rag",
+                "reason": str(exc),
+            },
+        )
+        return _success(RagData(answer=fallback.explanation, sources=fallback.sources))
+    except Exception as exc:
+        fallback = _build_explain_fallback()
+        log.error(
+            "ai_failure",
+            extra={
+                "request_id": request_id,
+                "trace_id": trace_id,
+                "endpoint": "/rag",
+                "reason": str(exc),
+            },
+        )
+        return _success(RagData(answer=fallback.explanation, sources=fallback.sources))
