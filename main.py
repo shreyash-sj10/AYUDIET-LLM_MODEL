@@ -46,6 +46,30 @@ REQUIRE_AUTH_ON_COMPAT_ENDPOINTS = (
 )
 _RATE_BUCKETS: Dict[str, Deque[float]] = {}
 _STRICT_WRAPPER: Optional[StrictLLMWrapper] = None
+_CORE_PROTECTED_PATHS = {
+    "/profile",
+    "/explain",
+    "/profile/",
+    "/explain/",
+    "/ai/profile",
+    "/ai/profile/",
+    "/api/ai/profile",
+    "/api/ai/profile/",
+}
+_COMPAT_PROTECTED_PATHS = {
+    "/ai/explain",
+    "/ai/explain/",
+    "/rag",
+    "/rag/",
+    "/ai/rag",
+    "/ai/rag/",
+    "/api/rag",
+    "/api/rag/",
+    "/api/ai/explain",
+    "/api/ai/explain/",
+    "/api/ai/rag",
+    "/api/ai/rag/",
+}
 
 
 def _parse_allowed_origins() -> list[str]:
@@ -222,6 +246,10 @@ def _enforce_api_key(request: Request) -> None:
     if not API_KEY:
         return
     provided = request.headers.get("X-API-Key", "").strip()
+    if not provided:
+        auth_header = request.headers.get("Authorization", "").strip()
+        if auth_header.lower().startswith("bearer "):
+            provided = auth_header[7:].strip()
     if provided != API_KEY:
         raise HTTPException(status_code=401, detail="Invalid API key")
 
@@ -242,13 +270,16 @@ async def auth_and_rate_limit(request: Request, call_next):
     if request.method == "OPTIONS":
         return await call_next(request)
 
-    protected_paths = {"/profile", "/explain"}
+    protected_paths = set(_CORE_PROTECTED_PATHS)
     if REQUIRE_AUTH_ON_COMPAT_ENDPOINTS:
-        protected_paths.update({"/ai/explain", "/rag"})
+        protected_paths.update(_COMPAT_PROTECTED_PATHS)
 
     if request.url.path in protected_paths:
-        _enforce_api_key(request)
-        _enforce_rate_limit(request)
+        try:
+            _enforce_api_key(request)
+            _enforce_rate_limit(request)
+        except HTTPException as exc:
+            return JSONResponse(status_code=exc.status_code, content=_error(str(exc.detail)))
     return await call_next(request)
 
 
@@ -315,6 +346,11 @@ async def general_exception_handler(request: Request, exc: Exception):
 
 
 @app.get("/health", response_model=Envelope[HealthData])
+@app.get("/health/", response_model=Envelope[HealthData])
+@app.get("/ai/health", response_model=Envelope[HealthData])
+@app.get("/ai/health/", response_model=Envelope[HealthData])
+@app.get("/api/health", response_model=Envelope[HealthData])
+@app.get("/api/health/", response_model=Envelope[HealthData])
 async def health(request: Request) -> Dict[str, Any]:
     request_id, trace_id = _request_meta(request)
     log.info(
@@ -329,6 +365,11 @@ async def health(request: Request) -> Dict[str, Any]:
 
 
 @app.post("/profile", response_model=Envelope[ProfileResponse])
+@app.post("/profile/", response_model=Envelope[ProfileResponse])
+@app.post("/ai/profile", response_model=Envelope[ProfileResponse])
+@app.post("/ai/profile/", response_model=Envelope[ProfileResponse])
+@app.post("/api/ai/profile", response_model=Envelope[ProfileResponse])
+@app.post("/api/ai/profile/", response_model=Envelope[ProfileResponse])
 async def profile(payload: ProfileRequest, request: Request) -> Dict[str, Any]:
     request_id, trace_id = _request_meta(request)
     start = time.perf_counter()
@@ -424,6 +465,9 @@ async def profile(payload: ProfileRequest, request: Request) -> Dict[str, Any]:
 
 
 @app.post("/explain", response_model=Envelope[ExplainResponse])
+@app.post("/explain/", response_model=Envelope[ExplainResponse])
+@app.post("/api/explain", response_model=Envelope[ExplainResponse])
+@app.post("/api/explain/", response_model=Envelope[ExplainResponse])
 async def explain(payload: ExplainRequest, request: Request) -> Dict[str, Any]:
     request_id, trace_id = _request_meta(request)
     start = time.perf_counter()
@@ -532,6 +576,9 @@ async def explain(payload: ExplainRequest, request: Request) -> Dict[str, Any]:
 
 
 @app.post("/ai/explain")
+@app.post("/ai/explain/")
+@app.post("/api/ai/explain")
+@app.post("/api/ai/explain/")
 async def ai_explain(request: Request) -> Dict[str, Any]:
     request_id, trace_id = _request_meta(request)
     start = time.perf_counter()
@@ -631,6 +678,13 @@ async def ai_explain(request: Request) -> Dict[str, Any]:
 
 
 @app.post("/rag")
+@app.post("/rag/")
+@app.post("/ai/rag")
+@app.post("/ai/rag/")
+@app.post("/api/rag")
+@app.post("/api/rag/")
+@app.post("/api/ai/rag")
+@app.post("/api/ai/rag/")
 async def rag(request: Request) -> Dict[str, Any]:
     request_id, trace_id = _request_meta(request)
     start = time.perf_counter()
@@ -673,6 +727,7 @@ async def rag(request: Request) -> Dict[str, Any]:
                 (
                     "Use the provided context first and answer the Ayurvedic query. "
                     f"Context: {context}. Query: {query}"
+
                 ),
             ),
             timeout=LLM_TIMEOUT_SECONDS,
