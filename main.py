@@ -727,7 +727,6 @@ async def rag(request: Request) -> Dict[str, Any]:
                 (
                     "Use the provided context first and answer the Ayurvedic query. "
                     f"Context: {context}. Query: {query}"
-
                 ),
             ),
             timeout=LLM_TIMEOUT_SECONDS,

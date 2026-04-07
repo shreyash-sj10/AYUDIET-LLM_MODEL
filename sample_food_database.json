@@ -1,0 +1,173 @@
+[
+  {
+    "id": "1",
+    "name": "Rice",
+    "category": "grain",
+    "ayurveda": {
+      "rasa": ["sweet"],
+      "guna": ["light", "dry"],
+      "virya": "cold",
+      "vipaka": "sweet"
+    },
+    "dosha_effect": {"vata": 0, "pitta": -0.2, "kapha": 0.2},
+    "functional": {"digestibility_score": 0.9, "heaviness_score": 0.2},
+    "nutrition": {"calories": 130, "protein": 2.7, "carbs": 28, "fat": 0.3, "glycemic_index": 73},
+    "seasonality": ["summer", "winter"],
+    "meta": {"is_vegetarian": true},
+    "extra": {}
+  },
+  {
+    "id": "2",
+    "name": "Wheat",
+    "category": "grain",
+    "ayurveda": {
+      "rasa": ["sweet"],
+      "guna": ["heavy", "oily"],
+      "virya": "hot",
+      "vipaka": "sweet"
+    },
+    "dosha_effect": {"vata": -0.2, "pitta": 0.1, "kapha": 0.3},
+    "functional": {"digestibility_score": 0.7, "heaviness_score": 0.7},
+    "nutrition": {"calories": 340, "protein": 13.2, "carbs": 72, "fat": 2.5, "glycemic_index": 54},
+    "seasonality": ["winter"],
+    "meta": {"is_vegetarian": true},
+    "extra": {}
+  },
+  {
+    "id": "3",
+    "name": "Moong Dal",
+    "category": "dal",
+    "ayurveda": {
+      "rasa": ["sweet"],
+      "guna": ["light", "dry"],
+      "virya": "cold",
+      "vipaka": "sweet"
+    },
+    "dosha_effect": {"vata": -0.1, "pitta": -0.1, "kapha": 0.1},
+    "functional": {"digestibility_score": 0.8, "heaviness_score": 0.3},
+    "nutrition": {"calories": 347, "protein": 24, "carbs": 63, "fat": 1.2, "glycemic_index": 38},
+    "seasonality": ["summer", "winter"],
+    "meta": {"is_vegetarian": true},
+    "extra": {}
+  },
+  {
+    "id": "4",
+    "name": "Chana Dal",
+    "category": "dal",
+    "ayurveda": {
+      "rasa": ["sweet"],
+      "guna": ["heavy", "dry"],
+      "virya": "hot",
+      "vipaka": "sweet"
+    },
+    "dosha_effect": {"vata": 0.1, "pitta": 0.1, "kapha": 0.2},
+    "functional": {"digestibility_score": 0.6, "heaviness_score": 0.7},
+    "nutrition": {"calories": 360, "protein": 20.8, "carbs": 60.9, "fat": 5.6, "glycemic_index": 28},
+    "seasonality": ["winter"],
+    "meta": {"is_vegetarian": true},
+    "extra": {}
+  },
+  {
+    "id": "5",
+    "name": "Spinach",
+    "category": "vegetable",
+    "ayurveda": {
+      "rasa": ["bitter", "astringent"],
+      "guna": ["light", "dry"],
+      "virya": "cold",
+      "vipaka": "pungent"
+    },
+    "dosha_effect": {"vata": 0.1, "pitta": -0.2, "kapha": -0.1},
+    "functional": {"digestibility_score": 0.7, "heaviness_score": 0.2},
+    "nutrition": {"calories": 23, "protein": 2.9, "carbs": 3.6, "fat": 0.4, "glycemic_index": 15},
+    "seasonality": ["winter"],
+    "meta": {"is_vegetarian": true},
+    "extra": {}
+  },
+  {
+    "id": "6",
+    "name": "Carrot",
+    "category": "vegetable",
+    "ayurveda": {
+      "rasa": ["sweet", "astringent"],
+      "guna": ["light", "dry"],
+      "virya": "hot",
+      "vipaka": "sweet"
+    },
+    "dosha_effect": {"vata": -0.1, "pitta": 0.1, "kapha": 0.1},
+    "functional": {"digestibility_score": 0.8, "heaviness_score": 0.2},
+    "nutrition": {"calories": 41, "protein": 0.9, "carbs": 9.6, "fat": 0.2, "glycemic_index": 35},
+    "seasonality": ["winter", "monsoon"],
+    "meta": {"is_vegetarian": true},
+    "extra": {}
+  },
+  {
+    "id": "7",
+    "name": "Apple",
+    "category": "fruit",
+    "ayurveda": {
+      "rasa": ["sweet", "astringent"],
+      "guna": ["light", "dry"],
+      "virya": "cold",
+      "vipaka": "sweet"
+    },
+    "dosha_effect": {"vata": 0, "pitta": -0.1, "kapha": 0.1},
+    "functional": {"digestibility_score": 0.9, "heaviness_score": 0.1},
+    "nutrition": {"calories": 52, "protein": 0.3, "carbs": 14, "fat": 0.2, "glycemic_index": 36},
+    "seasonality": ["summer", "winter"],
+    "meta": {"is_vegetarian": true},
+    "extra": {}
+  },
+  {
+    "id": "8",
+    "name": "Banana",
+    "category": "fruit",
+    "ayurveda": {
+      "rasa": ["sweet"],
+      "guna": ["heavy", "oily"],
+      "virya": "cold",
+      "vipaka": "sweet"
+    },
+    "dosha_effect": {"vata": -0.2, "pitta": 0.1, "kapha": 0.3},
+    "functional": {"digestibility_score": 0.7, "heaviness_score": 0.7},
+    "nutrition": {"calories": 89, "protein": 1.1, "carbs": 23, "fat": 0.3, "glycemic_index": 51},
+    "seasonality": ["monsoon", "summer"],
+    "meta": {"is_vegetarian": true},
+    "extra": {}
+  },
+  {
+    "id": "9",
+    "name": "Milk",
+    "category": "dairy",
+    "ayurveda": {
+      "rasa": ["sweet"],
+      "guna": ["heavy", "oily"],
+      "virya": "cold",
+      "vipaka": "sweet"
+    },
+    "dosha_effect": {"vata": -0.3, "pitta": 0.1, "kapha": 0.4},
+    "functional": {"digestibility_score": 0.6, "heaviness_score": 0.8},
+    "nutrition": {"calories": 42, "protein": 3.4, "carbs": 5, "fat": 1, "glycemic_index": 47},
+    "seasonality": ["winter"],
+    "meta": {"is_vegetarian": true},
+    "extra": {}
+  },
+  {
+    "id": "10",
+    "name": "Curd",
+    "category": "dairy",
+    "ayurveda": {
+      "rasa": ["sour", "sweet"],
+      "guna": ["heavy", "oily"],
+      "virya": "hot",
+      "vipaka": "sour"
+    },
+    "dosha_effect": {"vata": -0.2, "pitta": 0.2, "kapha": 0.4},
+    "functional": {"digestibility_score": 0.7, "heaviness_score": 0.7},
+    "nutrition": {"calories": 98, "protein": 3.5, "carbs": 4.7, "fat": 4.3, "glycemic_index": 36},
+    "seasonality": ["winter", "monsoon"],
+    "meta": {"is_vegetarian": true},
+    "extra": {}
+  }
+  // ... 90+ more foods to be added for full sample ...
+]
