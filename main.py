@@ -16,6 +16,8 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from llm_hallucination_control import ContextValidator, OutputValidator
 from llm_strict_wrapper import StrictLLMWrapper
 from schemas import (
+    AIExplainData,
+    AIExplainRequest,
     DoshaEstimate,
     Envelope,
     ErrorBody,
@@ -24,6 +26,8 @@ from schemas import (
     HealthData,
     ProfileRequest,
     ProfileResponse,
+    RagData,
+    RagRequest,
 )
 
 try:
@@ -187,7 +191,7 @@ async def auth_and_rate_limit(request: Request, call_next):
     if request.method == "OPTIONS":
         return await call_next(request)
 
-    if request.url.path in {"/profile", "/explain"}:
+    if request.url.path in {"/profile", "/explain", "/ai/explain", "/rag"}:
         _enforce_api_key(request)
         _enforce_rate_limit(request)
     return await call_next(request)
@@ -470,3 +474,91 @@ async def explain(payload: ExplainRequest, request: Request) -> Dict[str, Any]:
             },
         )
         return _success(fallback)
+
+
+@app.post("/ai/explain", response_model=Envelope[AIExplainData])
+async def ai_explain(payload: AIExplainRequest, request: Request) -> Dict[str, Any]:
+    request_id, trace_id = _request_meta(request)
+    wrapper = _get_strict_wrapper()
+
+    log.info(
+        "ai_explain_request",
+        extra={
+            "request_id": request_id,
+            "trace_id": trace_id,
+            "endpoint": "/ai/explain",
+        },
+    )
+
+    if wrapper is None:
+        return _success(AIExplainData(text=_build_explain_fallback().explanation))
+
+    try:
+        result = await asyncio.wait_for(
+            asyncio.to_thread(
+                wrapper.generate_explanation,
+                [payload.query],
+                f"Explain this Ayurvedic query clearly: {_normalize_text(payload.query)}",
+            ),
+            timeout=LLM_TIMEOUT_SECONDS,
+        )
+        data = result.get("data", {})
+        raw_explanation = str(data.get("explanation", "")).strip()
+        sanitized = sanitize_ai_output(raw_explanation)
+        if not sanitized:
+            raise ValueError("Empty explanation generated")
+        return _success(AIExplainData(text=sanitized))
+    except asyncio.TimeoutError:
+        return JSONResponse(status_code=504, content=_error("LLM timeout"))
+    except ValueError as exc:
+        return JSONResponse(status_code=500, content=_error(str(exc)))
+    except Exception:
+        return JSONResponse(status_code=500, content=_error("Failed to generate explanation"))
+
+
+@app.post("/rag", response_model=Envelope[RagData])
+async def rag(payload: RagRequest, request: Request) -> Dict[str, Any]:
+    request_id, trace_id = _request_meta(request)
+    wrapper = _get_strict_wrapper()
+
+    log.info(
+        "rag_request",
+        extra={
+            "request_id": request_id,
+            "trace_id": trace_id,
+            "endpoint": "/rag",
+        },
+    )
+
+    if wrapper is None:
+        fallback = _build_explain_fallback()
+        return _success(RagData(answer=fallback.explanation, sources=fallback.sources))
+
+    try:
+        result = await asyncio.wait_for(
+            asyncio.to_thread(
+                wrapper.generate_explanation,
+                [_normalize_text(payload.context), _normalize_text(payload.query)],
+                (
+                    "Use the provided context first and answer the Ayurvedic query. "
+                    f"Context: {_normalize_text(payload.context)}. Query: {_normalize_text(payload.query)}"
+                ),
+            ),
+            timeout=LLM_TIMEOUT_SECONDS,
+        )
+        data = result.get("data", {})
+        raw_answer = str(data.get("explanation", "")).strip()
+        answer = sanitize_ai_output(raw_answer)
+        if not answer:
+            raise ValueError("Empty answer generated")
+        sources = data.get("sources", [])
+        if not isinstance(sources, list):
+            sources = []
+        clean_sources = [_normalize_text(src) for src in sources if isinstance(src, str) and src.strip()]
+        return _success(RagData(answer=answer, sources=clean_sources))
+    except asyncio.TimeoutError:
+        return JSONResponse(status_code=504, content=_error("LLM timeout"))
+    except ValueError as exc:
+        return JSONResponse(status_code=500, content=_error(str(exc)))
+    except Exception:
+        return JSONResponse(status_code=500, content=_error("Failed to generate RAG response"))

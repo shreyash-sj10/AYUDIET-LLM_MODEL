@@ -31,6 +31,15 @@ class ExplainRequest(StrictModel):
     reasoning: str = Field(..., min_length=3)
 
 
+class AIExplainRequest(StrictModel):
+    query: str = Field(..., min_length=3)
+
+
+class RagRequest(StrictModel):
+    query: str = Field(..., min_length=3)
+    context: str = Field(..., min_length=1)
+
+
 class HealthData(StrictModel):
     status: Literal["ok"]
     entrypoint: Literal["main.py"]
@@ -50,6 +59,15 @@ class ExplainResponse(StrictModel):
     confidence: float = Field(ge=0.0, le=1.0)
     sources: List[str]
     fallback: bool
+
+
+class AIExplainData(StrictModel):
+    text: str = Field(..., min_length=1, max_length=2000)
+
+
+class RagData(StrictModel):
+    answer: str = Field(..., min_length=1, max_length=2000)
+    sources: List[str]
 
 
 class ErrorBody(StrictModel):
