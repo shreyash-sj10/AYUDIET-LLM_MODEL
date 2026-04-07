@@ -16,7 +16,6 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from llm_hallucination_control import ContextValidator, OutputValidator
 from llm_strict_wrapper import StrictLLMWrapper
 from schemas import (
-    AIExplainData,
     AIExplainRequest,
     DoshaEstimate,
     Envelope,
@@ -26,7 +25,6 @@ from schemas import (
     HealthData,
     ProfileRequest,
     ProfileResponse,
-    RagData,
     RagRequest,
 )
 
@@ -110,6 +108,25 @@ def _build_explain_fallback() -> ExplainResponse:
         sources=[],
         fallback=True,
     )
+
+
+def _build_ai_explain_data(text: str) -> Dict[str, str]:
+    cleaned = _normalize_text(text)
+    if not cleaned:
+        cleaned = _build_explain_fallback().explanation
+    return {"text": cleaned[:2000]}
+
+
+def _build_rag_data(answer: str, sources: Any) -> Dict[str, Any]:
+    cleaned_answer = _normalize_text(answer)
+    if not cleaned_answer:
+        cleaned_answer = _build_explain_fallback().explanation
+
+    clean_sources: list[str] = []
+    if isinstance(sources, list):
+        clean_sources = [_normalize_text(src) for src in sources if isinstance(src, str) and src.strip()]
+
+    return {"answer": cleaned_answer[:2000], "sources": clean_sources}
 
 
 def _normalize_text(value: str) -> str:
@@ -476,7 +493,7 @@ async def explain(payload: ExplainRequest, request: Request) -> Dict[str, Any]:
         return _success(fallback)
 
 
-@app.post("/ai/explain", response_model=Envelope[AIExplainData])
+@app.post("/ai/explain")
 async def ai_explain(payload: AIExplainRequest, request: Request) -> Dict[str, Any]:
     request_id, trace_id = _request_meta(request)
     start = time.perf_counter()
@@ -502,7 +519,7 @@ async def ai_explain(payload: AIExplainRequest, request: Request) -> Dict[str, A
                 "reason": "LLM unavailable",
             },
         )
-        return _success(AIExplainData(text=fallback.explanation))
+        return _success(_build_ai_explain_data(fallback.explanation))
 
     try:
         result = await asyncio.wait_for(
@@ -530,7 +547,7 @@ async def ai_explain(payload: AIExplainRequest, request: Request) -> Dict[str, A
                 "fallback": False,
             },
         )
-        return _success(AIExplainData(text=text))
+        return _success(_build_ai_explain_data(text))
     except asyncio.TimeoutError:
         fallback = _build_explain_fallback()
         log.error(
@@ -542,7 +559,7 @@ async def ai_explain(payload: AIExplainRequest, request: Request) -> Dict[str, A
                 "reason": "timeout",
             },
         )
-        return _success(AIExplainData(text=fallback.explanation))
+        return _success(_build_ai_explain_data(fallback.explanation))
     except ValueError as exc:
         fallback = _build_explain_fallback()
         log.warning(
@@ -554,7 +571,7 @@ async def ai_explain(payload: AIExplainRequest, request: Request) -> Dict[str, A
                 "reason": str(exc),
             },
         )
-        return _success(AIExplainData(text=fallback.explanation))
+        return _success(_build_ai_explain_data(fallback.explanation))
     except Exception as exc:
         fallback = _build_explain_fallback()
         log.error(
@@ -566,10 +583,10 @@ async def ai_explain(payload: AIExplainRequest, request: Request) -> Dict[str, A
                 "reason": str(exc),
             },
         )
-        return _success(AIExplainData(text=fallback.explanation))
+        return _success(_build_ai_explain_data(fallback.explanation))
 
 
-@app.post("/rag", response_model=Envelope[RagData])
+@app.post("/rag")
 async def rag(payload: RagRequest, request: Request) -> Dict[str, Any]:
     request_id, trace_id = _request_meta(request)
     start = time.perf_counter()
@@ -595,7 +612,7 @@ async def rag(payload: RagRequest, request: Request) -> Dict[str, Any]:
                 "reason": "LLM unavailable",
             },
         )
-        return _success(RagData(answer=fallback.explanation, sources=fallback.sources))
+        return _success(_build_rag_data(fallback.explanation, fallback.sources))
 
     try:
         result = await asyncio.wait_for(
@@ -617,7 +634,6 @@ async def rag(payload: RagRequest, request: Request) -> Dict[str, Any]:
         sources = data.get("sources", [])
         if not isinstance(sources, list):
             sources = []
-        clean_sources = [_normalize_text(src) for src in sources if isinstance(src, str) and src.strip()]
         latency_ms = int((time.perf_counter() - start) * 1000)
         log.info(
             "rag_response",
@@ -629,7 +645,7 @@ async def rag(payload: RagRequest, request: Request) -> Dict[str, Any]:
                 "fallback": False,
             },
         )
-        return _success(RagData(answer=answer[:2000], sources=clean_sources))
+        return _success(_build_rag_data(answer, sources))
     except asyncio.TimeoutError:
         fallback = _build_explain_fallback()
         log.error(
@@ -641,7 +657,7 @@ async def rag(payload: RagRequest, request: Request) -> Dict[str, Any]:
                 "reason": "timeout",
             },
         )
-        return _success(RagData(answer=fallback.explanation, sources=fallback.sources))
+        return _success(_build_rag_data(fallback.explanation, fallback.sources))
     except ValueError as exc:
         fallback = _build_explain_fallback()
         log.warning(
@@ -653,7 +669,7 @@ async def rag(payload: RagRequest, request: Request) -> Dict[str, Any]:
                 "reason": str(exc),
             },
         )
-        return _success(RagData(answer=fallback.explanation, sources=fallback.sources))
+        return _success(_build_rag_data(fallback.explanation, fallback.sources))
     except Exception as exc:
         fallback = _build_explain_fallback()
         log.error(
@@ -665,4 +681,4 @@ async def rag(payload: RagRequest, request: Request) -> Dict[str, Any]:
                 "reason": str(exc),
             },
         )
-        return _success(RagData(answer=fallback.explanation, sources=fallback.sources))
+        return _success(_build_rag_data(fallback.explanation, fallback.sources))
